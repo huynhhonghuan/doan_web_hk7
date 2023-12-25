@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('truyen', function (Blueprint $table) {
+        Schema::create('truyen_chitiet', function (Blueprint $table) {
             $table->id();
-            $table->string('tentruyen');
-            $table->string('slug');
-            $table->string('nhomdich')->default('Không biết')->nullable();
-            $table->longText('mota')->nullable();
-            $table->string('hinhanh',255);
-            $table->integer('luotxem')->default(0);
-            $table->integer('khoa')->default(1);
+            $table->foreignId('truyen_id')->constrained('truyen')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('hinhanh');
+            $table->integer('chuong');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('truyen');
+        Schema::dropIfExists('truyen_chitiet');
     }
 };

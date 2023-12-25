@@ -39,6 +39,13 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     //home
     Route::get('/', [AdminController::class, 'home'])->name('home');
     Route::get('home', [AdminController::class, 'home'])->name('home');
+
+    //phim
+    Route::prefix('phim')->group(function () {
+    });
+    //truyện
+    Route::prefix('truyen')->group(function () {
+    });
 });
 
 //Cộng tác viên truyện

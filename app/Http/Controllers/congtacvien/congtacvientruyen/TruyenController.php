@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Truyen;
+namespace App\Http\Controllers\Congtacvien\Congtacvientruyen;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

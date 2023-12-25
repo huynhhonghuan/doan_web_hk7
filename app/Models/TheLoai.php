@@ -9,7 +9,13 @@ class TheLoai extends Model
 {
     use HasFactory;
 
-    protected $table='theloai';
+    protected $table = 'theloai';
+    protected $fillable = [
+        'tentheloai',
+        'slug',
+        'mota',
+        'khoa',
+    ];
 
     public function Phim()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\admin\phim;
+namespace App\Http\Controllers\Admin\Phim;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

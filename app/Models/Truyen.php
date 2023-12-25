@@ -47,4 +47,10 @@ class Truyen extends Model
     {
         return $this->hasMany(TruyenChiTiet::class, 'truyen_id', 'id');
     }
+    //truyen - truyện_thelaai - theloai
+    //tử bảng truyện lấy tên thể loại qua bảng trung gian truyen_theloai
+    public function getTheLoai()
+    {
+        return $this->belongsToMany('App\Model\TheLoai', 'truyen_theloai', 'truyen_id', 'theloai_id');
+    }
 }
