@@ -2,11 +2,11 @@
 
 namespace App\Imports\Admin;
 
-use App\Models\TheLoai;
+use App\Models\TruyenChiTiet;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class TheLoaiImport implements ToModel, WithHeadingRow
+class TruyenChiTietImport implements ToModel, WithHeadingRow
 {
     /**
      * @param array $row
@@ -15,11 +15,10 @@ class TheLoaiImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        return new TheLoai([
-            'tentheloai' => $row['tentheloai'],
-            'slug' => $row['slug'],
-            'mota' => $row['mota'],
-            'khoa' => $row['khoa']
+        return new TruyenChiTiet([
+            'truyen_id' => $row['truyen_id'],
+            'hinhanh' => $row['hinhanh'],
+            'chuong' => $row['chuong'],
         ]);
     }
     public function headingRow(): int

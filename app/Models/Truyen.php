@@ -17,7 +17,7 @@ class Truyen extends Model
         'khoa',
         'nhomdich',
         'hinhanh',
-        'theloai_id',
+        'luotxem',
         'tacgia_id',
         'quocgia_id',
         'user_id'

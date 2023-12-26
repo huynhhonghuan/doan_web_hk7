@@ -2,37 +2,35 @@
 
 namespace App\Exports\Admin;
 
-use App\Models\TacGia;
+use App\Models\TruyenChiTiet;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class TacGiaExport implements FromCollection, WithHeadings, WithCustomStartCell, WithMapping
+class TruyenChiTietExport implements FromCollection, WithHeadings, WithCustomStartCell, WithMapping
 {
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return TacGia::all();
+        return TruyenChiTiet::all();
     }
     public function headings(): array
     {
         return [
-            'tentacgia',
-            'slug',
-            'mota',
-            'khoa'
+            'truyen_id',
+            'hinhanh',
+            'chuong',
         ];
     }
     public function map($row): array
     {
         return [
-            $row->tentacgia,
-            $row->slug,
-            $row->mota,
-            $row->khoa
+            $row->truyen_id,
+            $row->hinhanh,
+            $row->chuong
         ];
     }
     public function startCell(): string

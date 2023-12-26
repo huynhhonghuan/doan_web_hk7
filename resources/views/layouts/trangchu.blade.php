@@ -10,7 +10,7 @@
 
 <body>
     {{-- nhúng tĩnh Navbar --}}
-    @include('layouts.trangchu.navbar')
+    {{-- @include('layouts.trangchu.navbar') --}}
     {{-- nhúng động Contents từ bên form kế thừa --}}
     <div class="container">
         @yield('content')

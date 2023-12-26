@@ -26,7 +26,6 @@ class TruyenRequest extends FormRequest
                     return [
                         'tentruyen' => 'required',
                         'mota' => 'nullable',
-                        'theloai_id' => 'required',
                         'tacgia_id' => 'required',
                         'quocgia_id' => 'required',
                     ];
@@ -36,7 +35,6 @@ class TruyenRequest extends FormRequest
                     return [
                         'tentruyen' => 'required',
                         'mota' => 'nullable',
-                        'theloai_id' => 'required',
                         'tacgia_id' => 'required',
                         'quocgia_id' => 'required',
                     ];
