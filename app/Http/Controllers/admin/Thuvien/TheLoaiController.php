@@ -38,7 +38,7 @@ class TheLoaiController extends Controller
             $slug = Str::slug($request->tentheloai, '-');
             TheLoai::create($request->validated() + ['slug' => $slug]);
         }
-        return redirect()->route('admin.thuvien.theloai.index');
+        return redirect()->route('admin.theloai.index');
     }
 
     /**
@@ -73,7 +73,7 @@ class TheLoaiController extends Controller
             $theloai->update($request->validated() + ['slug' => $slug]);
         }
 
-        return redirect()->route('admin.thuvien.theloai.index');
+        return redirect()->route('admin.theloai.index');
     }
 
     /**
@@ -82,12 +82,12 @@ class TheLoaiController extends Controller
     public function destroy(TheLoai $theloai)
     {
         $theloai->delete();
-        return redirect()->route('admin.thuvien.theloai.index');
+        return redirect()->route('admin.theloai.index');
     }
     public function postNhap(Request $request)
     {
         Excel::import(new TheLoaiImport, $request->file('file_excel'));
-        return redirect()->route('admin.thuvien.theloai.index');
+        return redirect()->route('admin.theloai.index');
     }
 
     public function getXuat()

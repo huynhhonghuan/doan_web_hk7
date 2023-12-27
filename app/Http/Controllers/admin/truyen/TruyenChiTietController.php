@@ -57,7 +57,7 @@ class TruyenChiTietController extends Controller
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move('image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
             }
 
             TruyenChiTiet::create($request->validated() + ['hinhanh' => $file_name]);
@@ -106,7 +106,7 @@ class TruyenChiTietController extends Controller
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
-                $file->move('image/truyen/' . $slug . '/'  . $thumuc, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/'  . $thumuc, $file_name);
             }
 
             $truyenchitiet->update($request->validated() + ['hinhanh' => $file_name]);
@@ -196,8 +196,6 @@ class TruyenChiTietController extends Controller
                     }
                 }
             }
-
-
             $zip->close();
         }
         return response()->download(public_path('image/' . $file_name));

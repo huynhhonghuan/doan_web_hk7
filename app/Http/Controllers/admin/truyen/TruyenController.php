@@ -51,17 +51,19 @@ class TruyenController extends Controller
             $slug = Str::slug($request->tentruyen, '-');
 
             $file_name = '';
-            //dd($request->hasFile('hinhanh'));
-            if ($file = $request->file('hinhanh')) {
 
+            //dd($request->hasFile('hinhanh'));
+            if ($request->hasFile('hinhanh')) {
+                $file = $request->file('hinhanh');
                 //Tạo thư mục nếu chưa có
-                if (!File::isDirectory(public_path('image/truyen/' . $slug))) {
-                    File::makeDirectory(public_path('image/truyen/' . $slug), true);
-                }
+                // if (!File::isDirectory(public_path('image/truyen/' . $slug))) {
+                //     File::makeDirectory(public_path('image/truyen/' . $slug), true);
+                // }
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
-                $ext = $file->extension();
+                $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move(public_path('image/truyen/' . $slug, $file_name));
+                //dd($file->move(public_path('image/truyen/' . $slug, $file_name)));
+                $file->move('public/image/truyen/' . $slug, $file_name);
             }
 
             // dd($request->validated());
@@ -69,11 +71,10 @@ class TruyenController extends Controller
                 'slug' => $slug,
                 'nhomdich' => $request->nhomdich ?? 'Không biết',
                 'hinhanh' => $file_name,
-                'khoa' => $request->khoa,
                 'user_id' => Auth::user()->id,
             ]);
         }
-        return redirect()->route('admin.truyen.truyen.index');
+        return redirect()->route('admin.truyen.index');
     }
 
     /**
@@ -121,17 +122,16 @@ class TruyenController extends Controller
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
-                $file->move('image/truyen/' . $slug, $file_name);
+                $file->move('public/image/truyen/' . $slug, $file_name);
             }
             //dd($request->nhomdich);
             $truyen->update($request->validated() + [
                 'slug' => $slug,
                 'nhomdich' => $request->nhomdich ?? 'Không biết',
                 'hinhanh' => $file_name,
-                'khoa' => $request->khoa
             ]);
         }
-        return redirect()->route('admin.truyen.truyen.index');
+        return redirect()->route('admin.truyen.index');
     }
 
     /**
@@ -177,7 +177,7 @@ class TruyenController extends Controller
             }
         }
 
-        return redirect()->route('admin.truyen.truyen.index');
+        return redirect()->route('admin.truyen.index');
     }
 
     public function getXuat()

@@ -19,7 +19,6 @@
                 <th>Hình ảnh</th>
                 <th>Nhóm dịch </th>
                 <th>Tên tác giả</th>
-                <th>Tên thể loại</th>
                 <th>Tên quốc gia</th>
                 <th>Mô Tả</th>
                 <th>Trạng thái</th>
@@ -37,7 +36,6 @@
                         <td>{{ $truyen->hinhanh }}</td>
                         <td>{{ $truyen->nhomdich }}</td>
                         <td>{{ $truyen->TacGia->tentacgia }}</td>
-                        <td>{{ $truyen->TheLoai->tentheloai }}</td>
                         <td>{{ $truyen->QuocGia->tenquocgia }}</td>
                         <td>{{ $truyen->mota }}</td>
                         @if ($truyen->khoa == 1)

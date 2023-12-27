@@ -25,11 +25,10 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// Route::get('/', function () {
-//     return view('trangchu.home');
-// });
+//Trang chủ
 Route::get('/', [TrangChuController::class, 'home'])->name('homepage');
+Route::get('/home', [TrangChuController::class, 'home'])->name('home');
+
 Route::get('/danh-muc/{slug}', [TrangChuController::class, 'category'])->name('category');
 Route::get('/the-loai/{slug}', [TrangChuController::class, 'genre'])->name('genre');
 Route::get('/quoc-gia/{slug}', [TrangChuController::class, 'country'])->name('country');
@@ -40,6 +39,10 @@ Route::get('/tag/{tag}', [TrangChuController::class, 'tag'])->name('tag');
 Route::get('/tim-kiem', [TrangChuController::class, 'search'])->name('search');
 Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 
+//truyện
+Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen'])->name('truyen');
+Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyenChiTiet'])->name('truyenchitiet');
+
 Auth::routes();
 
 //-------------------------------------Login--------------------------------------------//
@@ -48,9 +51,6 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'login_xuly']);
 //-------------------------------------Logout--------------------------------------------//
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-
-//Trang chủ
-Route::get('/home', [TrangChuController::class, 'home'])->name('home');
 
 //Admin
 Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admin.'], function () {

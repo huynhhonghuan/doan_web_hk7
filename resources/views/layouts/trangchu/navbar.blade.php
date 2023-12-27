@@ -24,7 +24,7 @@
             <div class="col-md-4 hidden-xs">
                 <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
                         class="count">0</span></div>
-                        <a href="{{ route('admin.taikhoan.xuat') }}">Xuất</a>
+                <a href="{{ route('admin.taikhoan.xuat') }}">Xuất</a>
                 <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                     <ul style="margin: 0;"></ul>
                 </div>
@@ -59,12 +59,14 @@
             <div class="collapse navbar-collapse" id="halim">
                 <div class="menu-menu_1-container">
                     <ul id="menu-menu_1" class="nav navbar-nav navbar-left">
-                        <li class="current-menu-item active"><a title="Trang Chủ"
-                                href="{{ route('homepage') }}">Trang Chủ</a></li>
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('homepage') }}">Trang
+                                Chủ</a></li>
                         {{-- @foreach ($category as $key => $item)
                             <li class="mega"><a title="{{ $item->title }}"
                                     href="{{ route('category', $item->slug) }}">{{ $item->title }}</a></li>
                         @endforeach --}}
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('homepage') }}">Phim</a></li>
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('homepage') }}">Truyện</a></li>
                         <li class="mega dropdown">
                             <a title="Thể Loại" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                 aria-haspopup="true">Thể Loại <span class="caret"></span></a>
