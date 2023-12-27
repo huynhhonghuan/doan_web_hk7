@@ -48,22 +48,6 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Thể Loại</p>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Quốc Gia</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -72,7 +56,78 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.truyen.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Truyện</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.truyenchitiet.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Chi Tiết Truyện</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-copy"></i>
+                        <p> Quản Lý Thư Viện
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.quocgia.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Quốc Gia</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.theloai.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thể Loại</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.tacgia.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tác Giả</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-copy"></i>
+                        <p> Quản Lý Tài Khoản
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.truyen.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh Sách Tài Khoản</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.truyenchitiet.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Vai Trò</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 {{-- @endif --}}
                 {{-- <li class="nav-item">

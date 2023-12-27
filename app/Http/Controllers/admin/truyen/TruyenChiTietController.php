@@ -167,10 +167,12 @@ class TruyenChiTietController extends Controller
 
         return redirect()->route('admin.truyenchitiet.index');
     }
+
     public function getXuat()
     {
         return Excel::download(new TruyenChiTietExport, 'truyen-chi-tiet.xlsx');
     }
+
     //xuất tất cả hình ảnh ra file zip
     public function getHinh()
     {
