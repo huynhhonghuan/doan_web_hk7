@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('tentheloai',100);
             $table->string('slug');
-            $table->string('mota',255)->nullable();
+            $table->longText('mota')->nullable();
             $table->integer('khoa')->default(1);
             $table->timestamps();
             $table->engine = 'InnoDB';

@@ -10,6 +10,7 @@ class TheLoai extends Model
     use HasFactory;
 
     protected $table = 'theloai';
+
     protected $fillable = [
         'tentheloai',
         'slug',

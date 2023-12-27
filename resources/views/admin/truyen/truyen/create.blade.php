@@ -1,5 +1,6 @@
 @extends('layouts.trangquanly')
 @section('head')
+
 @endsection
 @section('content')
     <form action="{{ route('admin.truyen.store') }}" method="post" enctype="multipart/form-data">
@@ -29,9 +30,8 @@
 
             <div class="form-group" data-select2-id="29">
                 <label>Tên thể loại</label>
-                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1"
-                    tabindex="-1" aria-hidden="true" name="theloai_id">
-                    <option selected="selected" data-select2-id="3" value="">Chọn tên thể loại</option>
+                <select class="form-select select2 select2-hidden-accessible" style="width: 100%; height: 150px;" data-select2-id="1"
+                    tabindex="-1" aria-hidden="true" name="theloai_id[]" multiple="multiple">
                     @foreach ($theloai as $value)
                         <option value="{{ $value->id }}">{{ $value->tentheloai }}</option>
                     @endforeach

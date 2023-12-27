@@ -51,6 +51,6 @@ class Truyen extends Model
     //tử bảng truyện lấy tên thể loại qua bảng trung gian truyen_theloai
     public function getTheLoai()
     {
-        return $this->belongsToMany('App\Model\TheLoai', 'truyen_theloai', 'truyen_id', 'theloai_id');
+        return $this->belongsToMany('App\Models\TheLoai', 'truyen_theloai', 'truyen_id', 'theloai_id');
     }
 }
