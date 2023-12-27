@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     {{-- nhúng tĩnh header --}}
@@ -8,9 +8,9 @@
     @yield('style')
 </head>
 
-<body>
+<body class="home blog halimthemes halimmovies" data-masonry="">
     {{-- nhúng tĩnh Navbar --}}
-    {{-- @include('layouts.trangchu.navbar') --}}
+    @include('layouts.trangchu.navbar')
     {{-- nhúng động Contents từ bên form kế thừa --}}
     <div class="container">
         @yield('content')
@@ -19,7 +19,6 @@
     @include('layouts.trangchu.footer')
     {{-- nhúng động script từ bên form kế thừa --}}
     @yield('script')
-
 </body>
 
 </html>

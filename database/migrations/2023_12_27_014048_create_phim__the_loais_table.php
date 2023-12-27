@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nhieu_theloai', function (Blueprint $table) {
+        Schema::create('phim_theloai', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truyen_id')->constrained('phim')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreignId('phim_id')->constrained('truyen')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('phim_id')->constrained('phim')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('theloai_id')->constrained('theloai')->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
-            $table->engine = 'InnoDB';
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nhieu_theloai');
+        Schema::dropIfExists('phim_theloai');
     }
 };

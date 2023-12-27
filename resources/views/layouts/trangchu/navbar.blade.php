@@ -10,10 +10,10 @@
                     <div class="col-xs-12">
                         <div class="form-group form-timkiem">
                             <div class="input-group col-xs-12">
-                                <form action="{{ route('search') }}" method="GET">
+                                {{-- <form action="{{ route('search') }}" method="GET">
                                 <input id="timkiem" type="text" name="search" class="form-control"
                                     placeholder="Tìm kiếm phim..." autocomplete="off">
-                                </form>
+                                </form> --}}
                                 {{-- <i class="animate-spin hl-spin4 hidden"></i> --}}
                             </div>
                         </div>
@@ -24,6 +24,7 @@
             <div class="col-md-4 hidden-xs">
                 <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
                         class="count">0</span></div>
+                        <a href="{{ route('admin.taikhoan.xuat') }}">Xuất</a>
                 <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                     <ul style="margin: 0;"></ul>
                 </div>
@@ -60,29 +61,29 @@
                     <ul id="menu-menu_1" class="nav navbar-nav navbar-left">
                         <li class="current-menu-item active"><a title="Trang Chủ"
                                 href="{{ route('homepage') }}">Trang Chủ</a></li>
-                        @foreach ($category as $key => $item)
+                        {{-- @foreach ($category as $key => $item)
                             <li class="mega"><a title="{{ $item->title }}"
                                     href="{{ route('category', $item->slug) }}">{{ $item->title }}</a></li>
-                        @endforeach
+                        @endforeach --}}
                         <li class="mega dropdown">
                             <a title="Thể Loại" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                 aria-haspopup="true">Thể Loại <span class="caret"></span></a>
                             <ul role="menu" class=" dropdown-menu">
-                                @foreach ($genre as $key => $item)
+                                {{-- @foreach ($genre as $key => $item)
                                     <li><a title="{{ $item->title }}"
                                             href="{{ route('genre', $item->slug) }}">{{ $item->title }}</a></li>
-                                @endforeach
+                                @endforeach --}}
                             </ul>
                         </li>
                         <li class="mega dropdown">
                             <a title="Quốc Gia" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                 aria-haspopup="true">Quốc Gia <span class="caret"></span></a>
                             <ul role="menu" class=" dropdown-menu">
-                                @foreach ($country as $key => $item)
+                                {{-- @foreach ($country as $key => $item)
                                     <li><a title="{{ $item->title }}"
                                             href="{{ route('country', $item->slug) }}">{{ $item->title }}</a>
                                     </li>
-                                @endforeach
+                                @endforeach --}}
                             </ul>
                         </li>
                     </ul>

@@ -24,9 +24,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('trangchu.home');
-});
+// Route::get('/', function () {
+//     return view('trangchu.home');
+// });
+Route::get('/', [TrangChuController::class, 'home'])->name('homepage');
+Route::get('/danh-muc/{slug}', [TrangChuController::class, 'category'])->name('category');
+Route::get('/the-loai/{slug}', [TrangChuController::class, 'genre'])->name('genre');
+Route::get('/quoc-gia/{slug}', [TrangChuController::class, 'country'])->name('country');
+Route::get('/phim/{slug}', [TrangChuController::class, 'movie'])->name('movie');
+Route::get('/xem-phim/{slug}/{tap}', [TrangChuController::class, 'watch']);
+Route::get('/episode', [TrangChuController::class, 'episode'])->name('episode');
+Route::get('/tag/{tag}', [TrangChuController::class, 'tag'])->name('tag');
+Route::get('/tim-kiem', [TrangChuController::class, 'search'])->name('search');
+Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 
 Auth::routes();
 

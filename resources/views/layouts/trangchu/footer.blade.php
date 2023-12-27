@@ -13,14 +13,12 @@
         </div>
     </div>
 </footer>
-<div id='easy-top'></div>
-
-<script type='text/javascript' src='{{ asset('js/bootstrap.min.js') }}' id='bootstrap-js'></script>
-<script type='text/javascript' src='{{ asset('js/owl.carousel.min.js') }}' id='carousel-js'></script>
+<script type='text/javascript' src='{{ asset('public/js/bootstrap.min.js') }}' id='bootstrap-js'></script>
+<script type='text/javascript' src='{{ asset('public/js/owl.carousel.min.js') }}' id='carousel-js'></script>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0"
     nonce="Lev9y8dH"></script>
-<script type='text/javascript' src='{{ asset('js/halimtheme-core.min.js') }}' id='halim-init-js'></script>
+<script type='text/javascript' src='{{ asset('public/js/halimtheme-core.min.js') }}' id='halim-init-js'></script>
 <script type='text/javascript'>
     $(".watch_trailer").click(function(e) {
         e.preventDefault();

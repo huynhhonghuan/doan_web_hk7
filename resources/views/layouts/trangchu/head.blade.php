@@ -29,11 +29,10 @@
 
 <link rel='dns-prefetch' href='//s.w.org' />
 
-<link rel='stylesheet' id='bootstrap-css' href='{{ asset('css/bootstrap.min.css') }}' media='all' />
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-<link rel='stylesheet' id='style-css' href='{{ asset('css/style.css') }}' media='all' />
-<link rel='stylesheet' id='wp-block-library-css' href='{{ asset('css/style.min.css') }}' media='all' />
-<script type='text/javascript' src='{{ asset('js/jquery.min.js') }}' id='halim-jquery-js'></script>
+<link rel='stylesheet' id='bootstrap-css' href="{{ asset('public/css/bootstrap.min.css') }}" media='all' />
+<link rel='stylesheet' id='style-css' href='{{ asset('public/css/style.css') }}' media='all' />
+<link rel='stylesheet' id='wp-block-library-css' href='{{ asset('public/css/style.min.css') }}' media='all' />
+<script type='text/javascript' src="{{ asset('public/js/jquery.min.js') }}" id='halim-jquery-js'></script>
 <style type="text/css" id="wp-custom-css">
     .textwidget p a img {
         width: 100%;
