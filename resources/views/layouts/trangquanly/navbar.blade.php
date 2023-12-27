@@ -24,14 +24,14 @@
   <i class="fas fa-th-large"></i>
 </a>
 </li> --}}
-        <a class="dropdown-item" href="{{ route('login') }}"
+        <a class="dropdown-item" href="{{ route('users.postlogout') }}"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();"
             style="padding-top: 8px;" id="btn_logout">
             Đăng xuất
         </a>
 
-        <form id="logout-form" action="{{ route('login') }}" method="POST" class="d-none">
+        <form id="logout-form" action="{{ route('users.postlogout') }}" method="POST" class="d-none">
             @csrf
         </form>
     </ul>

@@ -1,11 +1,11 @@
 <footer class="main-footer">
     <strong>Copyright &copy; {{ date('Y') }} by ALo</strong>
 </footer>
-<script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('public/admin/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('public/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('public/admin/dist/js/adminlte.min.js') }}"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
-<script>
+{{-- <script>
     $(document).ready(function() {
         new DataTable('#tablephim', {
             language: {
@@ -23,8 +23,8 @@
             // scrollX: true,
         });
     });
-</script>
-<script>
+</script> --}}
+{{-- <script>
     $('.select-year').change(function() {
         var year = $(this).find(':selected').val();
         var id_movie = $(this).attr('id');
@@ -42,5 +42,5 @@
             }
         });
     })
-</script>
+</script> --}}
 @yield('footer')

@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
 use App\Http\Controllers\congtacvien\congtacvientruyen\CongTacVienTruyenController;
 use App\Http\Controllers\trangchu\TrangChuController;
+
+use App\Http\Controllers\admin\phim\DanhMucController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -88,6 +90,57 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::post('truyenchitiet/nhap', [TruyenChiTietController::class, 'postNhap'])->name('truyenchitiet.nhap'); //nhập excel
     Route::get('truyenchitiet/xuat', [TruyenChiTietController::class, 'getXuat'])->name('truyenchitiet.xuat'); //xuất excel
     Route::get('truyenchitiet/hinh', [TruyenChiTietController::class, 'getHinh'])->name('truyenchitiet.hinh'); //xuất hình file.zip
+
+    //danh muc
+    Route::prefix('danhmuc')->name('danhmuc.')->group(function () {
+        Route::get('list', [DanhMucController::class, 'show'])->name('list');
+        Route::get('add', [DanhMucController::class, 'create'])->name('add');
+        Route::post('add', [DanhMucController::class, 'postcreate'])->name('postadd');
+        Route::get('edit/{id}', [DanhMucController::class, 'edit'])->name('edit');
+        Route::post('edit', [DanhMucController::class, 'postedit'])->name('postedit');
+        Route::get('delete/{id}', [DanhMucController::class, 'delete'])->name('delete');
+    });
+
+    // //the loai
+    // Route::prefix('genre')->name('genre.')->group(function () {
+    //     Route::get('list', [GenreController::class, 'show'])->name('list');
+    //     Route::get('add', [GenreController::class, 'create'])->name('add');
+    //     Route::post('add', [GenreController::class, 'postcreate'])->name('postadd');
+    //     Route::get('edit/{id}', [GenreController::class, 'edit'])->name('edit');
+    //     Route::post('edit', [GenreController::class, 'postedit'])->name('postedit');
+    //     Route::get('delete/{id}', [GenreController::class, 'delete'])->name('delete');
+    // });
+
+    // //quoc gia
+    // Route::prefix('country')->name('country.')->group(function () {
+    //     Route::get('list', [CountryController::class, 'show'])->name('list');
+    //     Route::get('add', [CountryController::class, 'create'])->name('add');
+    //     Route::post('add', [CountryController::class, 'postcreate'])->name('postadd');
+    //     Route::get('edit/{id}', [CountryController::class, 'edit'])->name('edit');
+    //     Route::post('edit', [CountryController::class, 'postedit'])->name('postedit');
+    //     Route::get('delete/{id}', [CountryController::class, 'delete'])->name('delete');
+    // });
+
+    // //phim
+    // Route::prefix('movie')->name('movie.')->group(function () {
+    //     Route::get('list', [MovieController::class, 'show'])->name('list');
+    //     Route::get('add', [MovieController::class, 'create'])->name('add');
+    //     Route::post('add', [MovieController::class, 'postcreate'])->name('postadd');
+    //     Route::get('edit/{id}', [MovieController::class, 'edit'])->name('edit');
+    //     Route::post('edit', [MovieController::class, 'postedit'])->name('postedit');
+    //     Route::get('delete/{id}', [MovieController::class, 'delete'])->name('delete');
+    //     Route::get('update-year-movie', [MovieController::class, 'update_year'])->name('update_year');
+    // });
+
+    // //tap phim
+    // Route::prefix('episode')->name('episode.')->group(function () {
+    //     Route::get('list', [EpisodeController::class, 'show'])->name('list');
+    //     Route::get('add/{id}', [EpisodeController::class, 'create'])->name('add');
+    //     Route::post('add', [EpisodeController::class, 'postcreate'])->name('postadd');
+    //     Route::get('edit/{id}', [EpisodeController::class, 'edit'])->name('edit');
+    //     Route::post('edit', [EpisodeController::class, 'postedit'])->name('postedit');
+    //     Route::get('delete/{id}', [EpisodeController::class, 'delete'])->name('delete');
+    // });
 });
 
 //Cộng tác viên truyện
