@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Thuvien;
 
 use App\Exports\Admin\TheLoaiExport;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class TheLoaiController extends Controller
     {
         $title = 'Danh sách Thể Loại';
         $danhsach = TheLoai::orderby('id', 'ASC')->get();
-        return view('admin.theloai.index', compact('title', 'danhsach'));
+        return view('admin.thuvien.theloai.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -26,7 +26,7 @@ class TheLoaiController extends Controller
     public function create()
     {
         $title = 'Thêm mới Thể Loại';
-        return view('admin.TheLoai.create', compact('title'));
+        return view('admin.thuvien.TheLoai.create', compact('title'));
     }
 
     /**
@@ -38,7 +38,7 @@ class TheLoaiController extends Controller
             $slug = Str::slug($request->tentheloai, '-');
             TheLoai::create($request->validated() + ['slug' => $slug]);
         }
-        return redirect()->route('admin.theloai.index');
+        return redirect()->route('admin.thuvien.theloai.index');
     }
 
     /**
@@ -56,7 +56,7 @@ class TheLoaiController extends Controller
     {
         //dd($tacgium);
         $title = 'Chỉnh sửa Thể Loại';
-        return view('admin.theloai.edit', compact('theloai', 'title'));
+        return view('admin.thuvien.theloai.edit', compact('theloai', 'title'));
     }
 
     /**
@@ -73,7 +73,7 @@ class TheLoaiController extends Controller
             $theloai->update($request->validated() + ['slug' => $slug]);
         }
 
-        return redirect()->route('admin.theloai.index');
+        return redirect()->route('admin.thuvien.theloai.index');
     }
 
     /**
@@ -82,12 +82,12 @@ class TheLoaiController extends Controller
     public function destroy(TheLoai $theloai)
     {
         $theloai->delete();
-        return redirect()->route('admin.theloai.index');
+        return redirect()->route('admin.thuvien.theloai.index');
     }
     public function postNhap(Request $request)
     {
         Excel::import(new TheLoaiImport, $request->file('file_excel'));
-        return redirect()->route('admin.theloai.index');
+        return redirect()->route('admin.thuvien.theloai.index');
     }
 
     public function getXuat()

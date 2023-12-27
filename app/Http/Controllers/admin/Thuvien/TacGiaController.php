@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Thuvien;
 
 use App\Exports\Admin\TacGiaExport;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class TacGiaController extends Controller
     {
         $title = 'Danh sách Tác Giả';
         $danhsach = TacGia::orderby('id', 'ASC')->get();
-        return view('admin.tacgia.index', compact('title', 'danhsach'));
+        return view('admin.thuvien.tacgia.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -26,7 +26,7 @@ class TacGiaController extends Controller
     public function create()
     {
         $title = 'Thêm mới Tác Giả';
-        return view('admin.tacgia.create', compact('title'));
+        return view('admin.thuvien.tacgia.create', compact('title'));
     }
 
     /**
@@ -57,7 +57,7 @@ class TacGiaController extends Controller
         //dd($tacgium);
         $title = 'Chỉnh sửa Tác Giả';
         $tacgia = $tacgium;
-        return view('admin.tacgia.edit', compact('tacgia', 'title'));
+        return view('admin.thuvien.tacgia.edit', compact('tacgia', 'title'));
     }
 
     /**

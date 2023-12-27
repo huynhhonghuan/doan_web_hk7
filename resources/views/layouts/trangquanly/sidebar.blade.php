@@ -114,7 +114,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.truyen.index') }}" class="nav-link">
+                            <a href="{{ route('admin.taikhoan.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Danh Sách Tài Khoản</p>
                             </a>
@@ -122,7 +122,7 @@
                     </ul>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.truyenchitiet.index') }}" class="nav-link">
+                            <a href="{{ route('admin.vaitro.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Vai Trò</p>
                             </a>

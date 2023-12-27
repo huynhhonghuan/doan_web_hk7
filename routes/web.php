@@ -1,18 +1,18 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\Admin\QuocGiaController;
-use App\Http\Controllers\Admin\TacGiaController;
-use App\Http\Controllers\Admin\TaiKhoanController;
-use App\Http\Controllers\Admin\TheLoaiController;
 use App\Http\Controllers\Admin\Truyen\TruyenChiTietController;
 use App\Http\Controllers\Admin\Truyen\TruyenController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
 use App\Http\Controllers\congtacvien\congtacvientruyen\CongTacVienTruyenController;
 use App\Http\Controllers\trangchu\TrangChuController;
-
 use App\Http\Controllers\admin\phim\DanhMucController;
+use App\Http\Controllers\Admin\Taikhoan\TaiKhoanController;
+use App\Http\Controllers\Admin\Taikhoan\VaiTroController;
+use App\Http\Controllers\Admin\Thuvien\QuocGiaController;
+use App\Http\Controllers\Admin\Thuvien\TacGiaController;
+use App\Http\Controllers\Admin\Thuvien\TheLoaiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,7 +64,12 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::post('taikhoan/nhap', [TaiKhoanController::class, 'postNhap'])->name('taikhoan.nhap');
     Route::get('taikhoan/khoa/{id}', [TaiKhoanController::class, 'getKhoa'])->name('taikhoan.khoa');
 
-    //danh mục quốc gia
+    //vaitro
+    Route::resource('vaitro', VaiTroController::class)->except('show');
+    Route::get('vaitro/xuat', [TaiKhoanController::class, 'getXuat'])->name('vaitro.xuat');
+    Route::post('vaitro/nhap', [TaiKhoanController::class, 'postNhap'])->name('vaitro.nhap');
+
+    //quốc gia
     Route::resource('quocgia', QuocGiaController::class)->except('show');
     Route::post('quocgia/nhap', [QuocGiaController::class, 'postNhap'])->name('quocgia.nhap'); //nhập excel
     Route::get('quocgia/xuat', [QuocGiaController::class, 'getXuat'])->name('quocgia.xuat'); //xuất excel

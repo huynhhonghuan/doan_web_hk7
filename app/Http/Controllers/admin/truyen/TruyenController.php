@@ -26,7 +26,7 @@ class TruyenController extends Controller
     {
         $title = 'Danh sách truyện';
         $danhsach = Truyen::orderby('id', 'ASC')->get();
-        return view('admin.truyen.index', compact('title', 'danhsach'));
+        return view('admin.truyen.truyen.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -38,7 +38,7 @@ class TruyenController extends Controller
         $quocgia = QuocGia::all();
         $tacgia = TacGia::all();
         $theloai = TheLoai::all();
-        return view('admin.truyen.create', compact('title', 'quocgia', 'tacgia', 'theloai'));
+        return view('admin.truyen.truyen.create', compact('title', 'quocgia', 'tacgia', 'theloai'));
     }
 
     /**
@@ -73,7 +73,7 @@ class TruyenController extends Controller
                 'user_id' => Auth::user()->id,
             ]);
         }
-        return redirect()->route('admin.truyen.index');
+        return redirect()->route('admin.truyen.truyen.index');
     }
 
     /**
@@ -93,7 +93,7 @@ class TruyenController extends Controller
         $quocgia = QuocGia::all();
         $tacgia = TacGia::all();
         $theloai = TheLoai::all();
-        return view('admin.truyen.edit', compact('truyen', 'title', 'quocgia', 'tacgia', 'theloai'));
+        return view('admin.truyen.truyen.edit', compact('truyen', 'title', 'quocgia', 'tacgia', 'theloai'));
     }
 
     /**
@@ -131,7 +131,7 @@ class TruyenController extends Controller
                 'khoa' => $request->khoa
             ]);
         }
-        return redirect()->route('admin.truyen.index');
+        return redirect()->route('admin.truyen.truyen.index');
     }
 
     /**
@@ -177,7 +177,7 @@ class TruyenController extends Controller
             }
         }
 
-        return redirect()->route('admin.truyen.index');
+        return redirect()->route('admin.truyen.truyen.index');
     }
 
     public function getXuat()

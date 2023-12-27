@@ -22,7 +22,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Danh sách chi tiết truyện';
         $danhsach = TruyenChiTiet::orderby('id', 'ASC')->get();
-        return view('admin.truyenchitiet.index', compact('title', 'danhsach'));
+        return view('admin.truyen.truyenchitiet.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -32,7 +32,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Thêm mới chi tiết truyện';
         $truyen = Truyen::all();
-        return view('admin.truyenchitiet.create', compact('title', 'truyen'));
+        return view('admin.truyen.truyenchitiet.create', compact('title', 'truyen'));
     }
 
     /**
@@ -62,7 +62,7 @@ class TruyenChiTietController extends Controller
 
             TruyenChiTiet::create($request->validated() + ['hinhanh' => $file_name]);
         }
-        return redirect()->route('admin.truyenchitiet.index');
+        return redirect()->route('admin.truyen.truyenchitiet.index');
     }
 
     /**
@@ -80,7 +80,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Sửa mới chi tiết truyện';
         $truyen = Truyen::all();
-        return view('admin.truyenchitiet.edit', compact('title', 'truyen', 'truyenchitiet'));
+        return view('admin.truyen.truyenchitiet.edit', compact('title', 'truyen', 'truyenchitiet'));
     }
 
     /**
@@ -111,7 +111,7 @@ class TruyenChiTietController extends Controller
 
             $truyenchitiet->update($request->validated() + ['hinhanh' => $file_name]);
         }
-        return redirect()->route('admin.truyenchitiet.index');
+        return redirect()->route('admin.truyen.truyenchitiet.index');
     }
 
     /**
@@ -131,7 +131,7 @@ class TruyenChiTietController extends Controller
 
         $truyenchitiet->delete();
 
-        return redirect()->route('admin.truyenchitiet.index');
+        return redirect()->route('admin.truyen.truyenchitiet.index');
     }
     public function postNhap(Request $request)
     {
@@ -165,7 +165,7 @@ class TruyenChiTietController extends Controller
             }
         }
 
-        return redirect()->route('admin.truyenchitiet.index');
+        return redirect()->route('admin.truyen.truyenchitiet.index');
     }
 
     public function getXuat()

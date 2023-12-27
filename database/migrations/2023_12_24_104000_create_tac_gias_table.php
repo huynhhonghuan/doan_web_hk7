@@ -20,10 +20,10 @@ return new class extends Migration
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
-        DB::table('tacgia')->insert([
-            ['tentacgia' => 'Youn In-Wan', 'slug' => 'youn-in-wan', 'mota' => 'Người nước tương chấm bánh bèo'],
+        // DB::table('tacgia')->insert([
+        //     ['tentacgia' => 'Youn In-Wan', 'slug' => 'youn-in-wan', 'mota' => 'Người nước tương chấm bánh bèo'],
 
-        ]);
+        // ]);
     }
 
     /**

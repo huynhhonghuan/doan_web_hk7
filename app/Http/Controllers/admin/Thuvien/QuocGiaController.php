@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Thuvien;
 
 use App\Exports\Admin\QuocGiaExport;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class QuocGiaController extends Controller
     {
         $title = 'Danh sách Quốc Gia';
         $danhsach = QuocGia::orderby('id', 'ASC')->get();
-        return view('admin.quocgia.index', compact('title', 'danhsach'));
+        return view('admin.thuvien.quocgia.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -26,7 +26,7 @@ class QuocGiaController extends Controller
     public function create()
     {
         $title = 'Thêm mới quốc gia';
-        return view('admin.quocgia.create', compact('title'));
+        return view('admin.thuvien.quocgia.create', compact('title'));
     }
 
     /**
@@ -57,7 +57,7 @@ class QuocGiaController extends Controller
         //dd($quocgium);
         $title = 'Chỉnh sửa quốc gia';
         $quocgia = $quocgium;
-        return view('admin.quocgia.edit', compact('quocgia', 'title'));
+        return view('admin.thuvien.quocgia.edit', compact('quocgia', 'title'));
     }
 
     /**
@@ -65,10 +65,6 @@ class QuocGiaController extends Controller
      */
     public function update(QuocGiaRequest $request, QuocGia $quocgium)
     {
-        // $request->validate([
-        //     'tenquocgia' => 'required|string',
-        // ]);
-        //dd($quocgium);
         if ($request->validated()) {
             $slug = Str::slug($request->tenquocgia, '-');
             $quocgium->update($request->validated() + ['slug' => $slug]);
@@ -88,7 +84,7 @@ class QuocGiaController extends Controller
 
     public function postNhap(Request $request)
     {
-        Excel::import(new QuocGiaImport(), $request->file('file_excel'));
+        Excel::import(new QuocGiaImport, $request->file('file_excel'));
         return redirect()->route('admin.quocgia.index');
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Taikhoan;
 
 use App\Exports\Admin\TaiKhoanExport;
 use App\Http\Controllers\Controller;
@@ -20,7 +20,7 @@ class TaiKhoanController extends Controller
     {
         $title = 'Danh sách tài khoản';
         $danhsach = User::all();
-        return view('admin.taikhoan.index', compact('title', 'danhsach'));
+        return view('admin.taikhoan.taikhoan.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -30,7 +30,7 @@ class TaiKhoanController extends Controller
     {
         $title = 'Thêm mới tài khoản';
         $vaitro = VaiTro::all();
-        return view('admin.taikhoan.create', compact('title', 'vaitro'));
+        return view('admin.taikhoan.taikhoan.create', compact('title', 'vaitro'));
     }
 
     /**
@@ -52,7 +52,7 @@ class TaiKhoanController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.taikhoan.index');
+        return redirect()->route('admin.taikhoan.taikhoan.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class TaiKhoanController extends Controller
     {
         $title = 'Sửa tài khoản';
         $vaitro = VaiTro::all();
-        return view('admin.taikhoan.edit', compact('taikhoan', 'title', 'vaitro'));
+        return view('admin.taikhoan.taikhoan.edit', compact('taikhoan', 'title', 'vaitro'));
     }
 
     /**
@@ -99,7 +99,7 @@ class TaiKhoanController extends Controller
                 $user_vaitro->save();
             }
         }
-        return redirect()->route('admin.taikhoan.index');
+        return redirect()->route('admin.taikhoan.taikhoan.index');
     }
 
     /**
@@ -119,7 +119,7 @@ class TaiKhoanController extends Controller
         $user = User::find($id);
         $user->status = 'inactive';
         $user->save();
-        return redirect()->route('admin.taikhoan.index');
+        return redirect()->route('admin.taikhoan.taikhoan.index');
     }
     public function getXuat()
     {
