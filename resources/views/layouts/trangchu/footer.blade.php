@@ -1,4 +1,4 @@
-<div class="container-fluid" style="background: rgba(218, 213, 213, 0.205);">
+<div class="container-fluid" style="background: #12171b;">
     <div class="container">
         <footer class="py-5">
             <div class="row">

@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.trangquanly')
 @section('head')
     <style>
         .preview-upload img {
@@ -32,7 +32,7 @@
                 <label>Danh Mục Phim</label>
                 <select class="form-control" name="category_id" id="category_id">
                     @foreach ($category as $cate)
-                        <option value="{{ $cate->id }}">{{ $cate->title }}</option>
+                        <option value="{{ $cate->id }}">{{ $cate->ten }}</option>
                     @endforeach
                 </select>
             </div>
@@ -52,7 +52,7 @@
                 </select> --}}
                 @foreach ($genre as $key => $gen)
                     <input type="checkbox" name="genre[]" id="" value="{{ $gen->id }}">
-                    <label for="genre" style="margin-right: 10px;">{{ $gen->title }}</label>
+                    <label for="genre" style="margin-right: 10px;">{{ $gen->ten }}</label>
                 @endforeach
             </div>
 
@@ -60,7 +60,7 @@
                 <label>Quốc Gia</label>
                 <select class="form-control" name="country_id">
                     @foreach ($country as $coun)
-                        <option value="{{ $coun->id }}">{{ $coun->title }}</option>
+                        <option value="{{ $coun->id }}">{{ $coun->ten }}</option>
                     @endforeach
                 </select>
             </div>

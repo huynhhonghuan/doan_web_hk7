@@ -8,17 +8,18 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Truyen\TruyenChiTietController;
 use App\Http\Controllers\Admin\Truyen\TruyenController;
 use App\Http\Controllers\admin\phim\DanhMucController;
+use App\Http\Controllers\Admin\Phim\PhimController;
+use App\Http\Controllers\admin\phim\TapPhimController;
 use App\Http\Controllers\Admin\Taikhoan\TaiKhoanController;
 use App\Http\Controllers\Admin\Taikhoan\VaiTroController;
+use App\Http\Controllers\admin\Thuvien\DanhMucController as ThuvienDanhMucController;
 use App\Http\Controllers\Admin\Thuvien\QuocGiaController;
 use App\Http\Controllers\Admin\Thuvien\TacGiaController;
 use App\Http\Controllers\Admin\Thuvien\TheLoaiController;
-
+use App\Http\Controllers\Congtacvien\Congtacvienphim\CongTacVienPhimController;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\CongTacVienTruyenController;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenController as ctvt_truyen;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenChiTietController as ctvt_truyenct;
-
-use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +31,12 @@ use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//Trang chủ
-Route::get('/', [TrangChuController::class, 'home'])->name('homepage');
-Route::get('/home', [TrangChuController::class, 'home'])->name('home');
 
+// Route::get('/', function () {
+//     return view('trangchu.home');
+// });
+Route::get('/', [TrangChuController::class, 'home'])->name('homepage');
+Route::get('/phims', [TrangChuController::class, 'phim'])->name('phim');
 Route::get('/danh-muc/{slug}', [TrangChuController::class, 'category'])->name('category');
 Route::get('/the-loai/{slug}', [TrangChuController::class, 'genre'])->name('genre');
 Route::get('/quoc-gia/{slug}', [TrangChuController::class, 'country'])->name('country');
@@ -58,6 +61,9 @@ Route::post('/login', [LoginController::class, 'login_xuly']);
 //-------------------------------------Logout--------------------------------------------//
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+//Trang chủ
+Route::get('/home', [TrangChuController::class, 'home'])->name('home');
+
 //Admin
 Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     //home
@@ -70,12 +76,7 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::post('taikhoan/nhap', [TaiKhoanController::class, 'postNhap'])->name('taikhoan.nhap');
     Route::get('taikhoan/khoa/{id}', [TaiKhoanController::class, 'getKhoa'])->name('taikhoan.khoa');
 
-    //vaitro
-    Route::resource('vaitro', VaiTroController::class)->except('show');
-    Route::get('vaitro/xuat', [TaiKhoanController::class, 'getXuat'])->name('vaitro.xuat');
-    Route::post('vaitro/nhap', [TaiKhoanController::class, 'postNhap'])->name('vaitro.nhap');
-
-    //quốc gia
+    //danh mục quốc gia
     Route::resource('quocgia', QuocGiaController::class)->except('show');
     Route::post('quocgia/nhap', [QuocGiaController::class, 'postNhap'])->name('quocgia.nhap'); //nhập excel
     Route::get('quocgia/xuat', [QuocGiaController::class, 'getXuat'])->name('quocgia.xuat'); //xuất excel
@@ -89,6 +90,11 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::resource('tacgia', TacGiaController::class)->except('show');
     Route::post('tacgia/nhap', [TacGiaController::class, 'postNhap'])->name('tacgia.nhap'); //nhập excel
     Route::get('tacgia/xuat', [TacGiaController::class, 'getXuat'])->name('tacgia.xuat'); //xuất excel
+
+     //tác giả
+     Route::resource('vaitro', VaiTroController::class)->except('show');
+     Route::post('vaitro/nhap', [VaiTroController::class, 'postNhap'])->name('vaitro.nhap'); //nhập excel
+     Route::get('vaitro/xuat', [VaiTroController::class, 'getXuat'])->name('vaitro.xuat'); //xuất excel
 
     //truyện
     Route::resource('truyen', TruyenController::class)->except('show');
@@ -104,54 +110,36 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
 
     //danh muc
     Route::prefix('danhmuc')->name('danhmuc.')->group(function () {
-        Route::get('list', [DanhMucController::class, 'show'])->name('list');
+        Route::get('list', [ThuvienDanhMucController::class, 'show'])->name('list');
         Route::get('add', [DanhMucController::class, 'create'])->name('add');
         Route::post('add', [DanhMucController::class, 'postcreate'])->name('postadd');
         Route::get('edit/{id}', [DanhMucController::class, 'edit'])->name('edit');
         Route::post('edit', [DanhMucController::class, 'postedit'])->name('postedit');
         Route::get('delete/{id}', [DanhMucController::class, 'delete'])->name('delete');
+        Route::post('nhap', [DanhMucController::class, 'postNhap'])->name('nhap'); //nhập excel
+        Route::get('xuat', [DanhMucController::class, 'getXuat'])->name('xuat'); //xuất excel
     });
 
-    // //the loai
-    // Route::prefix('genre')->name('genre.')->group(function () {
-    //     Route::get('list', [GenreController::class, 'show'])->name('list');
-    //     Route::get('add', [GenreController::class, 'create'])->name('add');
-    //     Route::post('add', [GenreController::class, 'postcreate'])->name('postadd');
-    //     Route::get('edit/{id}', [GenreController::class, 'edit'])->name('edit');
-    //     Route::post('edit', [GenreController::class, 'postedit'])->name('postedit');
-    //     Route::get('delete/{id}', [GenreController::class, 'delete'])->name('delete');
-    // });
+    //phim
+    Route::prefix('movie')->name('movie.')->group(function () {
+        Route::get('list', [PhimController::class, 'show'])->name('list');
+        Route::get('add', [PhimController::class, 'create'])->name('add');
+        Route::post('add', [PhimController::class, 'postcreate'])->name('postadd');
+        Route::get('edit/{id}', [PhimController::class, 'edit'])->name('edit');
+        Route::post('edit', [PhimController::class, 'postedit'])->name('postedit');
+        Route::get('delete/{id}', [PhimController::class, 'delete'])->name('delete');
+        Route::get('update-year-movie', [PhimController::class, 'update_year'])->name('update_year');
+    });
 
-    // //quoc gia
-    // Route::prefix('country')->name('country.')->group(function () {
-    //     Route::get('list', [CountryController::class, 'show'])->name('list');
-    //     Route::get('add', [CountryController::class, 'create'])->name('add');
-    //     Route::post('add', [CountryController::class, 'postcreate'])->name('postadd');
-    //     Route::get('edit/{id}', [CountryController::class, 'edit'])->name('edit');
-    //     Route::post('edit', [CountryController::class, 'postedit'])->name('postedit');
-    //     Route::get('delete/{id}', [CountryController::class, 'delete'])->name('delete');
-    // });
-
-    // //phim
-    // Route::prefix('movie')->name('movie.')->group(function () {
-    //     Route::get('list', [MovieController::class, 'show'])->name('list');
-    //     Route::get('add', [MovieController::class, 'create'])->name('add');
-    //     Route::post('add', [MovieController::class, 'postcreate'])->name('postadd');
-    //     Route::get('edit/{id}', [MovieController::class, 'edit'])->name('edit');
-    //     Route::post('edit', [MovieController::class, 'postedit'])->name('postedit');
-    //     Route::get('delete/{id}', [MovieController::class, 'delete'])->name('delete');
-    //     Route::get('update-year-movie', [MovieController::class, 'update_year'])->name('update_year');
-    // });
-
-    // //tap phim
-    // Route::prefix('episode')->name('episode.')->group(function () {
-    //     Route::get('list', [EpisodeController::class, 'show'])->name('list');
-    //     Route::get('add/{id}', [EpisodeController::class, 'create'])->name('add');
-    //     Route::post('add', [EpisodeController::class, 'postcreate'])->name('postadd');
-    //     Route::get('edit/{id}', [EpisodeController::class, 'edit'])->name('edit');
-    //     Route::post('edit', [EpisodeController::class, 'postedit'])->name('postedit');
-    //     Route::get('delete/{id}', [EpisodeController::class, 'delete'])->name('delete');
-    // });
+    //tap phim
+    Route::prefix('episode')->name('episode.')->group(function () {
+        Route::get('list', [TapPhimController::class, 'show'])->name('list');
+        Route::get('add/{id}', [TapPhimController::class, 'create'])->name('add');
+        Route::post('add', [TapPhimController::class, 'postcreate'])->name('postadd');
+        Route::get('edit/{id}', [TapPhimController::class, 'edit'])->name('edit');
+        Route::post('edit', [TapPhimController::class, 'postedit'])->name('postedit');
+        Route::get('delete/{id}', [TapPhimController::class, 'delete'])->name('delete');
+    });
 });
 
 //Cộng tác viên truyện

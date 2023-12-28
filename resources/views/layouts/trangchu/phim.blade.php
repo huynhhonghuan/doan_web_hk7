@@ -39,10 +39,10 @@
        <div class="clearfix"></div>
     </div> --}}
         <div id="halim_related_movies-2xx" class="wrap-slider">
-            {{-- <div class="section-bar clearfix">
-                <h3 class="section-title"><span>HOT</span></h3>
+            <div class="section-bar clearfix">
+                <h3 class="section-title"><span>PHIM HOT</span></h3>
             </div>
-            {{-- <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
+            <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
                 @foreach ($movie_hot as $key => $hot)
                     <article class="thumb grid-item post-38498">
                         <div class="halim-item">
@@ -83,7 +83,7 @@
                         </div>
                     </article>
                 @endforeach
-            </div> --}}
+            </div>
             <script>
                 jQuery(document).ready(function($) {
                     var owl = $('#halim_related_movies-2');
@@ -117,39 +117,39 @@
             </script>
         </div>
         <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
-            {{-- @foreach ($category_home as $key => $cate_home)
+            @foreach ($category_home as $key => $cate_home)
                 <section id="halim-advanced-widget-2">
                     <div class="section-heading">
-                        <a href="{{ route('movie', $cate_home->slug) }}" title="{{ $cate_home->title }}">
-                            <span class="h-text">{{ $cate_home->title }}</span>
+                        <a href="{{ route('movie', $cate_home->slug) }}" title="{{ $cate_home->ten }}">
+                            <span class="h-text">{{ $cate_home->ten }}</span>
                         </a>
                     </div>
                     <div id="halim-advanced-widget-2-ajax-box" class="halim_box">
-                        @foreach ($cate_home->movie->take(12) as $key => $mov)
+                        @foreach ($cate_home->phim->take(12) as $key => $mov)
                             <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
                                 <div class="halim-item">
                                     <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}">
                                         <figure><img class="lazy img-responsive"
-                                                src="{{ asset('image/movie') }}/{{ $mov->image }}"
-                                                title="{{ $mov->title }}"></figure>
+                                                src="{{ asset('public/image/phim') }}/{{ $mov->hinhanh }}"
+                                                title="{{ $mov->ten }}"></figure>
                                         <span class="status">
-                                            @if ($mov->resolution == 0)
+                                            @if ($mov->chatluong == 0)
                                                 SD
-                                            @elseif($mov->resolution == 1)
+                                            @elseif($mov->chatluong == 1)
                                                 HD
-                                            @elseif($mov->resolution == 2)
+                                            @elseif($mov->chatluong == 2)
                                                 Trailer
                                             @endif
                                         </span><span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
-                                            @if ($mov->episodes == 0)
-                                                {{ $mov->episode_count }}/?? tập
-                                            @elseif($mov->episodes == $mov->episode_count)
-                                                Full-{{ $mov->episode_count }}/{{ $mov->episodes }} tập
+                                            @if ($mov->sotap == 0)
+                                                {{ $mov->tapphim_count }}/?? tập
+                                            @elseif($mov->sotap == $mov->tapphim_count)
+                                                Full-{{ $mov->tapphim_count }}/{{ $mov->sotap }} tập
                                             @else
-                                                {{ $mov->episode_count }}/{{ $mov->episodes }} tập
+                                                {{ $mov->tapphim_count }}/{{ $mov->sotap }} tập
                                             @endif
                                             |
-                                            @if ($mov->subtitle == 0)
+                                            @if ($mov->phude == 0)
                                                 Thuyết minh
                                             @else
                                                 Phụ đề
@@ -158,7 +158,7 @@
                                         <div class="icon_overlay"></div>
                                         <div class="halim-post-title-box">
                                             <div class="halim-post-title ">
-                                                <p class="entry-title">{{ $mov->title }}</p>
+                                                <p class="entry-title">{{ $mov->ten }}</p>
                                                 <p class="original_title">My Roommate Is a Gumiho</p>
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@
                     </div>
                 </section>
                 <div class="clearfix"></div>
-            @endforeach --}}
+            @endforeach
         </main>
         {{-- @include('layouts.trangchu.navbar') --}}
     </div>

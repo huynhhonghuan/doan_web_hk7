@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.trangquanly')
 @section('head')
 @endsection
 @section('content')
@@ -6,7 +6,7 @@
         <div class="card-body">
             <div class="form-group">
                 <label>Tên Phim</label>
-                <input type="text" name="title" value="{{ $movieEdit->title }}" class="form-control"
+                <input type="text" name="title" value="{{ $movieEdit->ten }}" class="form-control"
                     placeholder="Nhập tên phim">
             </div>
             @error('title')
@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <label>Thời Lượng Phim</label>
-                <input type="text" name="time" value="{{ $movieEdit->time }}" class="form-control"
+                <input type="text" name="time" value="{{ $movieEdit->thoiluong }}" class="form-control"
                     placeholder="VD: 133 phút hoặc 30 phút/tập">
             </div>
 
@@ -29,15 +29,15 @@
                 <label>Danh Mục Phim</label>
                 <select class="form-control" name="category_id" id="category_id">
                     @foreach ($category as $cate)
-                        <option value="{{ $cate->id }}" {{ $movieEdit->category_id == $cate->id ? 'selected' : '' }}>
-                            {{ $cate->title }}</option>
+                        <option value="{{ $cate->id }}" {{ $movieEdit->danhmuc_id == $cate->id ? 'selected' : '' }}>
+                            {{ $cate->ten }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group" id="form-ep">
                 <label>Số Tập Phim</label>
-                <input type="number" min="0" max="2000" value="{{ $movieEdit->episodes }}" name="episodes" class="form-control" placeholder="">
+                <input type="number" min="0" max="2000" value="{{ $movieEdit->sotap }}" name="episodes" class="form-control" placeholder="">
             </div>
 
             <div class="form-group">
@@ -51,7 +51,7 @@
                 </select> --}}
                 @foreach ($genre as $key => $gen)
                     <input type="checkbox" name="genre[]" id="" value="{{ $gen->id }}" {{ isset($movie_genre) && $movie_genre->contains($gen->id) ? 'checked':'' }}>
-                    <label for="genre" style="margin-right: 10px;">{{ $gen->title }}</label>
+                    <label for="genre" style="margin-right: 10px;">{{ $gen->ten }}</label>
                 @endforeach
             </div>
 
@@ -59,8 +59,8 @@
                 <label>Quốc Gia</label>
                 <select class="form-control" name="country_id">
                     @foreach ($country as $coun)
-                        <option value="{{ $coun->id }}" {{ $movieEdit->country_id == $coun->id ? 'selected' : '' }}>
-                            {{ $coun->title }}</option>
+                        <option value="{{ $coun->id }}" {{ $movieEdit->quocgia_id == $coun->id ? 'selected' : '' }}>
+                            {{ $coun->ten }}</option>
                     @endforeach
                 </select>
             </div>
@@ -68,23 +68,23 @@
             <div class="form-group">
                 <label>Định dạng</label>
                 <select class="form-control" name="resolution">
-                    <option value="0" {{ $movieEdit->resolution == 0 ? 'selected' : '' }}>SD</option>
-                    <option value="1" {{ $movieEdit->resolution == 1 ? 'selected' : '' }}>HD</option>
-                    <option value="2" {{ $movieEdit->resolution == 2 ? 'selected' : '' }}>Trailer</option>
+                    <option value="0" {{ $movieEdit->chatluong == 0 ? 'selected' : '' }}>SD</option>
+                    <option value="1" {{ $movieEdit->chatluong == 1 ? 'selected' : '' }}>HD</option>
+                    <option value="2" {{ $movieEdit->chatluong == 2 ? 'selected' : '' }}>Trailer</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Phụ Đề</label>
                 <select class="form-control" name="subtitle">
-                    <option value="0" {{ $movieEdit->subtitle == 0 ? 'selected' : '' }}>Thuyết minh</option>
-                    <option value="1" {{ $movieEdit->subtitle == 1 ? 'selected' : '' }}>Phụ đề</option>
+                    <option value="0" {{ $movieEdit->phude == 0 ? 'selected' : '' }}>Thuyết minh</option>
+                    <option value="1" {{ $movieEdit->phude == 1 ? 'selected' : '' }}>Phụ đề</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Mô Tả</label>
-                <textarea name="description" id="description" class="form-control">{{ $movieEdit->description }}</textarea>
+                <textarea name="description" id="description" class="form-control">{{ $movieEdit->mota }}</textarea>
             </div>
 
             <div class="form-group">
@@ -96,8 +96,8 @@
                 <label for="hinhanh">Ảnh Phim</label>
                 <input type="file" class="form-control" id="image" name="image" value="" placeholder="">
                 <div id="preview-upload">
-                    <a href="{{ asset('image/movie') }}/{{ $movieEdit->image }}">
-                        <img id='sp_hinh-upload' src="{{ asset('image/movie') }}/{{ $movieEdit->image }}" width="100">
+                    <a href="{{ asset('public/image/phim') }}/{{ $movieEdit->hinhanh }}">
+                        <img id='sp_hinh-upload' src="{{ asset('public/image/phim') }}/{{ $movieEdit->hinhanh }}" width="100">
                     </a>
                 </div>
                 <input type="hidden" name="thumb" id="thumb">
@@ -108,12 +108,12 @@
                     <label>Kích Hoạt</label>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="1" type="radio" id="active" name="status"
-                            {{ $movieEdit->status == 1 ? 'checked=""' : '' }}>
+                            {{ $movieEdit->khoa == 1 ? 'checked=""' : '' }}>
                         <label for="active" class="custom-control-label">Có</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="0" type="radio" id="no_active" name="status"
-                            {{ $movieEdit->status == 0 ? 'checked=""' : '' }}>
+                            {{ $movieEdit->khoa == 0 ? 'checked=""' : '' }}>
                         <label for="no_active" class="custom-control-label">Không</label>
                     </div>
                 </div>
@@ -122,12 +122,12 @@
                     <label>Phim Hot</label>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="1" type="radio" id="active1" name="movie_hot"
-                            {{ $movieEdit->movie_hot == 1 ? 'checked=""' : '' }}>
+                            {{ $movieEdit->phimhot == 1 ? 'checked=""' : '' }}>
                         <label for="active1" class="custom-control-label">Có</label>
                     </div>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="0" type="radio" id="no_active1"
-                            name="movie_hot" {{ $movieEdit->movie_hot == 0 ? 'checked=""' : '' }}>
+                            name="movie_hot" {{ $movieEdit->phimhot == 0 ? 'checked=""' : '' }}>
                         <label for="no_active1" class="custom-control-label">Không</label>
                     </div>
                 </div>
