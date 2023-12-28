@@ -19,7 +19,7 @@ return new class extends Migration
             $table->longText('mota')->nullable();
             $table->string('hinhanh',255)->default('anhmacdinh.jpg');
             $table->integer('luotxem')->default(0);
-            $table->integer('khoa')->default(1);
+            $table->integer('khoa')->default(0);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

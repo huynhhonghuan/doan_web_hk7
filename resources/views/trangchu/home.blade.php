@@ -42,11 +42,11 @@
             <div class="section-bar clearfix">
                 <h3 class="section-title"><span>PHIM HOT</span></h3>
             </div>
-            <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
+            {{-- <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
                 @foreach ($movie_hot as $key => $hot)
                     <article class="thumb grid-item post-38498">
                         <div class="halim-item">
-                            {{-- <a class="halim-thumb" href="{{ route('movie', $hot->slug) }}" title="{{ $hot->title }}">
+                            <a class="halim-thumb" href="{{ route('movie', $hot->slug) }}" title="{{ $hot->title }}">
                                 <figure><img class="lazy img-responsive"
                                         src="{{ asset('image/movie') }}/{{ $hot->image }}" alt="Đại Thánh Vô Song"
                                         title="Đại Thánh Vô Song"></figure>
@@ -80,11 +80,11 @@
                                         <p class="original_title">Monkey King: The One And Only</p>
                                     </div>
                                 </div>
-                            </a> --}}
+                            </a>
                         </div>
                     </article>
                 @endforeach
-            </div>
+            </div> --}}
             <script>
                 jQuery(document).ready(function($) {
                     var owl = $('#halim_related_movies-2');

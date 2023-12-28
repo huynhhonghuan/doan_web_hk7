@@ -1,19 +1,24 @@
 <?php
 
-use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\trangchu\TrangChuController;
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Truyen\TruyenChiTietController;
 use App\Http\Controllers\Admin\Truyen\TruyenController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
-use App\Http\Controllers\congtacvien\congtacvientruyen\CongTacVienTruyenController;
-use App\Http\Controllers\trangchu\TrangChuController;
 use App\Http\Controllers\admin\phim\DanhMucController;
 use App\Http\Controllers\Admin\Taikhoan\TaiKhoanController;
 use App\Http\Controllers\Admin\Taikhoan\VaiTroController;
 use App\Http\Controllers\Admin\Thuvien\QuocGiaController;
 use App\Http\Controllers\Admin\Thuvien\TacGiaController;
 use App\Http\Controllers\Admin\Thuvien\TheLoaiController;
-use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Congtacvien\Congtacvientruyen\CongTacVienTruyenController;
+use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenController as ctvt_truyen;
+use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenChiTietController as ctvt_truyenct;
+
+use App\Http\Controllers\congtacvien\congtacvienphim\CongTacVienPhimController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +45,8 @@ Route::get('/tim-kiem', [TrangChuController::class, 'search'])->name('search');
 Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 
 //truyện
-Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen'])->name('truyen');
+Route::get('/truyen', [TrangChuController::class, 'getTruyen'])->name('truyen');
+Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen_Id'])->name('truyen_id');
 Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyenChiTiet'])->name('truyenchitiet');
 
 Auth::routes();
@@ -153,6 +159,18 @@ Route::group(['middleware' => ['auth', 'ctvt'], 'prefix' => 'congtacvientruyen',
     //home
     Route::get('/', [CongTacVienTruyenController::class, 'home'])->name('home');
     Route::get('home', [CongTacVienTruyenController::class, 'home'])->name('home');
+
+    //danh mục truyện ctv
+    Route::resource('truyen', ctvt_truyen::class)->except('show');
+    Route::post('truyen/nhap', [ctvt_truyen::class, 'postNhap'])->name('truyen.nhap'); //nhập excel
+    Route::get('truyen/xuat', [ctvt_truyen::class, 'getXuat'])->name('truyen.xuat'); //xuất excel
+    Route::get('truyen/hinh', [ctvt_truyen::class, 'getHinh'])->name('truyen.hinh'); //xuất hình file.zip
+
+    //chi tiết truyện
+    Route::resource('truyenchitiet', ctvt_truyenct::class)->except('show');
+    Route::post('truyenchitiet/nhap', [ctvt_truyenct::class, 'postNhap'])->name('truyenchitiet.nhap'); //nhập excel
+    Route::get('truyenchitiet/xuat', [ctvt_truyenct::class, 'getXuat'])->name('truyenchitiet.xuat'); //xuất excel
+    Route::get('truyenchitiet/hinh', [ctvt_truyenct::class, 'getHinh'])->name('truyenchitiet.hinh'); //xuất hình file.zip
 });
 
 //Cộng tác viên phim

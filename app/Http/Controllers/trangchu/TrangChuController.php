@@ -7,6 +7,8 @@ use App\Models\DanhMuc;
 use App\Models\Phim;
 use App\Models\QuocGia;
 use App\Models\TheLoai;
+use App\Models\Truyen;
+use App\Models\TruyenChiTiet;
 use Illuminate\Http\Request;
 
 class TrangChuController extends Controller
@@ -23,5 +25,24 @@ class TrangChuController extends Controller
             $test->withCount('tapphim');
         }])->orderby('id', 'DESC')->where('khoa', 1)->get();
         return view('trangchu.home', compact('category', 'genre', 'country', 'category_home', 'movie_hot', 'movie_trailersidebar'));
+    }
+
+    public function getTruyen()
+    {
+        $truyen = Truyen::where('khoa',1)->orderby('id', 'asc')->limit(12)->get();
+        $truyenmoinhat = Truyen::where('khoa',1)->orderby('id', 'asc')->limit(10)->get();
+        return view('trangchu.truyen', compact('truyen', 'truyenmoinhat'));
+    }
+    public function getTruyen_Id($id)
+    {
+        $truyen = Truyen::find($id);
+        $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
+        $truyenmoinhat = Truyen::orderby('id', 'asc')->limit(4)->get();
+        return view('trangchu.truyen_id', compact('truyen','truyenchitiet','truyenmoinhat'));
+    }
+    public function getTruyenChiTiet($id, $chuong)
+    {
+        $truyenchitiet = TruyenChiTiet::where('truyen_id',$id)->where('chuong',$chuong)->get();
+        //dd($truyenchitiet);
     }
 }

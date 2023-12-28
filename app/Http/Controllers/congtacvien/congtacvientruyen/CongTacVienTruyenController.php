@@ -9,5 +9,7 @@ class CongTacVienTruyenController extends Controller
 {
     public function home()
     {
+        $title = 'Trang Cộng tác viên';
+        return view('congtacvien.congtacvientruyen.home', compact('title'));
     }
 }

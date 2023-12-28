@@ -2,10 +2,257 @@
 
 namespace App\Http\Controllers\Congtacvien\Congtacvientruyen;
 
+use App\Exports\Congtacvientruyen\TruyenExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Congtacvientruyen\TruyenRequest;
+use App\Imports\Congtacvientruyen\TruyenImport;
+use App\Models\QuocGia;
+use App\Models\TacGia;
+use App\Models\TheLoai;
+use App\Models\Truyen;
+use App\Models\Truyen_TheLoai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
+use ZipArchive;
 
 class TruyenController extends Controller
 {
-    //
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $title = 'Danh sách truyện';
+        $danhsach = Truyen::where('user_id', Auth::user()->id)->orderby('id', 'ASC')->get();
+        return view('congtacvien.congtacvientruyen.truyen.index', compact('title', 'danhsach'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $title = 'Thêm mới truyện';
+        $quocgia = QuocGia::all();
+        $tacgia = TacGia::all();
+        $theloai = TheLoai::all();
+        return view('congtacvien.congtacvientruyen.truyen.create', compact('title', 'quocgia', 'tacgia', 'theloai'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TruyenRequest $request)
+    {
+        if ($request->validated()) {
+
+            $slug = Str::slug($request->tentruyen, '-');
+
+            $file_name = '';
+            //dd($request->hasFile('hinhanh'));
+            if ($file = $request->file('hinhanh')) {
+
+                //Tạo thư mục nếu chưa có
+                // if (File::isDirectory($slug)) {
+                //     File::makeDirectory(public_path('image/truyen/' . $slug), true);
+                // }
+                //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
+                $ext = $request->file('hinhanh')->extension();
+                $file_name = time() . '-' . 'truyen.' . $ext;
+                $file->move('public/image/truyen/' . $slug, $file_name);
+            }
+
+            $truyen = Truyen::create($request->validated() + [
+                'slug' => $slug,
+                'nhomdich' => $request->nhomdich ?? 'Không biết',
+                'hinhanh' => $file_name,
+                'khoa' => 0,
+                'user_id' => Auth::user()->id,
+            ]);
+
+            foreach ($request->theloai_id as $tl) {
+                Truyen_TheLoai::create([
+                    'truyen_id' => $truyen->id,
+                    'theloai_id' => $tl
+                ]);
+            }
+        }
+
+        return redirect()->route('congtacvientruyen.truyen.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Truyen $truyen)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Truyen $truyen)
+    {
+        $title = 'Chỉnh sửa truyện';
+        $quocgia = QuocGia::all();
+        $tacgia = TacGia::all();
+
+        //xử lý hiện ra thể loại có giá trị selected hay không
+        $tl = TheLoai::all();
+        $theloai = [];
+        foreach ($tl as $value) {
+            $selected = in_array(
+                $value->id,
+                $truyen->getTheLoai->pluck('id')->all(),
+                true
+            );
+            $theloai[] = '<option value="' . $value->id . '"' . ($selected ? ' selected' : '') . '>' . $value->tentheloai . '</option>';
+        }
+        return view('congtacvien.congtacvientruyen.truyen.edit', compact('truyen', 'title', 'quocgia', 'tacgia', 'theloai'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TruyenRequest $request, Truyen $truyen)
+    {
+        if ($request->validated()) {
+            //băm tên truyện k dấu
+            $slug = Str::slug($request->tentruyen, '-');
+
+            //lấy tên hình ảnh cũ trước khi chỉnh
+            $file_name = $truyen->hinhanh;
+
+            //kiểm tra nếu thư mục bằng tên viết tắt có khác với trong database và thư mục đó đã tồn tại hay không
+            //nếu đúng thì sửa đổi lại tên thư mục đó
+            if ($truyen->slug != $slug && file_exists(public_path('image/truyen/' . $truyen->slug))) {
+                rename(public_path('image/truyen/' . $truyen->slug), public_path('image/truyen/' . $slug));
+            }
+            if ($file = $request->file('hinhanh')) {
+                //xóa ảnh cũ nằm trong thư mục
+                unlink(public_path('image/truyen/' . $truyen->slug . '/' . $truyen->hinhanh));
+
+                //thêm ảnh mới vào
+                $ext = $request->file('hinhanh')->extension();
+                $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
+                $file->move('public/image/truyen/' . $slug, $file_name);
+            }
+            //dd($request->nhomdich);
+            $truyen->update($request->validated() + [
+                'slug' => $slug,
+                'nhomdich' => $request->nhomdich ?? 'Không biết',
+                'hinhanh' => $file_name,
+                //'khoa' => $request->khoa
+            ]);
+
+            $truyen_theloai = Truyen_TheLoai::where('truyen_id', $truyen->id)->get();
+            //nếu có 1 thể loại nào đó trong truyen_theloai không tồn tại trong request thì thêm vào
+            foreach ($truyen_theloai as $tl) {
+                if (!in_array($tl->theloai_id, $request->theloai_id)) {
+                    $tl->delete();
+                }
+            }
+
+            $truyen_theloai_id = $truyen_theloai->pluck('theloai_id')->all();
+            //nếu có 1 thể loại nào đó trong request không tồn tại trong truyen_theloai thì thêm vào
+            foreach ($request->theloai_id as $tl) {
+                if (!in_array($tl, $truyen_theloai_id)) {
+                    Truyen_TheLoai::create([
+                        'truyen_id' => $truyen->id,
+                        'theloai_id' => $tl
+                    ]);
+                }
+            }
+        }
+        return redirect()->route('congtacvientruyen.truyen.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Truyen $truyen)
+    {
+        //xóa thư mục hình ảnh
+        if (file_exists(public_path('image/truyen/' . $truyen->slug)))
+            File::deleteDirectory(public_path('image/truyen/' . $truyen->slug));
+
+        //xóa data trên db
+        $truyen->delete();
+        //xóa data trên db
+        // $truyen->update([
+        //     'khoa' => 0
+        // ]);
+
+        return redirect()->route('congtacvientruyen.truyen.index');
+    }
+    //nhâp excel
+    public function postNhap(Request $request)
+    {
+        Excel::import(new TruyenImport, $request->file('file_excel'));
+
+        if ($file = $request->file('hinhanh')) {
+
+            //$thumuc = [];
+            foreach ($file as $hinhanh) {
+
+                //lấy thông tin truyện từ hình tên hình ảnh
+                //nếu tên hình ảnh trùng với tên hình ảnh được lưu trong db thì lấy thông tin truyện đó
+                $truyen = Truyen::where('hinhanh', $hinhanh->getClientOriginalName())->first();
+
+                //nếu thông tin chuyện khác null
+                if ($truyen != null) {
+                    //Tạo thư mục nếu chưa có
+                    //dd(!File::isDirectory(public_path('image/truyen/' . $truyen->slug)));
+                    if (!File::isDirectory(public_path('image/truyen/' . $truyen->slug))) {
+                        File::makeDirectory(public_path('image/truyen/' . $truyen->slug), true);
+                    }
+                    //nếu hình ảnh chưa có thì thêm ảnh đó vào thư mục
+                    if (!File::exists(public_path('image/truyen/' . $truyen->slug . '/' . $truyen->hinhanh))) {
+                        $hinhanh->move('public/image/truyen/' . $truyen->slug, $hinhanh->getClientOriginalName());
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('congtacvientruyen.truyen.index');
+    }
+
+    //xuất excel
+    public function getXuat()
+    {
+        return Excel::download(new TruyenExport, 'danh-sach-truyen.xlsx');
+    }
+
+    //xuất tất cả hình ảnh ra file zip
+    public function getHinh()
+    {
+        $zip = new ZipArchive();
+        $file_name = 'truyen.zip';
+
+        //xóa thư mục truyen.zip nếu đã có trước đó
+        if (file_exists(public_path('image/truyen.zip')))
+            File::deleteDirectory(public_path('image/truyen.zip'));
+
+        $truyen = Truyen::where('user_id',Auth::user()->id)->get();
+
+        //dd($truyen);
+
+        if ($zip->open(public_path('image/' . $file_name), ZipArchive::CREATE) === True) {
+
+            foreach ($truyen as $tr) {
+                $files = File::files(public_path('image/truyen/' . $tr->slug));
+                //dd($files);
+                foreach ($files as $item) {
+                    $zip->addFile($item, basename($item));
+                }
+            }
+
+            $zip->close();
+        }
+        return response()->download(public_path('image/' . $file_name));
+    }
 }
