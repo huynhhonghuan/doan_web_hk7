@@ -24,7 +24,7 @@
             <div class="col-md-4 hidden-xs">
                 <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
                         class="count">0</span></div>
-                <a href="{{ route('admin.taikhoan.xuat') }}">Xuất</a>
+                <a href="{{ route('login') }}">Đăng nhập</a>
                 <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                     <ul style="margin: 0;"></ul>
                 </div>

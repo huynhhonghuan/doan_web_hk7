@@ -15,7 +15,7 @@ class QuocGiaController extends Controller
 {
     public function index()
     {
-        $title = 'Danh sách Quốc Gia';
+        $title = 'Danh sách quốc gia';
         $danhsach = QuocGia::orderby('id', 'ASC')->get();
         return view('admin.thuvien.quocgia.index', compact('title', 'danhsach'));
     }

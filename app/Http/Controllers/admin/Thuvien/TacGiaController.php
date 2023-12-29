@@ -15,7 +15,7 @@ class TacGiaController extends Controller
 {
     public function index()
     {
-        $title = 'Danh sách Tác Giả';
+        $title = 'Danh sách tác giả';
         $danhsach = TacGia::orderby('id', 'ASC')->get();
         return view('admin.thuvien.tacgia.index', compact('title', 'danhsach'));
     }

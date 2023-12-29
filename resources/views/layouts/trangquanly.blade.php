@@ -28,9 +28,6 @@
                             @yield('content')
                         </div>
                     </div>
-                    <div class="col-md-6">
-
-                    </div>
                 </div>
             </div>
         </section>

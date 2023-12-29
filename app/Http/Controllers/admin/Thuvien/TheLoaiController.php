@@ -15,7 +15,7 @@ class TheLoaiController extends Controller
 {
     public function index()
     {
-        $title = 'Danh sách Thể Loại';
+        $title = 'Danh sách thể toại';
         $danhsach = TheLoai::orderby('id', 'ASC')->get();
         return view('admin.thuvien.theloai.index', compact('title', 'danhsach'));
     }
