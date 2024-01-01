@@ -89,12 +89,12 @@
     <hr>
     <div class="py-3 px-5">
         <h3 class="pb-3">Truyện</h3>
-        <div class="row justify-content-center">
+        <div class="row justify-content-left">
             <div class="col-md-3" style="padding-right: 20px;">
                 <div class="row h-100 bg-danger">
                     <div class="col-8 py-4">
                         <div class="text-white px-3" style="font-size: 40px;">
-                            <span style="font-weight: bold">150</span>
+                            <span style="font-weight: bold">{{$truyendang}}</span>
                             <br>
                         </div>
                         <span class="px-3" style="font-size: 20px;">Truyện đã đăng</span>
@@ -113,7 +113,7 @@
                 <div class="row h-100 bg-success">
                     <div class="col-8 py-4">
                         <div class="text-white px-3" style="font-size: 40px;">
-                            <span style="font-weight: bold">15</span>
+                            <span style="font-weight: bold">{{$truyenchuaduyet}}</span>
                             <br>
                         </div>
                         <span class="px-3" style="font-size: 20px;">Truyện chờ duyệt</span>
@@ -134,7 +134,7 @@
                 <div class="row h-100 bg-warning">
                     <div class="col-8 py-4">
                         <div class="text-white px-3" style="font-size: 40px;">
-                            <span style="font-weight: bold">10</span>
+                            <span style="font-weight: bold">{{$truyenduyet}}</span>
                             <br>
                         </div>
                         <span class="px-3 text-white" style="font-size: 20px;">Truyện được duyệt</span>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="padding-right: 20px;">
+            {{-- <div class="col-md-3" style="padding-right: 20px;">
                 <div class="row h-100 bg-info">
                     <div class="col-8 py-4">
                         <div class="text-white px-3" style="font-size: 40px;">
@@ -171,7 +171,7 @@
                         </svg>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <hr>

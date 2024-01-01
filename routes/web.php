@@ -53,7 +53,7 @@ Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name(
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');
 Route::get('/truyen/{id}', [TrangChuController::class, 'truyenmota'])->name('truyen_id');
-Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyen_Chuong'])->name('truyenchitiet');
+Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'truyenxem'])->name('truyenchitiet');
 
 Auth::routes();
 

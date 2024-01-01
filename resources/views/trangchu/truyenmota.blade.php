@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div class="container" style="margin-top: 30px;">
+    <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
         <div class="row">
             <div class="col-md-7 me-5">
                 <div class="section-bar clearfix">

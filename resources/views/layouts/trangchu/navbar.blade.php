@@ -91,7 +91,10 @@
                     </ul>
                 </div>
                 <ul class="nav navbar-nav navbar-left" style="background:#000;">
-                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc Phim</a></li>
+                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc phim</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left" style="background:#000;">
+                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc truyện</a></li>
                 </ul>
             </div>
         </nav>

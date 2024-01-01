@@ -17,9 +17,10 @@
             </div>
         </div>
         <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
+            {{-- PHIM --}}
             <section>
                 <div class="section-bar clearfix">
-                    <h1 class="section-title"><span>{{ $country_slug->tenquocgia }}</span></h1>
+                    <h1 class="section-title"><span>{{ $country_slug->tenquocgia }} - phim</span></h1>
                 </div>
                 <div class="section-bar clearfix">
                     <div class="row">
@@ -79,6 +80,66 @@
                         <li><a class="next page-numbers" href=""><i class="hl-down-open rotate-right"></i></a></li>
                     </ul> --}}
                     {!! $movie->links('pagination::bootstrap-4') !!}
+                </div>
+            </section>
+            {{-- TRUYỆN --}}
+            <section>
+                <div class="section-bar clearfix">
+                    <h1 class="section-title"><span>{{ $country_slug->tenquocgia }} - truyện</span></h1>
+                </div>
+                <div class="section-bar clearfix">
+                    <div class="row">
+                        {{-- @include('pages.include.filter') --}}
+                    </div>
+                </div>
+                <div class="halim_box">
+                    @foreach ($truyen as $key => $mov)
+                        <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
+                            <div class="halim-item">
+                                <a class="halim-thumb" href="{{ route('truyen_id', $mov->id) }}">
+                                    <figure><img class="lazy img-responsive"
+                                            src="{{ asset('public/image/truyen') }}/{{ $mov->slug }}/{{ $mov->hinhanh }}"
+                                            title="{{ $mov->tentruyen }}"></figure>
+                                    <span class="status">
+                                        Mới
+                                    </span>
+                                    {{-- </span><span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
+                                        @if ($mov->sotap == 0)
+                                            {{ $mov->tapphim_count }}/?? tập
+                                        @elseif($mov->sotap == $mov->tapphim_count)
+                                            Full-{{ $mov->tapphim_count }}/{{ $mov->sotap }} tập
+                                        @else
+                                            {{ $mov->tapphim_count }}/{{ $mov->sotap }} tập
+                                        @endif
+                                        |
+                                        @if ($mov->phude == 0)
+                                            Thuyết minh
+                                        @else
+                                            Phụ đề
+                                        @endif
+                                    </span> --}}
+                                    <div class="icon_overlay"></div>
+                                    <div class="halim-post-title-box">
+                                        <div class="halim-post-title ">
+                                            <p class="entry-title">{{ $mov->tentruyen }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+                <div class="clearfix"></div>
+                <div class="text-center">
+                    {{-- <ul class='page-numbers'>
+                        <li><span aria-current="page" class="page-numbers current">1</span></li>
+                        <li><a class="page-numbers" href="">2</a></li>
+                        <li><a class="page-numbers" href="">3</a></li>
+                        <li><span class="page-numbers dots">&hellip;</span></li>
+                        <li><a class="page-numbers" href="">55</a></li>
+                        <li><a class="next page-numbers" href=""><i class="hl-down-open rotate-right"></i></a></li>
+                    </ul> --}}
+                    {!! $truyen->links('pagination::bootstrap-4') !!}
                 </div>
             </section>
         </main>

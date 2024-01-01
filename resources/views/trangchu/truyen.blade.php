@@ -5,22 +5,60 @@
 @endsection
 @extends('layouts.trangchu')
 @section('content')
-    <div class="section-bar clearfix">
-        <h3 class="section-title"><span>TRUYỆN HOT</span></h3>
-    </div>
-    <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
-
-        @foreach ($truyen_head as $item)
-            <div class="card" style="width: 18rem;">
-                <a href="{{ route('truyen', ['id' => $item->id]) }}" class="text-decoration-none text-white fs-3">
-                    <img src="{{ asset('public/image/truyen/' . $item->slug . '/' . $item->hinhanh) }}" class="card-img-top"
-                        alt="..." style="width: 250px; height: 200px;">
-                </a>
-                <a href="{{ route('truyen_id', ['id' => $item->id]) }}" class="text-decoration-none text-dark fs-3 m-3">
-                    <h4>{{ $item->tentruyen }}</h3>
-                </a>
-            </div>
-        @endforeach
+    <div id="halim_related_movies-2xx" class="wrap-slider">
+        <div class="section-bar clearfix">
+            <h3 class="section-title"><span>TRUYỆN HOT</span></h3>
+        </div>
+        <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
+            @foreach ($truyen_head as $key => $hot)
+                <article class="thumb grid-item post-38498">
+                    <div class="halim-item">
+                        <a class="halim-thumb" href="{{ route('truyen_id', $hot->id) }}" title="{{ $hot->tentruyen }}">
+                            <figure><img class="lazy img-responsive"
+                                    src="{{ asset('public/image/truyen') }}/{{ $hot->slug }}/{{ $hot->hinhanh }}"
+                                    alt="Bành Dân" title="Bành Dân"></figure>
+                            <div class="icon_overlay"></div>
+                            <div class="halim-post-title-box">
+                                <div class="halim-post-title ">
+                                    <p class="entry-title">{{ $hot->tentruyen }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+        <script>
+            jQuery(document).ready(function($) {
+                var owl = $('#halim_related_movies-2');
+                owl.owlCarousel({
+                    loop: true,
+                    margin: 5,
+                    autoplay: true,
+                    autoplayTimeout: 4000,
+                    autoplayHoverPause: true,
+                    nav: true,
+                    navText: ['<i class="hl-down-open rotate-left"></i>',
+                        '<i class="hl-down-open rotate-right"></i>'
+                    ],
+                    responsiveClass: true,
+                    responsive: {
+                        0: {
+                            items: 2
+                        },
+                        480: {
+                            items: 3
+                        },
+                        600: {
+                            items: 5
+                        },
+                        1000: {
+                            items: 5
+                        }
+                    }
+                })
+            });
+        </script>
     </div>
     <div class="container overflow-hidden">
         <div class="section-bar clearfix">
@@ -80,7 +118,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-4 border border-secondary rounded-2 ms-2">
+            {{-- <div class="col-md-4 border border-secondary rounded-2 ms-2">
                 <div class="section-bar clearfix">
                     <h3 class="section-title"><span>ĐỌC NHIỀU TRONG NGÀY</span></h3>
                 </div>
@@ -104,7 +142,60 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
+            </div> --}}
+            <aside id="sidebar" class="col-xs-12 col-sm-12 col-md-4">
+                <div id="halim_tab_popular_videos-widget-7" class="widget halim_tab_popular_videos-widget">
+                    <div class="section-bar clearfix">
+                        <div class="section-title">
+                            <span>Truyện đọc nhiều</span>
+                        </div>
+                    </div>
+                    <section class="tab-content">
+                        <div role="tabpanel" class="tab-pane active halim-ajax-popular-post">
+                            <div class="halim-ajax-popular-post-loading hidden"></div>
+                            <div id="halim-ajax-popular-post" class="popular-post">
+                                @foreach ($truyenmoinhat as $key => $traler_sidebar)
+                                    <div class="item post-37176">
+                                        <a href="{{ route('truyen_id', $traler_sidebar->id) }}"
+                                            title="{{ $traler_sidebar->tentruyen }}">
+                                            <div class="item-link">
+                                                <img src="{{ asset('public/image/truyen') }}/{{ $traler_sidebar->slug }}/{{ $traler_sidebar->hinhanh }}"
+                                                    class="lazy post-thumb" alt="{{ $traler_sidebar->tentruyen }}"
+                                                    title="{{ $traler_sidebar->ten }}" />
+                                                {{-- <span class="is_trailer">
+                                                    @if ($traler_sidebar->chatluong == 0)
+                                                        SD
+                                                    @elseif($traler_sidebar->chatluong == 1)
+                                                        HD
+                                                    @elseif($traler_sidebar->chatluong == 2)
+                                                        Trailer
+                                                    @endif
+                                                </span> --}}
+                                            </div>
+                                            <p class="title">{{ $traler_sidebar->tentruyen }}</p>
+                                        </a>
+                                        <div class="viewsCount" style="color: #9d9d9d;">{{ $traler_sidebar->luotxem }} lượt
+                                            quan tâm
+                                        </div>
+                                        {{-- <div class="viewsCount" style="color: #9d9d9d;">{{ $traler_sidebar->nam }}</div>
+                                        <div style="float: left;">
+                                            <ul class="list-inline rating" title="Average Rating">
+                                                @for ($count = 1; $count <= 5; $count++)
+                                                    <li title="star_rating"
+                                                        style="cursor:pointer; color:#ffcc00; font-size:20px; padding:0;">
+                                                        &#9733;
+                                                    </li>
+                                                @endfor
+                                            </ul>
+                                        </div> --}}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                    <div class="clearfix"></div>
+                </div>
+            </aside>
         </div>
     </div>
     <div class="container my-5">
@@ -127,54 +218,4 @@
     </div>
 @endsection
 @section('script')
-    {{-- <script src="{{ asset('owl-carousel/js/owl.carousel.min.js') }}"></script> --}}
-    {{-- <script>
-        $(document).ready(function() {
-            $('.owl-carousel').owlCarousel({
-                loop: true,
-                autoplay: true,
-                margin: 10,
-                dots: false,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 5
-                    },
-                }
-            })
-        });
-    </script> --}}
-    <script>
-        jQuery(document).ready(function($) {
-            var owl = $('#halim_related_movies-2');
-            owl.owlCarousel({
-                loop: true,
-                margin: 5,
-                autoplay: true,
-                autoplayTimeout: 4000,
-                autoplayHoverPause: true,
-                nav: true,
-                navText: ['<i class="hl-down-open rotate-left"></i>',
-                    '<i class="hl-down-open rotate-right"></i>'
-                ],
-                responsiveClass: true,
-                responsive: {
-                    0: {
-                        items: 2
-                    },
-                    480: {
-                        items: 3
-                    },
-                    1000: {
-                        items: 5
-                    }
-                }
-            })
-        });
-    </script>
 @endsection

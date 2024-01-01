@@ -29,10 +29,8 @@ class TrangChuController extends Controller
     {
         $truyen_head = Truyen::orderby('id', 'ASC')->limit(6)->get();
         $ids = [];
-        $i = 0;
-        foreach ($truyen_head as $item) {
-            $ids[$i] = $item->id;
-            $i++;
+        foreach ($truyen_head as $key => $item) {
+            $ids[] = $item->id;
         }
         $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
 
@@ -51,7 +49,7 @@ class TrangChuController extends Controller
         $truyenmoinhat = Truyen::whereNot('id', $truyen->id)->orderby('id', 'ASC')->get();
         return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country'));
     }
-    public function truyenchuong($id)
+    public function truyenxem($id, $chuong)
     {
 
     }
@@ -101,7 +99,15 @@ class TrangChuController extends Controller
         }
         $movie = Phim::withCount('tapphim')->whereIn('id', $many_genre)->where('khoa', 1)->paginate(40);
 
-        return view('trangchu.theloai', compact('category', 'genre', 'country', 'genre_slug', 'movie', 'movie_trailersidebar', 'movie_hot'));
+        $truyen = Truyen::with('getTheLoai')->where('id', $genre_slug->id)->where('khoa', 1)->paginate(40);
+
+        $ids = [];
+        foreach ($truyen as $key => $item) {
+            $ids[] = $item->id;
+        }
+        $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
+
+        return view('trangchu.theloai', compact('category', 'genre', 'country', 'genre_slug', 'movie', 'movie_trailersidebar', 'movie_hot', 'truyen', 'truyenmoinhat'));
     }
     public function quocgia($slug)
     {
@@ -121,7 +127,16 @@ class TrangChuController extends Controller
 
         //Lấy phim có chất lượng trailer
         $movie_trailersidebar = Phim::where('chatluong', 2)->where('khoa', 1)->take(15)->get();
-        return view('trangchu.quocgia', compact('category', 'genre', 'country', 'country_slug', 'movie', 'movie_trailersidebar', 'movie_hot'));
+
+        $truyen = Truyen::where('quocgia_id', $country_slug->id)->paginate(40);
+
+        $ids = [];
+        foreach ($truyen as $key => $item) {
+            $ids[] = $item->id;
+        }
+        $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->limit(6)->get();
+
+        return view('trangchu.quocgia', compact('category', 'genre', 'country', 'country_slug', 'movie', 'movie_trailersidebar', 'movie_hot', 'truyen', 'truyenmoinhat'));
     }
     public function phim()
     {
