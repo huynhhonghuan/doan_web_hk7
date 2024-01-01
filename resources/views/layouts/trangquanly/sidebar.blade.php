@@ -54,9 +54,17 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('admin.danhmuc.list') }}" class="nav-link">
+                                <a href="{{ route('admin.movie.list') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Danh Sách Danh Mục</p>
+                                    <p>Danh Sách Phim</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.episode.list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Sách Tập Phim</p>
                                 </a>
                             </li>
                         </ul>
@@ -116,6 +124,14 @@
                                 </a>
                             </li>
                         </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.danhmuc.list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Mục</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -170,67 +186,32 @@
                     </li>
                     {{-- Menu dành cho cộng tác viên phim --}}
                 @elseif (Auth::user()->getVaiTro->first()->id == 'ctvp')
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-bars"></i>
+                            <p>
+                                Quản Lý Phim
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('congtacvienphim.movie.list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Sách Phim</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('congtacvienphim.episode.list') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Danh Sách Tập Phim</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
-                {{-- <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-film"></i>
-                        <p> Phim
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="
-                            @if (Auth::user()->User_Role->first()->id == 'admin') {{ route('admin.movie.add') }}
-                            @else
-                            {{ route('collaborators.movie.add') }}
-                            @endif"
-                                class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Thêm Phim</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@if (Auth::user()->User_Role->first()->id == 'admin') {{ route('admin.movie.list') }}
-                                @else
-                                {{ route('collaborators.movie.list') }}
-                                @endif" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Phim</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fa fa-file-video"></i>
-                        <p> Tập Phim
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="@if (Auth::user()->User_Role->first()->id == 'admin') {{ route('admin.movie.list') }}
-                                @else
-                                {{ route('collaborators.movie.list') }}
-                                @endif" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Thêm Tập Phim</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="@if (Auth::user()->User_Role->first()->id == 'admin') {{ route('admin.episode.list') }}
-                                @else
-                                {{ route('collaborators.episode.list') }}
-                                @endif" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Danh Sách Tập Phim</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li> --}}
             </ul>
         </nav>
     </div>

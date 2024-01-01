@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tapphim', function (Blueprint $table) {
+        Schema::create('danhgiaphim', function (Blueprint $table) {
             $table->id();
             $table->foreignId('phim_id')->constrained('phim')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->longText('linkphim')->nullable();
-            $table->longText('video')->nullable();
-            $table->integer('tap');
+            $table->integer('danhgia');
+            $table->string('ip',250);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tapphim');
+        Schema::dropIfExists('danhgiaphim');
     }
 };

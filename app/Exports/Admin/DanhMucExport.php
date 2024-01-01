@@ -4,8 +4,11 @@ namespace App\Exports\Admin;
 
 use App\Models\DanhMuc;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithCustomStartCell;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class DanhMucExport implements FromCollection
+class DanhMucExport implements FromCollection,  WithHeadings, WithCustomStartCell, WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -17,7 +20,7 @@ class DanhMucExport implements FromCollection
     public function headings(): array
     {
         return [
-            'tendanhmuc',
+            'ten',
             'slug',
             'mota',
             'khoa'

@@ -7,19 +7,21 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Truyen\TruyenChiTietController;
 use App\Http\Controllers\Admin\Truyen\TruyenController;
-use App\Http\Controllers\admin\phim\DanhMucController;
 use App\Http\Controllers\Admin\Phim\PhimController;
 use App\Http\Controllers\admin\phim\TapPhimController;
 use App\Http\Controllers\Admin\Taikhoan\TaiKhoanController;
 use App\Http\Controllers\Admin\Taikhoan\VaiTroController;
-use App\Http\Controllers\admin\Thuvien\DanhMucController as ThuvienDanhMucController;
+use App\Http\Controllers\admin\Thuvien\DanhMucController;
 use App\Http\Controllers\Admin\Thuvien\QuocGiaController;
 use App\Http\Controllers\Admin\Thuvien\TacGiaController;
 use App\Http\Controllers\Admin\Thuvien\TheLoaiController;
 use App\Http\Controllers\Congtacvien\Congtacvienphim\CongTacVienPhimController;
+use App\Http\Controllers\congtacvien\congtacvienphim\PhimController as CongtacvienphimPhimController;
+use App\Http\Controllers\congtacvien\congtacvienphim\TapPhimController as CongtacvienphimTapPhimController;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\CongTacVienTruyenController;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenController as ctvt_truyen;
 use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenChiTietController as ctvt_truyenct;
+use App\Http\Middleware\CongTacVienPhimMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,14 +40,15 @@ use App\Http\Controllers\Congtacvien\Congtacvientruyen\TruyenChiTietController a
 Route::get('/', [TrangChuController::class, 'home'])->name('homepage');
 Route::get('/phims', [TrangChuController::class, 'phim'])->name('phim');
 Route::get('/danh-muc/{slug}', [TrangChuController::class, 'category'])->name('category');
-Route::get('/the-loai/{slug}', [TrangChuController::class, 'genre'])->name('genre');
-Route::get('/quoc-gia/{slug}', [TrangChuController::class, 'country'])->name('country');
+Route::get('/the-loai/{slug}', [TrangChuController::class, 'theloai'])->name('genre');
+Route::get('/quoc-gia/{slug}', [TrangChuController::class, 'quocgia'])->name('country');
 Route::get('/phim/{slug}', [TrangChuController::class, 'movie'])->name('movie');
 Route::get('/xem-phim/{slug}/{tap}', [TrangChuController::class, 'watch']);
 Route::get('/episode', [TrangChuController::class, 'episode'])->name('episode');
 Route::get('/tag/{tag}', [TrangChuController::class, 'tag'])->name('tag');
 Route::get('/tim-kiem', [TrangChuController::class, 'search'])->name('search');
 Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
+Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name('them-danhgia');
 
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'getTruyen'])->name('truyen');
@@ -91,10 +94,10 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::post('tacgia/nhap', [TacGiaController::class, 'postNhap'])->name('tacgia.nhap'); //nhập excel
     Route::get('tacgia/xuat', [TacGiaController::class, 'getXuat'])->name('tacgia.xuat'); //xuất excel
 
-     //tác giả
-     Route::resource('vaitro', VaiTroController::class)->except('show');
-     Route::post('vaitro/nhap', [VaiTroController::class, 'postNhap'])->name('vaitro.nhap'); //nhập excel
-     Route::get('vaitro/xuat', [VaiTroController::class, 'getXuat'])->name('vaitro.xuat'); //xuất excel
+    //tác giả
+    Route::resource('vaitro', VaiTroController::class)->except('show');
+    Route::post('vaitro/nhap', [VaiTroController::class, 'postNhap'])->name('vaitro.nhap'); //nhập excel
+    Route::get('vaitro/xuat', [VaiTroController::class, 'getXuat'])->name('vaitro.xuat'); //xuất excel
 
     //truyện
     Route::resource('truyen', TruyenController::class)->except('show');
@@ -110,7 +113,7 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
 
     //danh muc
     Route::prefix('danhmuc')->name('danhmuc.')->group(function () {
-        Route::get('list', [ThuvienDanhMucController::class, 'show'])->name('list');
+        Route::get('list', [DanhMucController::class, 'show'])->name('list');
         Route::get('add', [DanhMucController::class, 'create'])->name('add');
         Route::post('add', [DanhMucController::class, 'postcreate'])->name('postadd');
         Route::get('edit/{id}', [DanhMucController::class, 'edit'])->name('edit');
@@ -166,6 +169,27 @@ Route::group(['middleware' => ['auth', 'ctvp'], 'prefix' => 'congtacvienphim', '
     //home
     Route::get('/', [CongTacVienPhimController::class, 'home'])->name('home');
     Route::get('home', [CongTacVienPhimController::class, 'home'])->name('home');
+
+    //phim
+    Route::prefix('movie')->name('movie.')->group(function () {
+        Route::get('list', [CongtacvienphimPhimController::class, 'show'])->name('list');
+        Route::get('add', [CongtacvienphimPhimController::class, 'create'])->name('add');
+        Route::post('add', [CongtacvienphimPhimController::class, 'postcreate'])->name('postadd');
+        Route::get('edit/{id}', [CongtacvienphimPhimController::class, 'edit'])->name('edit');
+        Route::post('edit', [CongtacvienphimPhimController::class, 'postedit'])->name('postedit');
+        Route::get('delete/{id}', [CongtacvienphimPhimController::class, 'delete'])->name('delete');
+        Route::get('update-year-movie', [CongtacvienphimPhimController::class, 'update_year'])->name('update_year');
+    });
+
+    //tap phim
+    Route::prefix('episode')->name('episode.')->group(function () {
+        Route::get('list', [CongtacvienphimTapPhimController::class, 'show'])->name('list');
+        Route::get('add/{id}', [CongtacvienphimTapPhimController::class, 'create'])->name('add');
+        Route::post('add', [CongtacvienphimTapPhimController::class, 'postcreate'])->name('postadd');
+        Route::get('edit/{id}', [CongtacvienphimTapPhimController::class, 'edit'])->name('edit');
+        Route::post('edit', [CongtacvienphimTapPhimController::class, 'postedit'])->name('postedit');
+        Route::get('delete/{id}', [CongtacvienphimTapPhimController::class, 'delete'])->name('delete');
+    });
 });
 
 //Người dùng

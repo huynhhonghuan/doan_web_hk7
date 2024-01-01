@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Phim;
+namespace App\Http\Controllers\congtacvien\congtacvienphim;
 
 use App\Http\Controllers\Controller;
 use App\Models\DanhMuc;
@@ -22,7 +22,7 @@ class PhimController extends Controller
         $category = DanhMuc::all();
         $genre = TheLoai::all();
         $country = QuocGia::all();
-        return view('admin.phims.phim.add', compact('title', 'category', 'genre', 'country'));
+        return view('congtacvien.congtacvienphim.phim.add', compact('title', 'category', 'genre', 'country'));
     }
 
     public function postcreate(Request $request)
@@ -30,44 +30,44 @@ class PhimController extends Controller
         $file = $request->image;
         $data = $request->all();
         $dieukien = 0;
-        // try {
-            $movie = new Phim();
-            $movie->ten = $request->input('title');
-            $movie->slug = Str::slug($request->input('title'), '-');
-            $movie->mota = $request->input('description');
-            $movie->khoa = $request->input('status');
-            $movie->phimhot = $request->input('movie_hot');
-            $movie->chatluong = $request->input('resolution');
-            $movie->phude = $request->input('subtitle');
-            $movie->thoiluong = $request->input('time');
-            if ($request->input('category_id') == 2) {
-                $movie->sotap = 1;
-            } else {
-                $movie->sotap = $request->input('episodes');
-            }
-            $movie->tags = $request->input('tags');
-            $movie->trailer = $request->input('trailer');
-            $movie->danhmuc_id = $request->input('category_id');
-            $movie->nam = '2000';
-            $movie->view = 0;
-            $movie->quocgia_id = $request->input('country_id');
-            $movie->user_id = Auth::user()->id;
-            $ext = $request->image->extension();
-            $file_name = time() . '-' . 'phim.' . $ext;
+        try {
+        $movie = new Phim();
+        $movie->ten = $request->input('title');
+        $movie->slug = Str::slug($request->input('title'), '-');
+        $movie->mota = $request->input('description');
+        $movie->khoa = 0;
+        $movie->phimhot = $request->input('movie_hot');
+        $movie->chatluong = $request->input('resolution');
+        $movie->phude = $request->input('subtitle');
+        $movie->thoiluong = $request->input('time');
+        if ($request->input('category_id') == 2) {
+            $movie->sotap = 1;
+        } else {
+            $movie->sotap = $request->input('episodes');
+        }
+        $movie->tags = $request->input('tags');
+        $movie->trailer = $request->input('trailer');
+        $movie->danhmuc_id = $request->input('category_id');
+        $movie->nam = '2000';
+        $movie->view = 0;
+        $movie->quocgia_id = $request->input('country_id');
+        $movie->user_id = Auth::user()->id;
+        $ext = $request->image->extension();
+        $file_name = time() . '-' . 'phim.' . $ext;
 
-            $request->merge(['image/phim' => $file_name]);
-            $movie->hinhanh = $file_name;
-            $movie->save();
+        $request->merge(['image/phim' => $file_name]);
+        $movie->hinhanh = $file_name;
+        $movie->save();
 
-            //nhieu th loai
-            $movie->Phim_TheLoai()->attach($data['genre']);
+        //nhieu th loai
+        $movie->Phim_TheLoai()->attach($data['genre']);
 
-            $dieukien = 1;
-            Session::flash('success', 'Thêm Phim thành công');
-        // } catch (Exception $e) {
-        //     Session::flash('error', 'Nhập lỗi. Vui lòng kiểm tra lại');
-        //     $dieukien = 0;
-        // }
+        $dieukien = 1;
+        Session::flash('success', 'Thêm Phim thành công');
+        } catch (Exception $e) {
+            Session::flash('error', 'Nhập lỗi. Vui lòng kiểm tra lại');
+            $dieukien = 0;
+        }
         if ($dieukien == 1) {
             $file->move(public_path('image/phim'), $file_name);
         }
@@ -77,15 +77,9 @@ class PhimController extends Controller
     public function show()
     {
         $title = 'Danh sách Phim';
-        $movieList = Phim::with('danhmuc', 'phim_theloai', 'quocgia')->withCount('tapphim')->orderBy('id', 'DESC')->get();
-        $movie = $movieList->where('khoa',1);
-        $path = public_path() . "/json/";
+        $movieList = Phim::with('danhmuc', 'phim_theloai', 'quocgia')->where('user_id', Auth::user()->id)->withCount('tapphim')->orderBy('id', 'DESC')->get();
 
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
-        }
-        File::put($path . 'phim.json', json_encode($movie));
-        return view('admin.phims.phim.list', compact('title', 'movieList'));
+        return view('congtacvien.congtacvienphim.phim.list', compact('title', 'movieList'));
     }
 
     public function delete($id)
@@ -103,7 +97,7 @@ class PhimController extends Controller
             Session::flash('error', 'Xóa lỗi. Vui lòng kiểm tra lại');
         }
 
-        return redirect()->route('admin.movie.list');
+        return redirect()->route('congtacvienphim.movie.list');
     }
 
     public function edit(Request $request, $id)
@@ -116,10 +110,10 @@ class PhimController extends Controller
             $genre = TheLoai::all();
             $movie_genre = $movieEdit->phim_theloai;
             $country = QuocGia::all();
-            return view('admin.phims.phim.edit', compact('title', 'movieEdit', 'category', 'genre', 'country', 'movie_genre'));
+            return view('congtacvien.congtacvienphim.phim.edit', compact('title', 'movieEdit', 'category', 'genre', 'country', 'movie_genre'));
         } catch (Exception $e) {
             Session::flash('error', 'Phim không tồn tại');
-            return redirect()->route('admin.movie.list');
+            return redirect()->route('congtacvienphim.movie.list');
         }
     }
 
@@ -140,7 +134,7 @@ class PhimController extends Controller
             $movie->ten = $request->input('title');
             $movie->slug = Str::slug($request->input('title'), '-');
             $movie->mota = $request->input('description');
-            $movie->khoa = $request->input('status');
+            $movie->khoa = 0;
             $movie->phimhot = $request->input('movie_hot');
             $movie->chatluong = $request->input('resolution');
             $movie->phude = $request->input('subtitle');
@@ -173,7 +167,7 @@ class PhimController extends Controller
         } catch (Exception $e) {
             Session::flash('error', 'Cập nhật lỗi. Vui lòng kiểm tra lại');
         }
-        return redirect()->route('admin.movie.list');
+        return redirect()->route('congtacvienphim.movie.list');
     }
     public function update_year(Request $request)
     {

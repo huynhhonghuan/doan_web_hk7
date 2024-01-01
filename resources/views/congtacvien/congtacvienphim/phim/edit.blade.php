@@ -2,7 +2,7 @@
 @section('head')
 @endsection
 @section('content')
-    <form action="{{ route('admin.movie.postedit') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('congtacvienphim.movie.postedit') }}" method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div class="form-group">
                 <label>Tên Phim</label>
@@ -104,7 +104,7 @@
             </div>
 
             <div class="form-group d-flex flex-wrap">
-                <div style="padding-right: 20%">
+                {{-- <div style="padding-right: 20%">
                     <label>Kích Hoạt</label>
                     <div class="custom-control custom-radio">
                         <input class="custom-control-input" value="1" type="radio" id="active" name="status"
@@ -116,7 +116,7 @@
                             {{ $movieEdit->khoa == 0 ? 'checked=""' : '' }}>
                         <label for="no_active" class="custom-control-label">Không</label>
                     </div>
-                </div>
+                </div> --}}
 
                 <div style="padding-right: 20%">
                     <label>Phim Hot</label>

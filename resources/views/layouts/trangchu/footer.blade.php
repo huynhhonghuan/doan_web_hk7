@@ -75,20 +75,21 @@
             if (search != '') {
                 $('#result').css('display', 'inherit')
                 var expression = new RegExp(search, "i");
-                $.getJSON('public/json/movies.json', function(data) {
+                $.getJSON("{{ asset('public/json/phim.json') }}", function(data) {
                     $.each(data, function(key, value) {
-                        if (value.title.search(expression) != -1) {
+                        if (value.ten.search(expression) != -1) {
                             $('#result').append(
-                                '<li style="cursor:pointer; display: flex; max-height: 200px;" class="list-group-item link-class"><img src="public/image/movie/' +
-                                value.image +
+                                '<li style="cursor:pointer; display: flex; max-height: 200px;" class="list-group-item link-class"><img src="{{ asset('public/image/phim/') }}/' +
+                                value.hinhanh +
                                 '" width="60" height="40"/><div style="flex-direction: column; margin-left: 10px;"><h4 width="80%">' +
-                                value.title +
+                                value.ten +
                                 '</h4><span style="display: -webkit-box; max-height: 8.2rem; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; -webkit-line-clamp: 5; line-height: 1.6rem;" class="text-muted">| ' +
-                                value.description + '</span></div></li>');
+                                value.mota + '</span></div></li>');
                         }
                     });
                 });
-            } else {
+            }
+            else {
                 $('#result').css('display', 'none')
             }
         });

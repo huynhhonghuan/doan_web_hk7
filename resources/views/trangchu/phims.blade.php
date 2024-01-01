@@ -120,7 +120,7 @@
             @foreach ($category_home as $key => $cate_home)
                 <section id="halim-advanced-widget-2">
                     <div class="section-heading">
-                        <a href="{{ route('movie', $cate_home->slug) }}" title="{{ $cate_home->ten }}">
+                        <a href="{{ route('category', $cate_home->slug) }}" title="{{ $cate_home->ten }}">
                             <span class="h-text">{{ $cate_home->ten }}</span>
                         </a>
                     </div>
@@ -159,7 +159,6 @@
                                         <div class="halim-post-title-box">
                                             <div class="halim-post-title ">
                                                 <p class="entry-title">{{ $mov->ten }}</p>
-                                                <p class="original_title">My Roommate Is a Gumiho</p>
                                             </div>
                                         </div>
                                     </a>
@@ -171,6 +170,6 @@
                 <div class="clearfix"></div>
             @endforeach
         </main>
-        {{-- @include('layouts.trangchu.navbar') --}}
+        @include('layouts.trangchu.sidebar')
     </div>
 @endsection

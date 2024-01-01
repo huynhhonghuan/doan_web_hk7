@@ -1,11 +1,11 @@
 @extends('layouts.trangquanly')
 @section('content')
     <p class="mt-3">
-        <a href="{{ route('admin.movie.add') }}" class="btn btn-info"><i class="fa fa-plus"></i> Thêm mới</a>
+        <a href="{{ route('congtacvienphim.movie.add') }}" class="btn btn-info"><i class="fa fa-plus"></i> Thêm mới</a>
         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">
             Nhập từ Excel
         </button>
-        <a href="#" class="btn btn-success"><i class="fa-light fa-download"></i> Xuất
+        <a href="{{ route('admin.danhmuc.xuat') }}" class="btn btn-success"><i class="fa-light fa-download"></i> Xuất
             ra Excel</a>
     </p>
     {{-- <iframe src="{{ asset('public/video/a.mkv') }}" frameborder="0" width="560" height="315"></iframe> --}}
@@ -77,7 +77,7 @@
                             @endif
                             @if ($item->sotap != $item->tapphim_count)
                                 <a class="btn btn-info btn-sm"
-                                    href="{{ route('admin.episode.add', ['id' => $item->id]) }}"><i
+                                    href="{{ route('congtacvienphim.episode.add', ['id' => $item->id]) }}"><i
                                         class="fa fa-plus"></i></a>
                             @endif
                         </td>
@@ -103,9 +103,10 @@
                         {{-- <td>{{ $item->updated_at }}</td> --}}
                         <td>
                             <a class="btn btn-primary btn-sm"
-                                href="{{ route('admin.movie.edit', ['id' => $item->id]) }}"><i class="fas fa-edit"></i></a>
+                                href="{{ route('congtacvienphim.movie.edit', ['id' => $item->id]) }}"><i
+                                    class="fas fa-edit"></i></a>
                             <a onclick="return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-danger btn-sm"
-                                href="{{ route('admin.movie.delete', ['id' => $item->id]) }}"><i
+                                href="{{ route('congtacvienphim.movie.delete', ['id' => $item->id]) }}"><i
                                     class="fas fa-trash"></i></a>
                         </td>
                     </tr>
@@ -126,7 +127,7 @@
 
             //alert(year);
             $.ajax({
-                url: "{{ route('admin.movie.update_year') }}",
+                url: "{{ route('congtacvienphim.movie.update_year') }}",
                 method: "GET",
                 data: {
                     year: year,

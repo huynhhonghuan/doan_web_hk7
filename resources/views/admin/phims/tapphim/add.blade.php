@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.trangquanly')
 @section('head')
     <style>
         .preview-upload img {
@@ -13,26 +13,26 @@
                 <label>Link Phim</label>
                 <input type="text" name="linkphim" class="form-control" placeholder="...">
             </div>
-            @if ($movie->category_id == 2)
+            @if ($movie->danhmuc_id == 1)
                 <div class="form-group">
                     <label>Tập Phim</label>
                     <select class="form-control" name="episode">
                         <option value="0" style="display: none;">---Chọn tập phim---</option>
-                        @if ($movie->episodes)
-                            @for ($i = 1; $i <= $movie->episodes; $i++)
+                        @if ($movie->sotap)
+                            @for ($i = 1; $i <= $movie->sotap; $i++)
                                 <option value="{{ $i }}"
                                     @foreach ($episode as $key => $ep)
-                    @if ($ep->episode == $i)
+                    @if ($ep->tap == $i)
                         style="display: none;"
                     @endif @endforeach>
                                     {{ $i }}
                                 </option>
                             @endfor
                         @else
-                            @for ($i = 1; $i <= $movie->episode->count() + 1; $i++)
+                            @for ($i = 1; $i <= $movie->tapphim->count() + 1; $i++)
                                 <option value="{{ $i }}"
                                     @foreach ($episode as $key => $ep)
-            @if ($ep->episode == $i)
+            @if ($ep->tap == $i)
                 style="display: none;"
             @endif @endforeach>
                                     {{ $i }}

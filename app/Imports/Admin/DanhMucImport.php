@@ -4,8 +4,9 @@ namespace App\Imports\Admin;
 
 use App\Models\DanhMuc;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class DanhMucImport implements ToModel
+class DanhMucImport implements ToModel, WithHeadingRow
 {
     /**
     * @param array $row

@@ -52,7 +52,7 @@
                 </select> --}}
                 @foreach ($genre as $key => $gen)
                     <input type="checkbox" name="genre[]" id="" value="{{ $gen->id }}">
-                    <label for="genre" style="margin-right: 10px;">{{ $gen->ten }}</label>
+                    <label for="genre" style="margin-right: 10px;">{{ $gen->tentheloai }}</label>
                 @endforeach
             </div>
 
@@ -60,7 +60,7 @@
                 <label>Quốc Gia</label>
                 <select class="form-control" name="country_id">
                     @foreach ($country as $coun)
-                        <option value="{{ $coun->id }}">{{ $coun->ten }}</option>
+                        <option value="{{ $coun->id }}">{{ $coun->tenquocgia }}</option>
                     @endforeach
                 </select>
             </div>
@@ -182,11 +182,10 @@
     </script>
     <script>
         $(document).ready(function() {
-            $("#form-ep").hide();
             $("#category_id").change(function() {
                 var selectedValue = $(this).val();
                 console.log(selectedValue);
-                if (selectedValue === '1') {
+                if (selectedValue === '2') {
                     $("#form-ep").hide();
                     $("#form-ep input").removeAttr("required");
                 } else {

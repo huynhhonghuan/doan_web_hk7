@@ -6,7 +6,7 @@
 <meta name="DC.language" scheme="utf-8" content="vi" />
 <meta name="language" content="Việt Nam">
 
-
+<meta name="csrf-token" content="{{ csrf_token() }}" >
 <link rel="shortcut icon"
     href="https://www.pngkey.com/png/detail/360-3601772_your-logo-here-your-company-logo-here-png.png"
     type="image/x-icon" />
@@ -32,7 +32,11 @@
 <link rel='stylesheet' id='bootstrap-css' href="{{ asset('public/css/bootstrap.min.css') }}" media='all' />
 <link rel='stylesheet' id='style-css' href='{{ asset('public/css/style.css') }}' media='all' />
 <link rel='stylesheet' id='wp-block-library-css' href='{{ asset('public/css/style.min.css') }}' media='all' />
+{{-- <link rel="stylesheet" href="{{ asset('public/admin/plugins/fontawesome-free/css/all.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('public/admin/dist/css/adminlte.min.css') }}"> --}}
 <script type='text/javascript' src="{{ asset('public/js/jquery.min.js') }}" id='halim-jquery-js'></script>
+
 <style type="text/css" id="wp-custom-css">
     .textwidget p a img {
         width: 100%;
@@ -54,5 +58,10 @@
         width: 94%;
         padding: 10px;
         margin: 1px;
+    }
+</style>
+<style>
+    .hl-down-open:before {
+        content: '▼';
     }
 </style>

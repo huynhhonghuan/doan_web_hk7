@@ -2,7 +2,7 @@
 @section('head')
 @endsection
 @section('content')
-    <form action="{{ route('admin.episode.postedit') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('congtacvienphim.episode.postedit') }}" method="post" enctype="multipart/form-data">
         <div class="card-body">
             <div class="form-group">
                 <label>Tên Phim</label>

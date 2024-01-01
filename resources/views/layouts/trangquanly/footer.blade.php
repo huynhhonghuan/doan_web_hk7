@@ -27,25 +27,6 @@
     });
 </script>
 <script>
-    $('.select-year').change(function() {
-        var year = $(this).find(':selected').val();
-        var id_movie = $(this).attr('id');
-
-        //alert(year);
-        $.ajax({
-            url: "{{ route('admin.movie.update_year') }}",
-            method: "GET",
-            data: {
-                year: year,
-                id_movie: id_movie,
-            },
-            success: function() {
-                alert('Thay đổi năm phim thành năm ' + year + ' thành công');
-            }
-        });
-    })
-</script>
-<script>
     $(document).ready(function() {
         $('#tabletruyen').DataTable({
             //disable sorting on last column

@@ -17,7 +17,7 @@ class DanhMucController extends Controller
     public function create()
     {
         $title = 'Thêm danh mục mới';
-        return view('admin.danhmuc.add',compact('title'));
+        return view('admin.thuvien.danhmuc.add',compact('title'));
     }
 
     public function postcreate(Request $request)
@@ -43,7 +43,7 @@ class DanhMucController extends Controller
     {
         $title = 'Danh sách Danh Mục';
         $categoryList = DanhMuc::orderby('id','ASC')->get();
-        return view('admin.danhmuc.list',compact('title','categoryList'));
+        return view('admin.thuvien.danhmuc.list',compact('title','categoryList'));
     }
 
     public function delete($id)
@@ -67,7 +67,7 @@ class DanhMucController extends Controller
             $categoryEdit = DanhMuc::find($id);
             $request->session()->put('id',$id);
             $title = 'Chỉnh sửa Danh Mục ' . $categoryEdit->ten;
-            return view('admin.danhmuc.edit', compact('title','categoryEdit'));
+            return view('admin.thuvien.danhmuc.edit', compact('title','categoryEdit'));
         }catch(Exception $e)
         {
             Session::flash('error','Danh Mục không tồn tại');
