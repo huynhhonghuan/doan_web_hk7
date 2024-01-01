@@ -50,19 +50,19 @@ class TruyenChiTietController extends Controller
                 //Tạo thư mục con nếu chưa có
                 $thumuc = 'chuong-' . $request->chuong;
 
-                if (!File::isDirectory($thumuc)) {
-                    File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
-                }
+                // if (!File::isDirectory($thumuc)) {
+                //     File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
+                // }
 
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move('public/image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/' . $thumuc, $file_name);
             }
 
             TruyenChiTiet::create($request->validated() + ['hinhanh' => $file_name]);
         }
-        return redirect()->route('admin.truyen.truyenchitiet.index');
+        return redirect()->route('admin.truyenchitiet.index');
     }
 
     /**
@@ -111,7 +111,7 @@ class TruyenChiTietController extends Controller
 
             $truyenchitiet->update($request->validated() + ['hinhanh' => $file_name]);
         }
-        return redirect()->route('admin.truyen.truyenchitiet.index');
+        return redirect()->route('admin.truyenchitiet.index');
     }
 
     /**
@@ -131,7 +131,7 @@ class TruyenChiTietController extends Controller
 
         $truyenchitiet->delete();
 
-        return redirect()->route('admin.truyen.truyenchitiet.index');
+        return redirect()->route('admin.truyenchitiet.index');
     }
     public function postNhap(Request $request)
     {
@@ -165,7 +165,7 @@ class TruyenChiTietController extends Controller
             }
         }
 
-        return redirect()->route('admin.truyen.truyenchitiet.index');
+        return redirect()->route('admin.truyenchitiet.index');
     }
 
     public function getXuat()

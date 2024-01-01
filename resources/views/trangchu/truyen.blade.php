@@ -39,7 +39,7 @@
                                         class="text-decoration-none text-white fs-3">
                                         {{ $item->tentruyen }}
                                     </a>
-                                    <h4 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h4>
+                                    <h5 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h5>
                                     <!-- truyen reviews-->
                                     <div class="d-flex justify-content-start small text-warning my-5">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -93,7 +93,7 @@
                                     class="text-decoration-none text-white fs-3">
                                     {{ $item->tentruyen }}
                                 </a>
-                                <h4 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h4>
+                                <h5 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h5>
                             </div>
                         </div>
                     </div>

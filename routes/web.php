@@ -49,8 +49,8 @@ Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'getTruyen'])->name('truyen');
-Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen_Id'])->name('truyen_id');
-Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyenChiTiet'])->name('truyenchitiet');
+Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen_Mota'])->name('truyen_id');
+Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyen_Chuong'])->name('truyenchitiet');
 
 Auth::routes();
 

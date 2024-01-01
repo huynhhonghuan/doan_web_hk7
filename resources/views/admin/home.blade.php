@@ -1,6 +1,6 @@
 @extends('layouts.trangquanly')
 @section('content')
-    <div class="p-5">
+    <div class="py-3 px-5">
         <h3 class="pb-3">Tài khoản</h3>
         <div class="row justify-content-center">
             <div class="col-md-3" style="padding-right: 20px;">
@@ -87,7 +87,7 @@
         </div>
     </div>
     <hr>
-    <div class="p-5">
+    <div class="py-3 px-5">
         <h3 class="pb-3">Truyện</h3>
         <div class="row justify-content-center">
             <div class="col-md-3" style="padding-right: 20px;">
@@ -175,7 +175,7 @@
         </div>
     </div>
     <hr>
-    <div class="p-5">
+    <div class="py-3 px-5">
         <h3 class="pb-3">Phim</h3>
         <div class="row justify-content-center">
             <div class="col-md-3" style="padding-right: 20px;">

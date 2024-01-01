@@ -13,14 +13,14 @@
                 <h3 class="text-white">{{ $truyen->tentruyen }}</h3>
                 <h5 class="mt-4 ">{{ $truyen->TacGia->tentacgia }}</h5>
                 <div class="fs-3 my-5">{!! $truyen->mota !!}</div>
-                <h4 class="mb-4">Thể loại: {{ $truyen->getTheLoai[0]->tentheloai }}</h4>
-                <h4 class="mb-4">Nhóm dịch: {{ $truyen->nhomdich }}</h4>
-                <h4>{{ $truyen->updated_at }}</h4>
+                <h5 class="mb-4">Thể loại: {{ $truyen->getTheLoai[0]->tentheloai }}</h5>
+                <h5 class="mb-4">Nhóm dịch: {{ $truyen->nhomdich }}</h5>
+                <h6>{{ $truyen->updated_at }}</h6>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="border-bottom border-secondary">
+    <div class="container" style="margin-top: 30px;">
+        <div class="border-bottom border-secondary" style="margin-bottom: 20px;">
             <h3 class="text-white">CHƯƠNG</h3>
         </div>
         <div class="row">
@@ -29,7 +29,8 @@
                     @foreach ($truyenchitiet as $item)
                         <div class="col-md-6 border-top border-secondary mt-5">
                             <a href="{{ route('truyenchitiet', ['id' => $truyen->id, 'chuong' => $loop->iteration]) }}"
-                                class="text-decoration-none fs-3 text-white fw-bold">Chương {{ $loop->iteration }}</a>
+                                class="text-decoration-none fs-3 text-white fw-bold" style="font-weight: bold; color:cornsilk;">Chương {{ $loop->iteration }}</a>
+                            <hr>
                         </div>
                     @endforeach
                 </div>
@@ -49,7 +50,7 @@
                                     class="text-decoration-none text-white fs-3">
                                     {{ $item->tentruyen }}
                                 </a>
-                                <h4 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h4>
+                                <h5 class="text-white mt-3">Tác giả: {{ $item->TacGia->tentacgia }}</h5>
                             </div>
                         </div>
                     </div>

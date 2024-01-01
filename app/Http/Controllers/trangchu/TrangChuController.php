@@ -33,17 +33,18 @@ class TrangChuController extends Controller
         $truyenmoinhat = Truyen::where('khoa', 1)->orderby('id', 'asc')->limit(10)->get();
         return view('trangchu.truyen', compact('truyen', 'truyenmoinhat'));
     }
-    public function getTruyen_Id($id)
+    public function getTruyen_MoTa($id)
     {
         $truyen = Truyen::find($id);
         $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
         $truyenmoinhat = Truyen::orderby('id', 'asc')->limit(4)->get();
-        return view('trangchu.truyen_id', compact('truyen', 'truyenchitiet', 'truyenmoinhat'));
+        return view('trangchu.truyen_mota', compact('truyen', 'truyenchitiet', 'truyenmoinhat'));
     }
-    public function getTruyenChiTiet($id, $chuong)
+    public function getTruyen_Chuong($id, $chuong)
     {
         $truyenchitiet = TruyenChiTiet::where('truyen_id', $id)->where('chuong', $chuong)->get();
         //dd($truyenchitiet);
+        return view('trangchu.truyen_chuong', compact('truyenchitiet'));
     }
     public function category($slug)
     {

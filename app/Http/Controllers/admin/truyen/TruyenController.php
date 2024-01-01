@@ -63,7 +63,7 @@ class TruyenController extends Controller
                 // }
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
                 $ext = $request->file('hinhanh')->extension();
-                $file_name = time() . '-' . 'truyen.' . $ext;
+                $file_name = time() . '-' . 'truyen-anhbia.' . $ext;
                 //dd($file->move(public_path('image/truyen/' . $slug, $file_name)));
                 $file->move('public/image/truyen/' . $slug, $file_name);
             }
@@ -142,7 +142,7 @@ class TruyenController extends Controller
 
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
-                $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
+                $file_name = time() . '-' . 'truyen-anhbia.' . $ext;//cập nhật lại tên hình ảnh đã chỉnh
                 $file->move('public/image/truyen/' . $slug, $file_name);
             }
             //dd($request->nhomdich);
