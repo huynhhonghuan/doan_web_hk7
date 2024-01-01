@@ -38,9 +38,17 @@
                                         <li title="star_rating" id="{{ $count }}"
                                             style="cursor:pointer;
                                             @php
+
                                                 $rating_sidebar = $hot->danhgiaphim;
-                                                $rating_sidebar = $rating_sidebar->avg('danhgia');
-                                                $rating_sidebar = round($rating_sidebar); @endphp
+                                                if($rating_sidebar)
+                                                {$rating_sidebar = $rating_sidebar->avg('danhgia');
+                                                $rating_sidebar = round($rating_sidebar);}
+                                                else
+                                                {
+                                                    $rating_sidebar=0;
+                                                }
+
+                                            @endphp
                                     @if ($count <= $rating_sidebar) color:#ffcc00
                                             @else
                                             color:#ccc @endif;

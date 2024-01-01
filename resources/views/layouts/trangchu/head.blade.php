@@ -6,7 +6,7 @@
 <meta name="DC.language" scheme="utf-8" content="vi" />
 <meta name="language" content="Việt Nam">
 
-<meta name="csrf-token" content="{{ csrf_token() }}" >
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="shortcut icon"
     href="https://www.pngkey.com/png/detail/360-3601772_your-logo-here-your-company-logo-here-png.png"
     type="image/x-icon" />
@@ -40,6 +40,16 @@
 <style type="text/css" id="wp-custom-css">
     .textwidget p a img {
         width: 100%;
+    }
+</style>
+<style>
+    html,
+    body {
+        cursor: url("{{ asset('public/image/curmiku6.png') }}"), auto;
+    }
+
+    a:hover {
+        cursor: url("{{ asset('public/image/201661.png') }}"), auto;
     }
 </style>
 <style>

@@ -36,6 +36,11 @@ class Phim extends Model
         return $this->hasMany(TapPhim::class);
     }
 
+    public function DanhGiaPhim()
+    {
+        return $this->hasMany(DanhGiaPhim::class);
+    }
+
     public function User()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
