@@ -51,8 +51,8 @@ Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name('them-danhgia');
 
 //truyện
-Route::get('/truyen', [TrangChuController::class, 'getTruyen'])->name('truyen');
-Route::get('/truyen/{id}', [TrangChuController::class, 'getTruyen_Mota'])->name('truyen_id');
+Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');
+Route::get('/truyen/{id}', [TrangChuController::class, 'truyenmota'])->name('truyen_id');
 Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'getTruyen_Chuong'])->name('truyenchitiet');
 
 Auth::routes();

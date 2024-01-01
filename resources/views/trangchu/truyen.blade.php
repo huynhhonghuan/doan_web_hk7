@@ -5,23 +5,27 @@
 @endsection
 @extends('layouts.trangchu')
 @section('content')
-    <div class="py-5">
-        <div class="owl-carousel owl-theme">
-            @foreach ($truyen as $item)
-                <div class="card" style="width: 18rem;">
-                    <a href="{{ route('truyen', ['id' => $item->id]) }}" class="text-decoration-none text-white fs-3">
-                        <img src="{{ asset('public/image/truyen/' . $item->slug . '/' . $item->hinhanh) }}"
-                            class="card-img-top" alt="..." style="width: 250px; height: 200px;">
-                    </a>
-                    <a href="{{ route('truyen_id', ['id' => $item->id]) }}" class="text-decoration-none text-dark fs-3 m-3">
-                        <h4>{{ $item->tentruyen }}</h3>
-                    </a>
-                </div>
-            @endforeach
-        </div>
+    <div class="section-bar clearfix">
+        <h3 class="section-title"><span>TRUYỆN HOT</span></h3>
+    </div>
+    <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
+
+        @foreach ($truyen_head as $item)
+            <div class="card" style="width: 18rem;">
+                <a href="{{ route('truyen', ['id' => $item->id]) }}" class="text-decoration-none text-white fs-3">
+                    <img src="{{ asset('public/image/truyen/' . $item->slug . '/' . $item->hinhanh) }}" class="card-img-top"
+                        alt="..." style="width: 250px; height: 200px;">
+                </a>
+                <a href="{{ route('truyen_id', ['id' => $item->id]) }}" class="text-decoration-none text-dark fs-3 m-3">
+                    <h4>{{ $item->tentruyen }}</h3>
+                </a>
+            </div>
+        @endforeach
     </div>
     <div class="container overflow-hidden">
-        <h3 class="text-white">Mới cập nhật</h3>
+        <div class="section-bar clearfix">
+            <h3 class="section-title"><span>TRUYỆN MỚI CẬP NHẬT</span></h3>
+        </div>
         <div class="row">
             <div class="col-md-7 me-5">
                 <div class="row">
@@ -77,7 +81,9 @@
                 </div>
             </div>
             <div class="col-md-4 border border-secondary rounded-2 ms-2">
-                <h3 class="text-danger">Đọc nhiều trong ngày</h3>
+                <div class="section-bar clearfix">
+                    <h3 class="section-title"><span>ĐỌC NHIỀU TRONG NGÀY</span></h3>
+                </div>
                 @foreach ($truyenmoinhat as $item)
                     <div class="col-12 my-5 pb-5 border-bottom border-secondary">
                         <div class="row">
@@ -102,7 +108,9 @@
         </div>
     </div>
     <div class="container my-5">
-        <h3 class="text-white">Review mới nhất</h3>
+        <div class="section-bar clearfix">
+            <h3 class="section-title"><span>REVIEW MỚI NHẤT</span></h3>
+        </div>
         <div class="row mt-5">
             @foreach ($truyenmoinhat as $item)
                 <div class="col-md-2">
@@ -120,7 +128,7 @@
 @endsection
 @section('script')
     {{-- <script src="{{ asset('owl-carousel/js/owl.carousel.min.js') }}"></script> --}}
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('.owl-carousel').owlCarousel({
                 loop: true,
@@ -137,6 +145,34 @@
                     1000: {
                         items: 5
                     },
+                }
+            })
+        });
+    </script> --}}
+    <script>
+        jQuery(document).ready(function($) {
+            var owl = $('#halim_related_movies-2');
+            owl.owlCarousel({
+                loop: true,
+                margin: 5,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                nav: true,
+                navText: ['<i class="hl-down-open rotate-left"></i>',
+                    '<i class="hl-down-open rotate-right"></i>'
+                ],
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    480: {
+                        items: 3
+                    },
+                    1000: {
+                        items: 5
+                    }
                 }
             })
         });

@@ -10,6 +10,8 @@ use App\Models\Phim_TheLoai;
 use App\Models\QuocGia;
 use App\Models\TapPhim;
 use App\Models\TheLoai;
+use App\Models\Truyen;
+use App\Models\TruyenChiTiet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -22,6 +24,36 @@ class TrangChuController extends Controller
         $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
         return view('trangchu.home', compact('genre', 'country'));
+    }
+    public function truyen()
+    {
+        $truyen_head = Truyen::orderby('id', 'ASC')->limit(6)->get();
+        $ids = [];
+        $i = 0;
+        foreach ($truyen_head as $item) {
+            $ids[$i] = $item->id;
+            $i++;
+        }
+        $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
+
+        $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+
+        return view('trangchu.truyen', compact('truyen_head', 'truyenmoinhat', 'genre', 'country'));
+    }
+
+    public function truyenmota($id)
+    {
+        $truyen = Truyen::where('id', $id)->first();
+        $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
+        $truyenmoinhat = Truyen::whereNot('id', $truyen->id)->orderby('id', 'ASC')->get();
+        return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country'));
+    }
+    public function truyenchuong($id)
+    {
+
     }
     //Controller khi chọn 1 danh mục(Phim bộ, phim lẻ,...)
     public function category($slug)

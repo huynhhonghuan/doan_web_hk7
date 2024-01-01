@@ -144,7 +144,7 @@
                                     @endif
                                     </li>
                                     <li class="list-info-group-item"><span>Lượt quan tâm</span> :
-                                        {{ $movie->view}} lượt</li>
+                                        {{ $movie->view }} lượt</li>
                                     <li class="list-info-group-item" style="height: 60px;">
                                         <span class="total_rating">Đánh Giá : {{ $count_rating }} lượt</span>
                                         <ul class="list-inline rating alo" title="Average Rating"

@@ -66,7 +66,7 @@
                                     href="{{ route('category', $item->slug) }}">{{ $item->title }}</a></li>
                         @endforeach --}}
                         <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('phim') }}">Phim</a></li>
-                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('homepage') }}">Truyện</a></li>
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('truyen') }}">Truyện</a></li>
                         <li class="mega dropdown">
                             <a title="Thể Loại" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                 aria-haspopup="true">Thể Loại <span class="caret"></span></a>
