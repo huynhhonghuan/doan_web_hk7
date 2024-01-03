@@ -55,16 +55,18 @@
                         <td>{{ $taikhoan->sdt }}</td>
                         <td>{{ $taikhoan->getVaiTro[0]->tenvaitro }}</td>
                         @if ($taikhoan->status == 'active')
-                            <td><span class="btn btn-success btn-xs">Hoạt động</span></td>
+                            <td><a href="{{ route('admin.taikhoan.khoa', ['taikhoan' => $taikhoan]) }}"><span
+                                        class="btn btn-success btn-xs">Hoạt động</span></a></td>
                         @else
-                            <td><span class="btn btn-danger btn-xs">Không hoạt động</span></td>
+                            <td><a href="{{ route('admin.taikhoan.khoa', ['taikhoan' => $taikhoan]) }}"><span
+                                        class="btn btn-danger btn-xs">Không hoạt động</span></a></td>
                         @endif
                         <td>{{ $taikhoan->updated_at }}</td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="{{ route('admin.taikhoan.edit', [$taikhoan]) }}"><i
                                     class="fas fa-edit"></i></a>
                             <a onclick="return confirm('Bạn có muốn khoá tài khoản?')"
-                                href="{{ route('admin.taikhoan.khoa', [$taikhoan->id]) }}"> <i class="fa fa-trash"></i>
+                                href="{{ route('admin.taikhoan.xoa', [$taikhoan->id]) }}"> <i class="fa fa-trash"></i>
                             </a>
                         </td>
                     </tr>

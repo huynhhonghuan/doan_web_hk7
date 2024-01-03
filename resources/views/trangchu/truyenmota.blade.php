@@ -28,7 +28,7 @@
                 <div class="row">
                     @foreach ($truyenchitiet as $item)
                         <div class="col-md-6 border-top border-secondary mt-5">
-                            <a href="{{ route('truyenchitiet', ['id' => $truyen->id, 'chuong' => $loop->iteration]) }}"
+                            <a href="{{ route('truyenchitiet', ['slug' => $truyen->slug, 'chuong' => $loop->iteration]) }}"
                                 class="text-decoration-none fs-3 text-white fw-bold"
                                 style="font-weight: bold; color:cornsilk;">Chương {{ $loop->iteration }}</a>
                             <hr>

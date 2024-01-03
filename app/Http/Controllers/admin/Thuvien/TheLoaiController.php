@@ -84,6 +84,19 @@ class TheLoaiController extends Controller
         $theloai->delete();
         return redirect()->route('admin.theloai.index');
     }
+    public function khoa(TheLoai $theloai)
+    {
+        $tr = TheLoai::find($theloai->id);
+        if ($theloai->khoa == 1) {
+            $tr->khoa = 0;
+            $tr->save();
+        } else {
+            $tr->khoa = 1;
+            $tr->save();
+        }
+        return redirect()->route('admin.theloai.index');
+    }
+
     public function postNhap(Request $request)
     {
         Excel::import(new TheLoaiImport, $request->file('file_excel'));

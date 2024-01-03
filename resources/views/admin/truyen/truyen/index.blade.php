@@ -69,9 +69,11 @@
                         <td>{{ $truyen->QuocGia->tenquocgia }}</td>
                         <td>{{ $truyen->mota }}</td>
                         @if ($truyen->khoa == 1)
-                            <td><span class="btn btn-success btn-xs">Có</span></td>
+                            <td><a href="{{ route('admin.truyen.khoa', ['truyen' => $truyen]) }}"><span
+                                        class="btn btn-success btn-xs">Có</span></a></td>
                         @else
-                            <td><span class="btn btn-danger btn-xs">Không</span></td>
+                            <td><a href="{{ route('admin.truyen.khoa', ['truyen' => $truyen]) }}"><span
+                                        class="btn btn-danger btn-xs">Không</span></a></td>
                         @endif
                         <td>{{ $truyen->updated_at }}</td>
                         <td>

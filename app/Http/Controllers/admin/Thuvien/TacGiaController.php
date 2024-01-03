@@ -85,6 +85,18 @@ class TacGiaController extends Controller
         $tacgium->delete();
         return redirect()->route('admin.tacgia.index');
     }
+    public function khoa(TacGia $tacgia)
+    {
+        $tr = TacGia::find($tacgia->id);
+        if ($tacgia->khoa == 1) {
+            $tr->khoa = 0;
+            $tr->save();
+        } else {
+            $tr->khoa = 1;
+            $tr->save();
+        }
+        return redirect()->route('admin.tacgia.index');
+    }
     public function postNhap(Request $request)
     {
         Excel::import(new TacGiaImport, $request->file('file_excel'));

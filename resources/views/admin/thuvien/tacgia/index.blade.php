@@ -51,10 +51,12 @@
                         <td>{{ $tacgia->slug }}</td>
                         <td>{{ $tacgia->mota }}</td>
                         @if ($tacgia->khoa == 1)
-                            <td><span class="btn btn-success btn-xs">Có</span></td>
-                        @else
-                            <td><span class="btn btn-danger btn-xs">Không</span></td>
-                        @endif
+                        <td><a href="{{ route('admin.tacgia.khoa', ['tacgia' => $tacgia]) }}"><span
+                                    class="btn btn-success btn-xs">Có</span></a></td>
+                    @else
+                        <td><a href="{{ route('admin.tacgia.khoa', ['tacgia' => $tacgia]) }}"><span
+                                    class="btn btn-danger btn-xs">Không</span></a></td>
+                    @endif
                         <td>{{ $tacgia->updated_at }}</td>
                         <td>
                             <a class="btn btn-primary btn-sm" href="{{ route('admin.tacgia.edit', [$tacgia]) }}"><i

@@ -51,9 +51,11 @@
                         <td>{{ $quocgia->slug }}</td>
                         <td>{{ $quocgia->mota }}</td>
                         @if ($quocgia->khoa == 1)
-                            <td><span class="btn btn-success btn-xs">Có</span></td>
+                            <td><a href="{{ route('admin.quocgia.khoa', ['quocgia' => $quocgia]) }}"><span
+                                        class="btn btn-success btn-xs">Có</span></a></td>
                         @else
-                            <td><span class="btn btn-danger btn-xs">Không</span></td>
+                            <td><a href="{{ route('admin.quocgia.khoa', ['quocgia' => $quocgia]) }}"><span
+                                        class="btn btn-danger btn-xs">Không</span></a></td>
                         @endif
                         <td>{{ $quocgia->updated_at }}</td>
                         <td>

@@ -53,7 +53,7 @@ Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name(
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');
 Route::get('/truyen/{id}', [TrangChuController::class, 'truyenmota'])->name('truyen_id');
-Route::get('/truyen/{id}/{chuong}', [TrangChuController::class, 'truyenxem'])->name('truyenchitiet');
+Route::get('/truyen/{slug}/{chuong}', [TrangChuController::class, 'truyenxem'])->name('truyenchitiet');
 
 Auth::routes();
 
@@ -75,32 +75,37 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
 
     //tài khoản
     Route::resource('taikhoan', TaiKhoanController::class)->except('show');
+    Route::get('taikhoan/khoa/{taikhoan}', [TaiKhoanController::class, 'khoa'])->name('taikhoan.khoa'); //kiểm duyệt
     Route::get('taikhoan/xuat', [TaiKhoanController::class, 'getXuat'])->name('taikhoan.xuat');
     Route::post('taikhoan/nhap', [TaiKhoanController::class, 'postNhap'])->name('taikhoan.nhap');
-    Route::get('taikhoan/khoa/{id}', [TaiKhoanController::class, 'getKhoa'])->name('taikhoan.khoa');
+    Route::get('taikhoan/xoa/{id}', [TaiKhoanController::class, 'getXoa'])->name('taikhoan.xoa');
 
     //danh mục quốc gia
     Route::resource('quocgia', QuocGiaController::class)->except('show');
+    Route::get('quocgia/khoa/{quocgia}', [QuocGiaController::class, 'khoa'])->name('quocgia.khoa'); //kiểm duyệt
     Route::post('quocgia/nhap', [QuocGiaController::class, 'postNhap'])->name('quocgia.nhap'); //nhập excel
     Route::get('quocgia/xuat', [QuocGiaController::class, 'getXuat'])->name('quocgia.xuat'); //xuất excel
 
     //thể loại
     Route::resource('theloai', TheLoaiController::class)->except('show');
+    Route::get('theloai/khoa/{theloai}', [TheLoaiController::class, 'khoa'])->name('theloai.khoa'); //kiểm duyệt
     Route::post('theloai/nhap', [TheLoaiController::class, 'postNhap'])->name('theloai.nhap'); //nhập excel
     Route::get('theloai/xuat', [TheLoaiController::class, 'getXuat'])->name('theloai.xuat'); //xuất excel
 
     //tác giả
     Route::resource('tacgia', TacGiaController::class)->except('show');
+    Route::get('tacgia/khoa/{tacgia}', [TacGiaController::class, 'khoa'])->name('tacgia.khoa'); //kiểm duyệt
     Route::post('tacgia/nhap', [TacGiaController::class, 'postNhap'])->name('tacgia.nhap'); //nhập excel
     Route::get('tacgia/xuat', [TacGiaController::class, 'getXuat'])->name('tacgia.xuat'); //xuất excel
 
-    //tác giả
+    //vai trò
     Route::resource('vaitro', VaiTroController::class)->except('show');
     Route::post('vaitro/nhap', [VaiTroController::class, 'postNhap'])->name('vaitro.nhap'); //nhập excel
     Route::get('vaitro/xuat', [VaiTroController::class, 'getXuat'])->name('vaitro.xuat'); //xuất excel
 
     //truyện
     Route::resource('truyen', TruyenController::class)->except('show');
+    Route::get('truyen/khoa/{truyen}', [TruyenController::class, 'khoa'])->name('truyen.khoa'); //kiểm duyệt
     Route::post('truyen/nhap', [TruyenController::class, 'postNhap'])->name('truyen.nhap'); //nhập excel
     Route::get('truyen/xuat', [TruyenController::class, 'getXuat'])->name('truyen.xuat'); //xuất excel
     Route::get('truyen/hinh', [TruyenController::class, 'getHinh'])->name('truyen.hinh'); //xuất hình file.zip

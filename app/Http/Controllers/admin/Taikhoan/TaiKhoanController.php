@@ -114,12 +114,25 @@ class TaiKhoanController extends Controller
         // return redirect()->route('admin.taikhoan.index');
     }
 
-    public function getKhoa($id)
+    public function getXoa($id)
     {
         $user = User::find($id);
         $user->status = 'inactive';
         $user->save();
-        return redirect()->route('admin.taikhoan.taikhoan.index');
+        return redirect()->route('admin.taikhoan.index');
+    }
+
+    public function khoa(User $taikhoan)
+    {
+        $tr = User::find($taikhoan->id);
+        if ($taikhoan->status == 'active') {
+            $tr->status = 'inactive';
+            $tr->save();
+        } else {
+            $tr->status = 'active';
+            $tr->save();
+        }
+        return redirect()->route('admin.taikhoan.index');
     }
     public function getXuat()
     {

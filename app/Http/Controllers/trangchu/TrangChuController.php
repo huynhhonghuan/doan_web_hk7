@@ -23,16 +23,22 @@ class TrangChuController extends Controller
         //Thông tin cần thiết cho giao diện
         $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+
+        // Tạo file json
+
+        $data = json_encode(Truyen::all());
+        file_put_contents(public_path('json/truyen.json'), $data);
+
         return view('trangchu.home', compact('genre', 'country'));
     }
     public function truyen()
     {
-        $truyen_head = Truyen::orderby('id', 'ASC')->limit(6)->get();
+        $truyen_head = Truyen::where('khoa', 1)->orderby('id', 'ASC')->limit(6)->get();
         $ids = [];
         foreach ($truyen_head as $key => $item) {
             $ids[] = $item->id;
         }
-        $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
+        $truyenmoinhat = Truyen::where('khoa', 1)->whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
 
         $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
@@ -42,16 +48,35 @@ class TrangChuController extends Controller
 
     public function truyenmota($id)
     {
-        $truyen = Truyen::where('id', $id)->first();
+        $truyen = Truyen::where('id', $id)->where('khoa', 1)->first();
         $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
         $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
         $truyenmoinhat = Truyen::whereNot('id', $truyen->id)->orderby('id', 'ASC')->get();
+
+        $daxem = $truyen->id;
+
+        if (!session()->has($daxem)) {
+            $orm = Truyen::find($truyen->id);
+            $orm->luotxem = $truyen->luotxem + 1;
+            $orm->save();
+            session()->put($daxem, 1);
+        }
+
         return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country'));
     }
-    public function truyenxem($id, $chuong)
+    public function truyenxem($slug, $chuong)
     {
+        $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
 
+        //$truyen = Truyen::where('slug', $slug)->paginate(1);
+
+        $truyen_slug = Truyen::where('slug', $slug)->first();
+        $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen_slug->id)->where('chuong', $chuong)->get();
+        $truyen_chuong = TruyenChiTiet::all()->groupBy('chuong');
+        // dd($truyen_chuong);
+        return view('trangchu.truyenxem', compact('genre', 'country', 'truyen_slug', 'truyenchitiet', 'truyen_chuong'));
     }
     //Controller khi chọn 1 danh mục(Phim bộ, phim lẻ,...)
     public function category($slug)
@@ -286,6 +311,32 @@ class TrangChuController extends Controller
     //Tìm kiếm phim
     public function search()
     {
+        //truyện
+        if (isset($_GET['search'])) {
+            $search = $_GET['search'];
+
+            $truyen = Truyen::where('tentruyen', 'LIKE', '%' . $search . '%')->where('khoa', 1)->first();
+
+            if ($truyen) {
+                $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+                $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+                $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
+                $truyenmoinhat = Truyen::whereNot('id', $truyen->id)->orderby('id', 'ASC')->get();
+
+                $daxem = $truyen->id;
+
+                if (!session()->has($daxem)) {
+                    $orm = Truyen::find($truyen->id);
+                    $orm->luotxem = $truyen->luotxem + 1;
+                    $orm->save();
+                    session()->put($daxem, 1);
+                }
+
+                return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country'));
+            }
+        }
+
+        //phim
         if (isset($_GET['search'])) {
             $search = $_GET['search'];
             //Thông tin cần thiết cho giao diện

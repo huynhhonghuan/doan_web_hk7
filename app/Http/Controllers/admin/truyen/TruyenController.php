@@ -142,7 +142,7 @@ class TruyenController extends Controller
 
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
-                $file_name = time() . '-' . 'truyen-anhbia.' . $ext;//cập nhật lại tên hình ảnh đã chỉnh
+                $file_name = time() . '-' . 'truyen-anhbia.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
                 $file->move('public/image/truyen/' . $slug, $file_name);
             }
             //dd($request->nhomdich);
@@ -188,6 +188,20 @@ class TruyenController extends Controller
             'khoa' => 0
         ]);
 
+        return redirect()->route('admin.truyen.index');
+    }
+
+    //duyệt
+    public function khoa(Truyen $truyen)
+    {
+        $tr = Truyen::find($truyen->id);
+        if ($truyen->khoa == 1) {
+            $tr->khoa = 0;
+            $tr->save();
+        } else {
+            $tr->khoa = 1;
+            $tr->save();
+        }
         return redirect()->route('admin.truyen.index');
     }
 

@@ -81,6 +81,18 @@ class QuocGiaController extends Controller
         $quocgium->delete();
         return redirect()->route('admin.quocgia.index');
     }
+    public function khoa(QuocGia $quocgia)
+    {
+        $tr = QuocGia::find($quocgia->id);
+        if ($quocgia->khoa == 1) {
+            $tr->khoa = 0;
+            $tr->save();
+        } else {
+            $tr->khoa = 1;
+            $tr->save();
+        }
+        return redirect()->route('admin.quocgia.index');
+    }
 
     public function postNhap(Request $request)
     {
