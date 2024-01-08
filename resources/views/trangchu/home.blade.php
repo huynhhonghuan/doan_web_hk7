@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <a href="{{ route('taikhoan.xuat') }}">Xuat</a>
 </body>
 
 </html>
