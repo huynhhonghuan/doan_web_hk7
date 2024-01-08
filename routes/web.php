@@ -49,6 +49,8 @@ Route::get('/tag/{tag}', [TrangChuController::class, 'tag'])->name('tag');
 Route::get('/tim-kiem', [TrangChuController::class, 'search'])->name('search');
 Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name('them-danhgia');
+Route::get('/loc', [TrangChuController::class, 'loc'])->name('loc');
+Route::post('/upload', [TapPhimController::class, 'upload'])->name('uploadvideo');
 
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');

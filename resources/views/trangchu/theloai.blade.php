@@ -24,7 +24,7 @@
                 </div>
                 <div class="section-bar clearfix">
                     <div class="row">
-                        {{-- @include('pages.include.filter') --}}
+                        @include('layouts.trangchu.filter')
                     </div>
                 </div>
                 <div class="halim_box">

@@ -358,4 +358,45 @@ class TrangChuController extends Controller
             return redirect()->to('/');
         }
     }
+    public function loc()
+    {
+        $sapxep = $_GET['order'];
+        $genre_filter = $_GET['genre'];
+        $country_filter = $_GET['country'];
+        if ($sapxep == '' && $genre_filter == '' && $country_filter == '') {
+            return redirect()->back();
+        } else {
+            $category = DanhMuc::orderby('id', 'ASC')->where('khoa', 1)->get();
+            $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+            $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+            $movie_hot = Phim::where('phimhot', 1)->where('khoa', 1)->get();
+            $movie_trailersidebar = Phim::where('chatluong', 2)->where('khoa', 1)->take(15)->get();
+            //lay phim
+            $movie = Phim::withCount('tapphim');
+            if ($country_filter) {
+                $movie = $movie->where('quocgia_id', $country_filter);
+            } elseif ($genre_filter) {
+                $many_genre = [];
+                $movieGenreIds = Phim_TheLoai::with('danhmuc', 'phim_theloai', 'quocgia')->where('theloai_id', $genre_filter)->pluck('theloai_id')->toArray();
+                if (!empty($movieGenreIds)) {
+                    $relatedMovieIds = Phim_TheLoai::whereIn('theloai_id', $movieGenreIds)
+                        ->pluck('phim_id')
+                        ->toArray();
+
+                    $many_genre = array_unique($relatedMovieIds);
+                } else {
+                    $many_genre = [];
+                }
+                $movie = $movie->whereIn('id', $many_genre);
+            } elseif ($sapxep == 'name_a_z') {
+                $movie = $movie->orderBy('id', 'ASC');
+            } elseif ($sapxep == 'date') {
+                $movie = $movie->orderBy('created_at', 'ASC');
+            } elseif ($sapxep == 'year_release') {
+                $movie = $movie->orderBy('year', 'ASC');
+            }
+            $movie = $movie->orderBy('updated_at', 'DESC')->paginate(40);
+            return view('trangchu.loc', compact('category', 'genre', 'country', 'movie_hot', 'movie_trailersidebar', 'movie'));
+        }
+    }
 }
