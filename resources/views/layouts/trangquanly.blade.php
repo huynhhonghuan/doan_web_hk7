@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<title>{{$title}}</title>
 <head>
     {{-- nhúng tĩnh header --}}
     @include('layouts.trangquanly.head')
@@ -8,7 +8,8 @@
     @yield('style')
 </head>
 
-<body>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
     {{-- nhúng tĩnh Navbar --}}
     @include('layouts.trangquanly.navbar')
     {{-- nhúng tĩnh sidebar --}}
@@ -28,12 +29,10 @@
                             @yield('content')
                         </div>
                     </div>
-                    <div class="col-md-6">
-
-                    </div>
                 </div>
             </div>
         </section>
+    </div>
     </div>
     {{-- nhúng tĩnh Footer --}}
     @include('layouts.trangquanly.footer')
@@ -41,5 +40,4 @@
     @yield('script')
 
 </body>
-
 </html>

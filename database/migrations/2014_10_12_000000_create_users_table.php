@@ -27,6 +27,7 @@ return new class extends Migration
         });
 
         $pass = Hash::make('12345678');
+        $date = date("Y-m-d H:i:s");
 
         DB::table('users')->insert([
             ['name' => 'Huỳnh Hồng Huân', 'username' => 'hhhuan_21th', 'sdt' => '0374692834', 'email' => 'hhhuan_21th@student.agu.edu.vn', 'password' => $pass],

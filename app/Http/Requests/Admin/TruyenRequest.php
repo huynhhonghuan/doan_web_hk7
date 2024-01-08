@@ -28,6 +28,7 @@ class TruyenRequest extends FormRequest
                         'mota' => 'nullable',
                         'tacgia_id' => 'required',
                         'quocgia_id' => 'required',
+                        'khoa' => 'int',
                     ];
                 }
             case 'PUT':
@@ -37,6 +38,8 @@ class TruyenRequest extends FormRequest
                         'mota' => 'nullable',
                         'tacgia_id' => 'required',
                         'quocgia_id' => 'required',
+                        'khoa' => 'int',
+
                     ];
                 }
         }

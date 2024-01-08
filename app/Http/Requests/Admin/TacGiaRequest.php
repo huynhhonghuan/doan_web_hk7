@@ -25,7 +25,7 @@ class TacGiaRequest extends FormRequest
             case 'POST': {
                     return [
                         'tentacgia' => 'required',
-                        'mota' => 'required',
+                        'mota' => 'string|nullable',
                         'khoa' => 'int',
                     ];
                 }
@@ -33,7 +33,7 @@ class TacGiaRequest extends FormRequest
             case 'PATCH': {
                     return [
                         'tentacgia' => 'required',
-                        'mota' => 'required',
+                        'mota' => 'string|nullable',
                         'khoa' => 'int',
                     ];
                 }

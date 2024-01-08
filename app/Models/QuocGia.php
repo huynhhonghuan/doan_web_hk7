@@ -13,7 +13,7 @@ class QuocGia extends Model
     protected $guarded = ['id'];
 
     protected $fillable =[
-        'ten',
+        'tenquocgia',
         'slug',
         'mota',
         'khoa'

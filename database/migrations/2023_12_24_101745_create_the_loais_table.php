@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('theloai', function (Blueprint $table) {
             $table->id();
-            $table->string('ten',100);
+            $table->string('tentheloai',100);
             $table->string('slug');
-            $table->string('mota',255);
+            $table->longText('mota')->nullable();
             $table->integer('khoa')->default(1);
             $table->timestamps();
             $table->engine = 'InnoDB';

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\DanhMuc;
+use App\Models\QuocGia;
+use App\Models\TheLoai;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -44,7 +47,10 @@ class LoginController extends Controller
     //Gọi view đăng nhập
     public function login()
     {
-        return view('auth.login');
+        $category = DanhMuc::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+        $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+        return view('auth.login',compact('category', 'genre', 'country'));
     }
     public function login_xuly(Request $request)
     {

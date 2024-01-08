@@ -22,7 +22,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Danh sách chi tiết truyện';
         $danhsach = TruyenChiTiet::orderby('id', 'ASC')->get();
-        return view('admin.truyenchitiet.index', compact('title', 'danhsach'));
+        return view('admin.truyen.truyenchitiet.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -32,7 +32,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Thêm mới chi tiết truyện';
         $truyen = Truyen::all();
-        return view('admin.truyenchitiet.create', compact('title', 'truyen'));
+        return view('admin.truyen.truyenchitiet.create', compact('title', 'truyen'));
     }
 
     /**
@@ -50,14 +50,14 @@ class TruyenChiTietController extends Controller
                 //Tạo thư mục con nếu chưa có
                 $thumuc = 'chuong-' . $request->chuong;
 
-                if (!File::isDirectory($thumuc)) {
-                    File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
-                }
+                // if (!File::isDirectory($thumuc)) {
+                //     File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
+                // }
 
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move('image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/' . $thumuc, $file_name);
             }
 
             TruyenChiTiet::create($request->validated() + ['hinhanh' => $file_name]);
@@ -80,7 +80,7 @@ class TruyenChiTietController extends Controller
     {
         $title = 'Sửa mới chi tiết truyện';
         $truyen = Truyen::all();
-        return view('admin.truyenchitiet.edit', compact('title', 'truyen', 'truyenchitiet'));
+        return view('admin.truyen.truyenchitiet.edit', compact('title', 'truyen', 'truyenchitiet'));
     }
 
     /**
@@ -106,7 +106,7 @@ class TruyenChiTietController extends Controller
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
-                $file->move('image/truyen/' . $slug . '/'  . $thumuc, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/'  . $thumuc, $file_name);
             }
 
             $truyenchitiet->update($request->validated() + ['hinhanh' => $file_name]);
@@ -167,10 +167,12 @@ class TruyenChiTietController extends Controller
 
         return redirect()->route('admin.truyenchitiet.index');
     }
+
     public function getXuat()
     {
         return Excel::download(new TruyenChiTietExport, 'truyen-chi-tiet.xlsx');
     }
+
     //xuất tất cả hình ảnh ra file zip
     public function getHinh()
     {
@@ -194,8 +196,6 @@ class TruyenChiTietController extends Controller
                     }
                 }
             }
-
-
             $zip->close();
         }
         return response()->download(public_path('image/' . $file_name));

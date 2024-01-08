@@ -24,18 +24,17 @@ class TheLoaiRequest extends FormRequest
         switch ($this->method()) {
             case 'POST': {
                     return [
-                        'name' => 'required',
-                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                        'sdt' => 'required',
-                        'password' => 'required'
+                        'tentheloai' => 'required',
+                        'mota' => 'string|nullable',
+                        'khoa' => 'int',
                     ];
                 }
             case 'PUT':
             case 'PATCH': {
                     return [
-                        'name' => 'required',
-                        'email' => ['required', 'string', 'email', 'max:255'], // chưa bỏ qua email hiện tại từ request
-                        'sdt' => 'required',
+                        'tentheloai' => 'required',
+                        'mota' => 'string|nullable',
+                        'khoa' => 'int',
                     ];
                 }
         }

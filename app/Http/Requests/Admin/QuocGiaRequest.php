@@ -25,14 +25,16 @@ class QuocGiaRequest extends FormRequest
             case 'POST': {
                     return [
                         'tenquocgia' => 'required',
-                        'mota' => 'required',
+                        'mota' => 'string|nullable',
+                        'khoa' => 'int',
                     ];
                 }
             case 'PUT':
             case 'PATCH': {
                     return [
                         'tenquocgia' => 'required',
-                        'mota' => 'required',
+                        'mota' => 'string|nullable',
+                        'khoa' => 'int',
                     ];
                 }
         }

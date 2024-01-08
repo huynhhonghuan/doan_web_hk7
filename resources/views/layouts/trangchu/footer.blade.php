@@ -1,26 +1,63 @@
-<footer id="footer" class="clearfix">
-    <div class="container footer-columns">
-        <div class="row container">
-            <div class="widget about col-xs-12 col-sm-4 col-md-4">
-                <div class="footer-logo">
-                    <img class="img-responsive"
-                        src="https://img.favpng.com/9/23/19/movie-logo-png-favpng-nRr1DmYq3SNYSLN8571CHQTEG.jpg"
-                        alt="Phim hay 2021- Xem phim hay nhất" />
+<div class="container-fluid" style="background: #12171b;">
+    <div class="container">
+        <footer class="py-5">
+            <div class="row">
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">About</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                    </ul>
                 </div>
-                Liên hệ QC: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                    data-cfemail="e5958d8c888d849ccb868aa58288848c89cb868a88">[email&#160;protected]</a>
-            </div>
-        </div>
-    </div>
-</footer>
-<div id='easy-top'></div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">About</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
 
-<script type='text/javascript' src='{{ asset('js/bootstrap.min.js') }}' id='bootstrap-js'></script>
-<script type='text/javascript' src='{{ asset('js/owl.carousel.min.js') }}' id='carousel-js'></script>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Section</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Home</a></li>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">About</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+                        <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-info">Features</a>
+
+                    </ul>
+                </div>
+
+
+                <div class="col-md-5 offset-md-1 mb-3">
+                    <form>
+                        <h5>Subscribe to our newsletter</h5>
+                        <p>Monthly digest of whats new and exciting from us.</p>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                            <label for="newsletter1" class="visually-hidden">Email address</label>
+                            <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
+                            <button class="btn btn-primary" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</div>
+<script type='text/javascript' src='{{ asset('public/js/bootstrap.min.js') }}' id='bootstrap-js'></script>
+<script type='text/javascript' src='{{ asset('public/js/owl.carousel.min.js') }}' id='carousel-js'></script>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v18.0"
     nonce="Lev9y8dH"></script>
-<script type='text/javascript' src='{{ asset('js/halimtheme-core.min.js') }}' id='halim-init-js'></script>
+<script type='text/javascript' src='{{ asset('public/js/halimtheme-core.min.js') }}' id='halim-init-js'></script>
 <script type='text/javascript'>
     $(".watch_trailer").click(function(e) {
         e.preventDefault();
@@ -32,27 +69,49 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#timkiem').on("keyup",function() {
-            $('#result').html('');
-            var search = $('#timkiem').val();
-            if (search != '') {
-                $('#result').css('display', 'inherit')
-                var expression = new RegExp(search, "i");
-                $.getJSON('public/json/movies.json', function(data) {
-                    $.each(data, function(key, value) {
-                        if (value.title.search(expression) != -1) {
-                            $('#result').append(
-                                '<li style="cursor:pointer; display: flex; max-height: 200px;" class="list-group-item link-class"><img src="public/image/movie/' +
-                                value.image +
-                                '" width="60" height="40"/><div style="flex-direction: column; margin-left: 10px;"><h4 width="80%">' +
-                                value.title +
-                                '</h4><span style="display: -webkit-box; max-height: 8.2rem; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; -webkit-line-clamp: 5; line-height: 1.6rem;" class="text-muted">| ' +
-                                value.description + '</span></div></li>');
-                        }
+        $('#timkiem').on("keyup", function(event) {
+            if (event.key !== "Shift" && !event.ctrlKey && !event.altKey && !event.metaKey) {
+                $('#result').html('');
+                var search = $('#timkiem').val();
+                if (search != '') {
+                    $('#result').css('display', 'inherit')
+                    var expression = new RegExp(search, "i");
+                    // Tìm kiếm theo phim
+                    $.getJSON("{{ asset('public/json/phim.json') }}", function(data) {
+                        var count = 0;
+                        $.each(data, function(key, value) {
+                            if (value.ten.search(expression) != -1) {
+                                if (count < 4) {
+                                $('#result').append(
+                                    '<li style="cursor:pointer; display: flex; max-height: 200px;" class="list-group-item link-class"><img src="{{ asset('public/image/phim/') }}/' +
+                                    value.hinhanh +
+                                    '" width="60" height="40"/><div style="flex-direction: column; margin-left: 10px;"><h4 width="80%">' +
+                                    value.ten +
+                                    '(Phim)</h4><span style="display: -webkit-box; max-height: 8.2rem; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; -webkit-line-clamp: 5; line-height: 1.6rem;" class="text-muted">| ' +
+                                    value.mota + '</span></div></li>');
+                                    count++;
+                                }
+                            }
+                        });
                     });
-                });
-            } else {
-                $('#result').css('display', 'none')
+                    //Tìm kiếm theo truyện
+                    $.getJSON("{{ asset('public/json/truyen.json') }}", function(data) {
+                        $.each(data, function(key, value) {
+                            if (value.tentruyen.search(expression) != -1) {
+                                $('#result').append(
+                                    '<li style="cursor:pointer; display: flex; max-height: 200px;" class="list-group-item link-class"><img src="{{ asset('public/image/truyen/') }}/' +
+                                    value.slug +
+                                    '/' + value.hinhanh +
+                                    '" width="60" height="40"/><div style="flex-direction: column; margin-left: 10px;"><h4 width="80%">' +
+                                    value.tentruyen +
+                                    '(Truyện)</h4><span style="display: -webkit-box; max-height: 8.2rem; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; white-space: normal; -webkit-line-clamp: 5; line-height: 1.6rem;" class="text-muted">| ' +
+                                    value.mota + '</span></div></li>');
+                            }
+                        });
+                    });
+                } else {
+                    $('#result').css('display', 'none')
+                }
             }
         });
         $('#result').on('click', function() {

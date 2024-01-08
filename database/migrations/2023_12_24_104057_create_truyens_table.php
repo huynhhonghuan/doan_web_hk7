@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('slug');
             $table->string('nhomdich')->default('Không biết')->nullable();
             $table->longText('mota')->nullable();
-            $table->string('hinhanh',255);
+            $table->string('hinhanh',255)->default('anhmacdinh.jpg');
             $table->integer('luotxem')->default(0);
-            $table->integer('khoa')->default(1);
+            $table->integer('khoa')->default(0);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });

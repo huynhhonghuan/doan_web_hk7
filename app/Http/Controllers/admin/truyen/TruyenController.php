@@ -10,6 +10,7 @@ use App\Models\QuocGia;
 use App\Models\TacGia;
 use App\Models\TheLoai;
 use App\Models\Truyen;
+use App\Models\Truyen_TheLoai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -26,7 +27,7 @@ class TruyenController extends Controller
     {
         $title = 'Danh sách truyện';
         $danhsach = Truyen::orderby('id', 'ASC')->get();
-        return view('admin.truyen.index', compact('title', 'danhsach'));
+        return view('admin.truyen.truyen.index', compact('title', 'danhsach'));
     }
 
     /**
@@ -38,7 +39,7 @@ class TruyenController extends Controller
         $quocgia = QuocGia::all();
         $tacgia = TacGia::all();
         $theloai = TheLoai::all();
-        return view('admin.truyen.create', compact('title', 'quocgia', 'tacgia', 'theloai'));
+        return view('admin.truyen.truyen.create', compact('title', 'quocgia', 'tacgia', 'theloai'));
     }
 
     /**
@@ -46,32 +47,41 @@ class TruyenController extends Controller
      */
     public function store(TruyenRequest $request)
     {
+        //dd($request->theloai_id);
         if ($request->validated()) {
 
             $slug = Str::slug($request->tentruyen, '-');
 
             $file_name = '';
-            //dd($request->hasFile('hinhanh'));
-            if ($file = $request->file('hinhanh')) {
 
+            //dd($request->hasFile('hinhanh'));
+            if ($request->hasFile('hinhanh')) {
+                $file = $request->file('hinhanh');
                 //Tạo thư mục nếu chưa có
-                if (!File::isDirectory(public_path('image/truyen/' . $slug))) {
-                    File::makeDirectory(public_path('image/truyen/' . $slug), true);
-                }
+                // if (!File::isDirectory(public_path('image/truyen/' . $slug))) {
+                //     File::makeDirectory(public_path('image/truyen/' . $slug), true);
+                // }
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
-                $ext = $file->extension();
-                $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move(public_path('image/truyen/' . $slug, $file_name));
+                $ext = $request->file('hinhanh')->extension();
+                $file_name = time() . '-' . 'truyen-anhbia.' . $ext;
+                //dd($file->move(public_path('image/truyen/' . $slug, $file_name)));
+                $file->move('public/image/truyen/' . $slug, $file_name);
             }
 
             // dd($request->validated());
-            Truyen::create($request->validated() + [
+            $truyen = Truyen::create($request->validated() + [
                 'slug' => $slug,
                 'nhomdich' => $request->nhomdich ?? 'Không biết',
                 'hinhanh' => $file_name,
-                'khoa' => $request->khoa,
                 'user_id' => Auth::user()->id,
             ]);
+
+            foreach ($request->theloai_id as $tl) {
+                Truyen_TheLoai::create([
+                    'truyen_id' => $truyen->id,
+                    'theloai_id' => $tl
+                ]);
+            }
         }
         return redirect()->route('admin.truyen.index');
     }
@@ -92,8 +102,20 @@ class TruyenController extends Controller
         $title = 'Chỉnh sửa truyện';
         $quocgia = QuocGia::all();
         $tacgia = TacGia::all();
-        $theloai = TheLoai::all();
-        return view('admin.truyen.edit', compact('truyen', 'title', 'quocgia', 'tacgia', 'theloai'));
+
+        //xử lý hiện ra thể loại có giá trị selected hay không
+        $tl = TheLoai::all();
+        $theloai = [];
+        foreach ($tl as $value) {
+            $selected = in_array(
+                $value->id,
+                $truyen->getTheLoai->pluck('id')->all(),
+                true
+            );
+            $theloai[] = '<option value="' . $value->id . '"' . ($selected ? ' selected' : '') . '>' . $value->tentheloai . '</option>';
+        }
+
+        return view('admin.truyen.truyen.edit', compact('truyen', 'title', 'quocgia', 'tacgia', 'theloai'));
     }
 
     /**
@@ -120,16 +142,34 @@ class TruyenController extends Controller
 
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
-                $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
-                $file->move('image/truyen/' . $slug, $file_name);
+                $file_name = time() . '-' . 'truyen-anhbia.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
+                $file->move('public/image/truyen/' . $slug, $file_name);
             }
             //dd($request->nhomdich);
             $truyen->update($request->validated() + [
                 'slug' => $slug,
                 'nhomdich' => $request->nhomdich ?? 'Không biết',
                 'hinhanh' => $file_name,
-                'khoa' => $request->khoa
             ]);
+
+            $truyen_theloai = Truyen_TheLoai::where('truyen_id', $truyen->id)->get();
+            //nếu có 1 thể loại nào đó trong truyen_theloai không tồn tại trong request thì thêm vào
+            foreach ($truyen_theloai as $tl) {
+                if (!in_array($tl->theloai_id, $request->theloai_id)) {
+                    $tl->delete();
+                }
+            }
+
+            $truyen_theloai_id = $truyen_theloai->pluck('theloai_id')->all();
+            //nếu có 1 thể loại nào đó trong request không tồn tại trong truyen_theloai thì thêm vào
+            foreach ($request->theloai_id as $tl) {
+                if (!in_array($tl, $truyen_theloai_id)) {
+                    Truyen_TheLoai::create([
+                        'truyen_id' => $truyen->id,
+                        'theloai_id' => $tl
+                    ]);
+                }
+            }
         }
         return redirect()->route('admin.truyen.index');
     }
@@ -140,12 +180,28 @@ class TruyenController extends Controller
     public function destroy(Truyen $truyen)
     {
         //xóa thư mục hình ảnh
-        if (file_exists(public_path('image/truyen/' . $truyen->slug)))
-            File::deleteDirectory(public_path('image/truyen/' . $truyen->slug));
+        // if (file_exists(public_path('image/truyen/' . $truyen->slug)))
+        //     File::deleteDirectory(public_path('image/truyen/' . $truyen->slug));
 
         //xóa data trên db
-        $truyen->delete();
+        $truyen->update([
+            'khoa' => 0
+        ]);
 
+        return redirect()->route('admin.truyen.index');
+    }
+
+    //duyệt
+    public function khoa(Truyen $truyen)
+    {
+        $tr = Truyen::find($truyen->id);
+        if ($truyen->khoa == 1) {
+            $tr->khoa = 0;
+            $tr->save();
+        } else {
+            $tr->khoa = 1;
+            $tr->save();
+        }
         return redirect()->route('admin.truyen.index');
     }
 

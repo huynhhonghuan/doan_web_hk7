@@ -12,7 +12,7 @@
                             <div class="input-group col-xs-12">
                                 <form action="{{ route('search') }}" method="GET">
                                 <input id="timkiem" type="text" name="search" class="form-control"
-                                    placeholder="Tìm kiếm phim..." autocomplete="off">
+                                    placeholder="Tìm kiếm..." autocomplete="off">
                                 </form>
                                 {{-- <i class="animate-spin hl-spin4 hidden"></i> --}}
                             </div>
@@ -24,6 +24,7 @@
             <div class="col-md-4 hidden-xs">
                 <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
                         class="count">0</span></div>
+                        <a href="{{ route('login') }}">Đăng nhập</a>
                 <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                     <ul style="margin: 0;"></ul>
                 </div>
@@ -58,19 +59,21 @@
             <div class="collapse navbar-collapse" id="halim">
                 <div class="menu-menu_1-container">
                     <ul id="menu-menu_1" class="nav navbar-nav navbar-left">
-                        <li class="current-menu-item active"><a title="Trang Chủ"
-                                href="{{ route('homepage') }}">Trang Chủ</a></li>
-                        @foreach ($category as $key => $item)
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('homepage') }}">Trang
+                                Chủ</a></li>
+                        {{-- @foreach ($category as $key => $item)
                             <li class="mega"><a title="{{ $item->title }}"
                                     href="{{ route('category', $item->slug) }}">{{ $item->title }}</a></li>
-                        @endforeach
+                        @endforeach --}}
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('phim') }}">Phim</a></li>
+                        <li class="current-menu-item active"><a title="Trang Chủ" href="{{ route('truyen') }}">Truyện</a></li>
                         <li class="mega dropdown">
                             <a title="Thể Loại" href="#" data-toggle="dropdown" class="dropdown-toggle"
                                 aria-haspopup="true">Thể Loại <span class="caret"></span></a>
                             <ul role="menu" class=" dropdown-menu">
                                 @foreach ($genre as $key => $item)
-                                    <li><a title="{{ $item->title }}"
-                                            href="{{ route('genre', $item->slug) }}">{{ $item->title }}</a></li>
+                                    <li><a title="{{ $item->tentheloai }}"
+                                            href="{{ route('genre', $item->slug) }}">{{ $item->tentheloai }}</a></li>
                                 @endforeach
                             </ul>
                         </li>
@@ -79,8 +82,8 @@
                                 aria-haspopup="true">Quốc Gia <span class="caret"></span></a>
                             <ul role="menu" class=" dropdown-menu">
                                 @foreach ($country as $key => $item)
-                                    <li><a title="{{ $item->title }}"
-                                            href="{{ route('country', $item->slug) }}">{{ $item->title }}</a>
+                                    <li><a title="{{ $item->tenquocgia }}"
+                                            href="{{ route('country', $item->slug) }}">{{ $item->tenquocgia }}</a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -88,7 +91,10 @@
                     </ul>
                 </div>
                 <ul class="nav navbar-nav navbar-left" style="background:#000;">
-                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc Phim</a></li>
+                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc phim</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left" style="background:#000;">
+                    <li><a href="#" onclick="locphim()" style="color: #ffed4d;">Lọc truyện</a></li>
                 </ul>
             </div>
         </nav>

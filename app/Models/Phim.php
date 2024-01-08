@@ -23,17 +23,22 @@ class Phim extends Model
 
     public function QuocGia()
     {
-        return $this->belongsTo(QuocGia::class, 'country_id', 'id');
+        return $this->belongsTo(QuocGia::class, 'quocgia_id', 'id');
     }
 
     public function Phim_TheLoai()
     {
-        return $this->belongsToMany(TheLoai::class, 'nhieutl', 'phim_id','theloai_id');
+        return $this->belongsToMany(TheLoai::class, 'phim_theloai', 'phim_id','theloai_id');
     }
 
     public function TapPhim()
     {
         return $this->hasMany(TapPhim::class);
+    }
+
+    public function DanhGiaPhim()
+    {
+        return $this->hasMany(DanhGiaPhim::class);
     }
 
     public function User()
