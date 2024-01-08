@@ -51,6 +51,8 @@ Route::get('/loc-phim', [TrangChuController::class, 'filter'])->name('filter');
 Route::post('/them-danhgia', [TrangChuController::class, 'them_danhgia'])->name('them-danhgia');
 Route::get('/loc', [TrangChuController::class, 'loc'])->name('loc');
 Route::post('/upload', [TapPhimController::class, 'upload'])->name('uploadvideo');
+Route::get('/auth/facebook', [TrangChuController::class, 'redirectToFacebook'])->name('login-by-facebook');
+Route::get('/auth/facebook/callback', [TrangChuController::class, 'handleFacebookCallback']);
 
 //truyện
 Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');
