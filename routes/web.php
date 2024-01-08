@@ -73,6 +73,10 @@ Route::group(['middleware' => ['auth', 'ad'], 'prefix' => 'admin', 'as' => 'admi
     Route::get('/', [AdminController::class, 'home'])->name('home');
     Route::get('home', [AdminController::class, 'home'])->name('home');
 
+    //sao lưu - phục hồi
+    Route::get('/saoluu', [AdminController::class, 'saoluu'])->name('saoluu');
+    Route::get('/phuchoi', [AdminController::class, 'phuchoi'])->name('phuchoi');
+
     //tài khoản
     Route::resource('taikhoan', TaiKhoanController::class)->except('show');
     Route::get('taikhoan/khoa/{taikhoan}', [TaiKhoanController::class, 'khoa'])->name('taikhoan.khoa'); //kiểm duyệt

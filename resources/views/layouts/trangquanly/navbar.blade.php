@@ -18,10 +18,10 @@
         </li> --}}
         @if (Auth::user()->getVaiTro->first()->id == 'admin')
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Sao lưu</a>
+                <a href="{{route('admin.saoluu')}}" class="nav-link">Sao lưu</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Phục hồi</a>
+                <a href="{{route('admin.phuchoi')}}" class="nav-link">Phục hồi</a>
             </li>
         @endif
     </ul>
