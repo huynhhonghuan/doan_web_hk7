@@ -31,39 +31,39 @@ class PhimController extends Controller
         $data = $request->all();
         $dieukien = 0;
         try {
-        $movie = new Phim();
-        $movie->ten = $request->input('title');
-        $movie->slug = Str::slug($request->input('title'), '-');
-        $movie->mota = $request->input('description');
-        $movie->khoa = 0;
-        $movie->phimhot = $request->input('movie_hot');
-        $movie->chatluong = $request->input('resolution');
-        $movie->phude = $request->input('subtitle');
-        $movie->thoiluong = $request->input('time');
-        if ($request->input('category_id') == 2) {
-            $movie->sotap = 1;
-        } else {
-            $movie->sotap = $request->input('episodes');
-        }
-        $movie->tags = $request->input('tags');
-        $movie->trailer = $request->input('trailer');
-        $movie->danhmuc_id = $request->input('category_id');
-        $movie->nam = '2000';
-        $movie->view = 0;
-        $movie->quocgia_id = $request->input('country_id');
-        $movie->user_id = Auth::user()->id;
-        $ext = $request->image->extension();
-        $file_name = time() . '-' . 'phim.' . $ext;
+            $movie = new Phim();
+            $movie->ten = $request->input('title');
+            $movie->slug = Str::slug($request->input('title'), '-');
+            $movie->mota = $request->input('description');
+            $movie->khoa = 0;
+            $movie->phimhot = $request->input('movie_hot');
+            $movie->chatluong = $request->input('resolution');
+            $movie->phude = $request->input('subtitle');
+            $movie->thoiluong = $request->input('time');
+            if ($request->input('category_id') == 2) {
+                $movie->sotap = 1;
+            } else {
+                $movie->sotap = $request->input('episodes');
+            }
+            $movie->tags = $request->input('tags');
+            $movie->trailer = $request->input('trailer');
+            $movie->danhmuc_id = $request->input('category_id');
+            $movie->nam = '2000';
+            $movie->view = 0;
+            $movie->quocgia_id = $request->input('country_id');
+            $movie->user_id = Auth::user()->id;
+            $ext = $request->image->extension();
+            $file_name = time() . '-' . 'phim.' . $ext;
 
-        $request->merge(['image/phim' => $file_name]);
-        $movie->hinhanh = $file_name;
-        $movie->save();
+            $request->merge(['image/phim' => $file_name]);
+            $movie->hinhanh = $file_name;
+            $movie->save();
 
-        //nhieu th loai
-        $movie->Phim_TheLoai()->attach($data['genre']);
+            //nhieu th loai
+            $movie->Phim_TheLoai()->attach($data['genre']);
 
-        $dieukien = 1;
-        Session::flash('success', 'Thêm Phim thành công');
+            $dieukien = 1;
+            Session::flash('success', 'Thêm Phim thành công');
         } catch (Exception $e) {
             Session::flash('error', 'Nhập lỗi. Vui lòng kiểm tra lại');
             $dieukien = 0;
@@ -86,7 +86,7 @@ class PhimController extends Controller
     {
         try {
             $movie = Phim::find($id);
-            $Path = 'image/phim/' . $movie->hinhanh;
+            $Path = 'public/image/phim/' . $movie->hinhanh;
             if (file_exists($Path)) {
                 unlink($Path);
             }
@@ -149,7 +149,7 @@ class PhimController extends Controller
             $movie->danhmuc_id = $request->input('category_id');
             $movie->quocgia_id = $request->input('country_id');
             if ($img) {
-                $Path = 'image/phim/' . $movie->hinhanh;
+                $Path = 'public/image/phim/' . $movie->hinhanh;
                 if (file_exists($Path)) {
                     unlink($Path);
                 }

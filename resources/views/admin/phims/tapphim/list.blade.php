@@ -52,14 +52,18 @@
                                 <thead>
                                     <tr>
                                         <th width="15%">Tập</th>
-                                        <th width="20%">Link Phim</th>
+                                        <th width="20%">Nguồn Tập Phim</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($item->tapphim as $key => $ep)
                                         <tr>
                                             <td>{{ $ep->tap }}</td>
-                                            <td>{{ $ep->linkphim }}</td>
+                                            <td>@if (!empty($ep->linkphim))
+                                                {{ $ep->linkphim }}
+                                                @else
+                                                {{ $ep->video }}
+                                            @endif</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
