@@ -6,7 +6,7 @@
             <div class="row h-100">
                 <div class="col-8 py-4">
                     <div class="text-white px-3" style="font-size: 40px;">
-                        <span style="font-weight: bold">{{$truyendadang}}</span>
+                        <span style="font-weight:   bold">{{$truyendadang}}</span>
                         <br>
                     </div>
                     <span class="px-3" style="font-size: 20px;">Truyện đã đăng</span>
