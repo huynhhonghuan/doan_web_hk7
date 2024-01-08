@@ -14,7 +14,7 @@ class TruyenImport implements WithMultipleSheets
     {
         return [
             'Sheet1' => new Truyen(),
-            'Sheet2' => new Truyen_TheLoai()
+            'Sheet2' => new Truyen_TheLoai(),
         ];
     }
 }
@@ -34,7 +34,6 @@ class Truyen implements ToModel, WithHeadingRow
             'mota' => $row['mota'],
             'khoa' => $row['khoa'],
             'nhomdich' => $row['nhomdich'],
-            'luotxem' => $row['luotxem'],
             'hinhanh' => $row['hinhanh'],
             'tacgia_id' => $row['tacgia_id'],
             'quocgia_id' => $row['quocgia_id'],

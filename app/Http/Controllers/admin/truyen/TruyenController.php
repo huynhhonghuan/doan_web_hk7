@@ -207,6 +207,7 @@ class TruyenController extends Controller
 
     public function postNhap(Request $request)
     {
+
         Excel::import(new TruyenImport(), $request->file('excel_file'));
 
         if ($file = $request->file('hinhanh')) {

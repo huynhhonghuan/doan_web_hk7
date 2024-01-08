@@ -41,7 +41,9 @@ class TrangChuController extends Controller
         $data = json_encode(Truyen::all());
         file_put_contents(public_path('json/truyen.json'), $data);
 
-        return view('trangchu.home', compact('genre', 'country'));
+        $truyen = Truyen::orderby('id', 'ASC')->where('khoa', 1)->limit(6)->get();
+
+        return view('trangchu.home', compact('genre', 'country', 'truyen'));
     }
     public function truyen()
     {
@@ -50,7 +52,7 @@ class TrangChuController extends Controller
         foreach ($truyen_head as $key => $item) {
             $ids[] = $item->id;
         }
-        $truyenmoinhat = Truyen::where('khoa', 1)->whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
+        $truyenmoinhat = Truyen::where('khoa', 1)->whereNotIn('id', $ids)->orderby('id', 'ASC')->limit(6)->get();
 
         $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
@@ -153,13 +155,17 @@ class TrangChuController extends Controller
         }
         $movie = Phim::withCount('tapphim')->whereIn('id', $many_genre)->where('khoa', 1)->paginate(40);
 
-        $truyen = Truyen::with('getTheLoai')->where('id', $genre_slug->id)->where('khoa', 1)->paginate(40);
+        // $truyen = Truyen::with('getTheLoai')->where('id', $genre_slug->id)->where('khoa', 1)->paginate(40);
 
-        $ids = [];
-        foreach ($truyen as $key => $item) {
-            $ids[] = $item->id;
-        }
-        $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->get();
+        // $ids = [];
+        // foreach ($truyen as $key => $item) {
+        //     $ids[] = $item->id;
+        // }
+        $tl = TheLoai::where('slug', $slug)->pluck('id')->toArray();
+        $tr = Truyen_TheLoai::whereIn('theloai_id', $tl)->pluck('truyen_id')->toArray();
+        $truyen = Truyen::whereIn('id', $tr)->paginate(40);
+
+        $truyenmoinhat = Truyen::whereNotIn('id', $tr)->orderby('id', 'ASC')->limit(6)->get();
 
         return view('trangchu.theloai', compact('category', 'genre', 'country', 'genre_slug', 'movie', 'movie_trailersidebar', 'movie_hot', 'truyen', 'truyenmoinhat'));
     }
@@ -184,10 +190,12 @@ class TrangChuController extends Controller
 
         $truyen = Truyen::where('quocgia_id', $country_slug->id)->paginate(40);
 
+
         $ids = [];
         foreach ($truyen as $key => $item) {
             $ids[] = $item->id;
         }
+
         $truyenmoinhat = Truyen::whereNotIn('id', $ids)->orderby('id', 'ASC')->limit(6)->get();
 
         return view('trangchu.quocgia', compact('category', 'genre', 'country', 'country_slug', 'movie', 'movie_trailersidebar', 'movie_hot', 'truyen', 'truyenmoinhat'));

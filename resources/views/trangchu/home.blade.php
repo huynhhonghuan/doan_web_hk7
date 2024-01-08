@@ -116,61 +116,63 @@
                 });
             </script>
         </div>
-        <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
-            {{-- @foreach ($category_home as $key => $cate_home)
-                <section id="halim-advanced-widget-2">
-                    <div class="section-heading">
-                        <a href="{{ route('movie', $cate_home->slug) }}" title="{{ $cate_home->title }}">
-                            <span class="h-text">{{ $cate_home->title }}</span>
-                        </a>
-                    </div>
-                    <div id="halim-advanced-widget-2-ajax-box" class="halim_box">
-                        @foreach ($cate_home->movie->take(12) as $key => $mov)
-                            <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
-                                <div class="halim-item">
-                                    <a class="halim-thumb" href="{{ route('movie', $mov->slug) }}">
-                                        <figure><img class="lazy img-responsive"
-                                                src="{{ asset('image/movie') }}/{{ $mov->image }}"
-                                                title="{{ $mov->title }}"></figure>
-                                        <span class="status">
-                                            @if ($mov->resolution == 0)
-                                                SD
-                                            @elseif($mov->resolution == 1)
-                                                HD
-                                            @elseif($mov->resolution == 2)
-                                                Trailer
-                                            @endif
-                                        </span><span class="episode"><i class="fa fa-play" aria-hidden="true"></i>
-                                            @if ($mov->episodes == 0)
-                                                {{ $mov->episode_count }}/?? tập
-                                            @elseif($mov->episodes == $mov->episode_count)
-                                                Full-{{ $mov->episode_count }}/{{ $mov->episodes }} tập
-                                            @else
-                                                {{ $mov->episode_count }}/{{ $mov->episodes }} tập
-                                            @endif
-                                            |
-                                            @if ($mov->subtitle == 0)
-                                                Thuyết minh
-                                            @else
-                                                Phụ đề
-                                            @endif
-                                        </span>
-                                        <div class="icon_overlay"></div>
-                                        <div class="halim-post-title-box">
-                                            <div class="halim-post-title ">
-                                                <p class="entry-title">{{ $mov->title }}</p>
-                                                <p class="original_title">My Roommate Is a Gumiho</p>
-                                            </div>
-                                        </div>
-                                    </a>
+        {{-- Cái này của tao, sai là chết mẹ, ngon chỉnh đi rồi biết--}}
+        <div class="">
+            <div class="section-bar clearfix">
+                <h3 class="section-title"><span>TRUYỆN HOT</span></h3>
+            </div>
+            <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">
+                @foreach ($truyen as $key => $hot)
+                    <article class="thumb grid-item post-38498">
+                        <div class="halim-item">
+                            <a class="halim-thumb" href="{{ route('truyen_id', $hot->id) }}" title="{{ $hot->tentruyen }}">
+                                <figure><img class="lazy img-responsive"
+                                        src="{{ asset('public/image/truyen') }}/{{ $hot->slug }}/{{ $hot->hinhanh }}"
+                                        alt="Bành Dân" title="Bành Dân"></figure>
+                                <div class="icon_overlay"></div>
+                                <div class="halim-post-title-box">
+                                    <div class="halim-post-title ">
+                                        <p class="entry-title">{{ $hot->tentruyen }}</p>
+                                    </div>
                                 </div>
-                            </article>
-                        @endforeach
-                    </div>
-                </section>
-                <div class="clearfix"></div>
-            @endforeach --}}
-        </main>
+                            </a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+            <script>
+                jQuery(document).ready(function($) {
+                    var owl = $('#halim_related_movies-2');
+                    owl.owlCarousel({
+                        loop: true,
+                        margin: 5,
+                        autoplay: true,
+                        autoplayTimeout: 4000,
+                        autoplayHoverPause: true,
+                        nav: true,
+                        navText: ['<i class="hl-down-open rotate-left"></i>',
+                            '<i class="hl-down-open rotate-right"></i>'
+                        ],
+                        responsiveClass: true,
+                        responsive: {
+                            0: {
+                                items: 2
+                            },
+                            480: {
+                                items: 3
+                            },
+                            600: {
+                                items: 5
+                            },
+                            1000: {
+                                items: 5
+                            }
+                        }
+                    })
+                });
+            </script>
+        </div>
+
         {{-- @include('layouts.trangchu.navbar') --}}
     </div>
 @endsection
