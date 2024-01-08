@@ -15,6 +15,11 @@ use App\Models\TruyenChiTiet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Laravel\Socialite\Facades\Socialite;
+use Exception;
+use App\Models\User;
+use App\Models\User_VaiTro;
+use Illuminate\Support\Facades\Auth;
 
 class TrangChuController extends Controller
 {
@@ -372,31 +377,83 @@ class TrangChuController extends Controller
             $movie_hot = Phim::where('phimhot', 1)->where('khoa', 1)->get();
             $movie_trailersidebar = Phim::where('chatluong', 2)->where('khoa', 1)->take(15)->get();
             //lay phim
-            $movie = Phim::withCount('tapphim');
+            $movie_array = Phim::withCount('tapphim');
             if ($country_filter) {
-                $movie = $movie->where('quocgia_id', $country_filter);
-            } elseif ($genre_filter) {
-                $many_genre = [];
-                $movieGenreIds = Phim_TheLoai::with('danhmuc', 'phim_theloai', 'quocgia')->where('theloai_id', $genre_filter)->pluck('theloai_id')->toArray();
-                if (!empty($movieGenreIds)) {
-                    $relatedMovieIds = Phim_TheLoai::whereIn('theloai_id', $movieGenreIds)
-                        ->pluck('phim_id')
-                        ->toArray();
-
-                    $many_genre = array_unique($relatedMovieIds);
-                } else {
-                    $many_genre = [];
-                }
-                $movie = $movie->whereIn('id', $many_genre);
-            } elseif ($sapxep == 'name_a_z') {
-                $movie = $movie->orderBy('id', 'ASC');
-            } elseif ($sapxep == 'date') {
-                $movie = $movie->orderBy('created_at', 'ASC');
-            } elseif ($sapxep == 'year_release') {
-                $movie = $movie->orderBy('year', 'ASC');
+                $movie_array = $movie_array->where('quocgia_id', $country_filter);
             }
-            $movie = $movie->orderBy('updated_at', 'DESC')->paginate(40);
+            if ($sapxep == 'name_a_z') {
+                $movie_array = $movie_array->orderBy('id', 'ASC');
+            }
+            if ($sapxep == 'date') {
+                $movie_array = $movie_array->orderBy('created_at', 'ASC');
+            }
+            if ($sapxep == 'year_release') {
+                $movie_array = $movie_array->orderBy('nam', 'DESC');
+            }
+
+            $movie_array = $movie_array->with('phim_theloai');
+            $movie = array();
+            $many_genre = [];
+            $movieGenreIds = Phim_TheLoai::with('danhmuc', 'phim_theloai', 'quocgia')->where('theloai_id', $genre_filter)->pluck('theloai_id')->toArray();
+            if (!empty($movieGenreIds)) {
+                $relatedMovieIds = Phim_TheLoai::whereIn('theloai_id', $movieGenreIds)
+                    ->pluck('phim_id')
+                    ->toArray();
+
+                $many_genre = array_unique($relatedMovieIds);
+            } else {
+                $many_genre = [];
+            }
+            if ($country_filter == '' && $genre_filter == '') {
+                return redirect()->back();
+                $movie = $movie_array->paginate(40);
+            } else {
+                $movie = $movie_array->whereIn('id', $many_genre);
+                $movie =  $movie_array->orWhere('quocgia_id', $country_filter);
+                $movie = $movie_array->paginate(40);
+            }
             return view('trangchu.loc', compact('category', 'genre', 'country', 'movie_hot', 'movie_trailersidebar', 'movie'));
+        }
+    }
+
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    public function handleFacebookCallback()
+    {
+        try {
+
+            $user = Socialite::driver('facebook')->user();
+
+            $finduser = User::where('email', $user->email)->first();
+
+            if($finduser){
+
+                Auth::login($finduser);
+
+                return redirect()->route('homepage');
+
+            }else{
+                $newUser = User::updateOrCreate(['email' => $user->email],[
+                        'name' => $user->name,
+                        'username' => 'a',
+                        'facebook_id'=> $user->id,
+                        'password' => encrypt('123456789')
+                    ]);
+                $vaitro = new User_VaiTro();
+                $vaitro->user_id = $newUser->id;
+                $vaitro->vaitro_id = 'nd';
+                $vaitro->save();
+
+                Auth::login($newUser);
+
+                return redirect()->route('homepage');
+            }
+
+        } catch (Exception $e) {
+            dd($e->getMessage());
         }
     }
 }

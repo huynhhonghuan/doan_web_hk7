@@ -24,7 +24,11 @@
             <div class="col-md-4 hidden-xs">
                 <div id="get-bookmark" class="box-shadow"><i class="hl-bookmark"></i><span> Bookmarks</span><span
                         class="count">0</span></div>
-                        <a href="{{ route('login') }}">Đăng nhập</a>
+                       @if(Auth::user())
+                       <a href="{{ route('logout') }}">Đăng xuất</a>
+                       @else
+                       <a href="{{ route('login') }}">Đăng nhập</a>
+                       @endif
                 <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                     <ul style="margin: 0;"></ul>
                 </div>

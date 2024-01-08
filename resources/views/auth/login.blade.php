@@ -253,7 +253,7 @@
                                         <p>Bạn chưa có tài khoản? <a href="#">Đăng ký</a></p>
                                     </div>
                                     <div class="login-form-footer">
-                                        <a href="#" style="padding-right: 90px;">
+                                        <a href="{{route('login-by-facebook')}}" style="padding-right: 90px;">
                                             <img width="30"
                                                 src="{{ asset('public/image/Facebook_Logo_(2019).png.webp') }}"> Facebook
                                         </a>

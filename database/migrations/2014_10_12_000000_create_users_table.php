@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('status')->default('active');
+            $table->string('facebook_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->engine = 'InnoDB';
