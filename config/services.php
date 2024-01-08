@@ -36,5 +36,11 @@ return [
         'client_secret' => 'b252a92f7eca0ddad797aeff401670e2',
         'redirect' => 'http://localhost/doan_web_hk7/auth/facebook/callback',
     ],
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT'),
+    ],
+
 
 ];

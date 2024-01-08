@@ -7,6 +7,12 @@
 @section('content')
     <div id="halim_related_movies-2xx" class="wrap-slider">
         <div class="section-bar clearfix">
+            <h3 class="section-title"><span>Lọc truyện</span></h3>
+            <div class="row">
+                @include('layouts.trangchu.filtertruyen')
+            </div>
+        </div>
+        <div class="section-bar clearfix">
             <h3 class="section-title"><span>TRUYỆN HOT</span></h3>
         </div>
         <div id="halim_related_movies-2" class="owl-carousel owl-theme related-film">

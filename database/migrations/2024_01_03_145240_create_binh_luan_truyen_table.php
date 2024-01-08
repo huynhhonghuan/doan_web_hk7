@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('binhluan_truyen', function (Blueprint $table) {
+        Schema::create('truyen_binhluan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('truyen_id')->constrained('truyen')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->longText('noidung')->nullable();
-            $table->integer('khoa')->default(0);
+            $table->integer('khoa')->default(1);
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('binhluan_truyen');
+        Schema::dropIfExists('truyen_binhluan');
     }
 };

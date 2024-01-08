@@ -62,4 +62,45 @@
             </div>
         </div>
     </div>
+    <div class="container my-5">
+        <div class="section-bar clearfix">
+            <h3 class="section-title"><span>Bình luận</span></h3>
+        </div>
+        <div class="row mt-5">
+            {{-- @foreach ($truyenmoinhat as $item)
+                <div class="col-md-2">
+                    <a href="{{ route('truyen_id', ['id' => $item->id]) }}" class="text-decoration-none text-white fs-3">
+                        <img src="{{ asset('public/image/truyen/' . $item->slug . '/' . $item->hinhanh) }}"
+                            class="card-img-top" alt="..." style="width: 200px; height: 230px;">
+                    </a>
+                    <a href="{{ route('truyen_id', ['id' => $item->id]) }}" class="text-decoration-none text-white fs-3">
+                        {{ $item->tentruyen }}
+                    </a>
+                </div>
+            @endforeach --}}
+            <form action="{{ route('binhluan', ['id' => $truyen->id]) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="col-md-6">
+                    <textarea name="binhluan" id="" cols="80" rows="3" style="background-color: rgb(236, 236, 236);"></textarea>
+                </div>
+                <div class="col-md-3" style="margin-top: 20px; margin-left: 10px;">
+                    <button type="submit" class="btn btn-primary">Bình luận</button>
+                </div>
+            </form>
+
+        </div>
+        <div class="row mt-5">
+            @foreach ($binhluan as $item)
+                <div class="row" style="margin-top: 20px; margin-left: 10px; margin-bottom: 20px;">
+                    <div class="col-md-1">
+                        <img src="{{ asset('public/image/user.png') }}" class="card-img-top" alt="..." style="width: 60px;" height="60px;">
+                    </div>
+                    <div class="col-md-8">
+                        <h6>{{$item->User->name}}</h6>
+                        <p style="font-size: 20px;">{{ $item->noidung }}</p>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 @endsection

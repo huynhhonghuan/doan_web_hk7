@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\trangchu;
 
 use App\Http\Controllers\Controller;
+use App\Models\BinhLuan;
+use App\Models\Truyen_TheLoai;
 use App\Models\DanhGiaPhim;
 use App\Models\DanhMuc;
 use App\Models\Phim;
@@ -15,11 +17,16 @@ use App\Models\TruyenChiTiet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Laravel\Socialite\Facades\Socialite;
 use Exception;
 use App\Models\User;
 use App\Models\User_VaiTro;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+
+use Socialite;
+
 
 class TrangChuController extends Controller
 {
@@ -58,6 +65,7 @@ class TrangChuController extends Controller
         $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
         $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen->id)->get()->groupBy('chuong');
         $truyenmoinhat = Truyen::whereNot('id', $truyen->id)->orderby('id', 'ASC')->get();
+        $binhluan = BinhLuan::where('truyen_id', $truyen->id)->where('khoa', 1)->get();
 
         $daxem = $truyen->id;
 
@@ -68,7 +76,7 @@ class TrangChuController extends Controller
             session()->put($daxem, 1);
         }
 
-        return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country'));
+        return view('trangchu.truyenmota', compact('truyen', 'truyenchitiet', 'truyenmoinhat', 'genre', 'country', 'binhluan'));
     }
     public function truyenxem($slug, $chuong)
     {
@@ -80,8 +88,24 @@ class TrangChuController extends Controller
         $truyen_slug = Truyen::where('slug', $slug)->first();
         $truyenchitiet = TruyenChiTiet::where('truyen_id', $truyen_slug->id)->where('chuong', $chuong)->get();
         $truyen_chuong = TruyenChiTiet::all()->groupBy('chuong');
-        // dd($truyen_chuong);
         return view('trangchu.truyenxem', compact('genre', 'country', 'truyen_slug', 'truyenchitiet', 'truyen_chuong'));
+    }
+
+    public function binhluantruyen(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'binhluan' => ['required'],
+            ]);
+            $binhluan = new BinhLuan();
+            $binhluan->truyen_id = $id;
+            $binhluan->user_id = Auth::user()->id;
+            $binhluan->noidung = $request->binhluan;
+            $binhluan->save();
+        } catch (Exception $e) {
+            Session::flash('error', 'Xóa lỗi. Vui lòng kiểm tra lại');
+        }
+        return redirect()->refresh();
     }
     //Controller khi chọn 1 danh mục(Phim bộ, phim lẻ,...)
     public function category($slug)
@@ -415,6 +439,46 @@ class TrangChuController extends Controller
             return view('trangchu.loc', compact('category', 'genre', 'country', 'movie_hot', 'movie_trailersidebar', 'movie'));
         }
     }
+    public function loctruyen()
+    {
+        $sapxep = $_GET['order'];
+        $genre_filter = $_GET['genre'];
+        $country_filter = $_GET['country'];
+        if ($sapxep == '' && $genre_filter == '' && $country_filter == '') {
+            return redirect()->back();
+        } else {
+            $genre = TheLoai::orderby('id', 'ASC')->where('khoa', 1)->get();
+            $country = QuocGia::orderby('id', 'ASC')->where('khoa', 1)->get();
+            //lay truyện
+            $truyen_array = Truyen::where('khoa', 1);
+
+            if ($country_filter) {
+                $truyen_array = $truyen_array->where('quocgia_id', $country_filter);
+            }
+            if ($genre_filter) {
+                $tr = Truyen_TheLoai::where('theloai_id', $genre_filter)->pluck('truyen_id')->toArray();
+                $truyen_array = $truyen_array->whereIn('id', $tr);
+            }
+            if ($sapxep == 'name_a_z') {
+                $truyen_array = $truyen_array->orderBy('id', 'ASC');
+            }
+            if ($sapxep == 'date') {
+                $truyen_array = $truyen_array->orderBy('created_at', 'ASC');
+                // dd($truyen_array);
+            }
+            if ($sapxep == 'year_release') {
+                $truyen_array = $truyen_array->orderBy('nam', 'DESC');
+            }
+
+            $truyen = array();
+
+            $truyen = $truyen_array->paginate(40);
+
+            $truyenmoinhat = Truyen::where('khoa', 1)->whereNotIn('id', $truyen_array->pluck('id')->toArray())->orderby('id', 'ASC')->limit(6)->get();
+
+            return view('trangchu.loctruyen', compact('genre', 'country', 'truyen', 'truyenmoinhat'));
+        }
+    }
 
     public function redirectToFacebook()
     {
@@ -429,19 +493,18 @@ class TrangChuController extends Controller
 
             $finduser = User::where('email', $user->email)->first();
 
-            if($finduser){
+            if ($finduser) {
 
                 Auth::login($finduser);
 
                 return redirect()->route('homepage');
-
-            }else{
-                $newUser = User::updateOrCreate(['email' => $user->email],[
-                        'name' => $user->name,
-                        'username' => 'a',
-                        'facebook_id'=> $user->id,
-                        'password' => encrypt('123456789')
-                    ]);
+            } else {
+                $newUser = User::updateOrCreate(['email' => $user->email], [
+                    'name' => $user->name,
+                    'username' => 'a',
+                    'facebook_id' => $user->id,
+                    'password' => encrypt('123456789')
+                ]);
                 $vaitro = new User_VaiTro();
                 $vaitro->user_id = $newUser->id;
                 $vaitro->vaitro_id = 'nd';
@@ -451,9 +514,48 @@ class TrangChuController extends Controller
 
                 return redirect()->route('homepage');
             }
-
         } catch (Exception $e) {
             dd($e->getMessage());
+        }
+    }
+    public function getGoogleLogin()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function getGoogleCallback()
+    {
+        try {
+            $user = Socialite::driver('google')
+                ->setHttpClient(new \GuzzleHttp\Client(['verify' => false]))
+                ->stateless()
+                ->user();
+        } catch (Exception $e) {
+            return redirect()->route('user.dangnhap')->with('warning', 'Lỗi xác thực. Xin vui lòng thử lại!');
+        }
+
+        $existingUser = User::where('email', $user->email)->first();
+        if ($existingUser) {
+            // Nếu người dùng đã tồn tại thì đăng nhập
+            Auth::login($existingUser, true);
+            return redirect()->route('user.home');
+        } else {
+            // Nếu chưa tồn tại người dùng thì thêm mới
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'username' => Str::before($user->email, '@'),
+                'password' => Hash::make('123456'), // Gán mật khẩu tự do
+            ]);
+
+            $vaitro = new User_VaiTro();
+            $vaitro->user_id = $newUser->id;
+            $vaitro->vaitro_id = 'nd';
+            $vaitro->save();
+
+            // Sau đó đăng nhập
+            Auth::login($newUser, true);
+            return redirect()->route('homepage');
         }
     }
 }

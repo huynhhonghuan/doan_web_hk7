@@ -79,7 +79,7 @@ class LoginController extends Controller
             }
             //đăng nhập vớí quyền người dùng
             else if (Auth::user()->Check_Nguoidung()) {
-                return redirect()->route('nguoidung.home');
+                return redirect()->back();
             }
         }
         //tài khoản không hoạt động

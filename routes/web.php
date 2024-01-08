@@ -58,8 +58,13 @@ Route::get('/auth/facebook/callback', [TrangChuController::class, 'handleFaceboo
 Route::get('/truyen', [TrangChuController::class, 'truyen'])->name('truyen');
 Route::get('/truyen/{id}', [TrangChuController::class, 'truyenmota'])->name('truyen_id');
 Route::get('/truyen/{slug}/{chuong}', [TrangChuController::class, 'truyenxem'])->name('truyenchitiet');
+Route::post('/truyen/{id}', [TrangChuController::class, 'binhluantruyen'])->middleware('nd')->name('binhluan');
+Route::get('/loc-truyen', [TrangChuController::class, 'loctruyen'])->name('loctruyen');
 
 Auth::routes();
+// Google OAuth
+Route::get('/login/google', [TrangChuController::class, 'getGoogleLogin'])->name('google.login');
+Route::get('/login/google/callback', [TrangChuController::class, 'getGoogleCallback'])->name('google.callback');
 
 //-------------------------------------Login--------------------------------------------//
 Route::get('/login', [LoginController::class, 'login'])->name('login');

@@ -88,7 +88,7 @@ class User extends Authenticatable
         return in_array(
             $this->getVaiTro[0]->id,
             [
-                'nguoidung',
+                'nd',
             ],
         );
     }

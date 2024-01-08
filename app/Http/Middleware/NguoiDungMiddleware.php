@@ -16,9 +16,12 @@ class NguoiDungMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && !$request->user()->Check_Nguoidung()) {
-            abort(403);
+        if (!Auth::check()) {
+            return redirect()->route('login');
         }
+        // if (Auth::check() && !$request->user()->Check_Nguoidung()) {
+        //     return redirect()->route('login');
+        // }
         return $next($request);
     }
 }

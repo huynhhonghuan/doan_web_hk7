@@ -25,7 +25,8 @@ class RedirectIfAuthenticated
                 return redirect(RouteServiceProvider::ADMIN);
             }
             if (Auth::guard($guard)->check() && Auth::user()->Check_Nguoidung()) {
-                return redirect(RouteServiceProvider::NGUOIDUNG);
+                // return redirect(RouteServiceProvider::NGUOIDUNG);
+                return $next($request);
             }
             if (Auth::guard($guard)->check() && Auth::user()->Check_Congtacvientruyen()) {
                 return redirect(RouteServiceProvider::CONGTACVIENTRUYEN);

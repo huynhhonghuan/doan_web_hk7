@@ -12,15 +12,15 @@
         }
 
         /* body {
-                                                        display: flex;
-                                                        justify-content: center;
-                                                        align-items: center;
-                                                        min-height: 100vh;
-                                                        width: 100%;
-                                                        background: url('image/digital-digital-art-artwork-illustration-minimalism-hd-wallpaper-preview.jpg') no-repeat;
-                                                        background-position: center;
-                                                        background-size: cover;
-                                                    } */
+                                                                display: flex;
+                                                                justify-content: center;
+                                                                align-items: center;
+                                                                min-height: 100vh;
+                                                                width: 100%;
+                                                                background: url('image/digital-digital-art-artwork-illustration-minimalism-hd-wallpaper-preview.jpg') no-repeat;
+                                                                background-position: center;
+                                                                background-size: cover;
+                                                            } */
 
         .form-box {
             position: relative;
@@ -253,11 +253,11 @@
                                         <p>Bạn chưa có tài khoản? <a href="#">Đăng ký</a></p>
                                     </div>
                                     <div class="login-form-footer">
-                                        <a href="{{route('login-by-facebook')}}" style="padding-right: 90px;">
+                                        <a href="{{ route('login-by-facebook') }}" style="padding-right: 90px;">
                                             <img width="30"
                                                 src="{{ asset('public/image/Facebook_Logo_(2019).png.webp') }}"> Facebook
                                         </a>
-                                        <a href="#">
+                                        <a href="{{ route('google.login') }}">
                                             <img width="30" src="{{ asset('public/image/Google__G__Logo.svg.png') }}">
                                             Google
                                         </a>
