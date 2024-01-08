@@ -25,9 +25,9 @@
                     placeholder="VD: https://www.youtube.com/watch?v=>>fO5t3tpVyuk<<">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label>Danh Mục Phim</label>
-                <select class="form-control" name="category_id" id="category_id">
+                <select class="form-control" name="category_id" id="category_id" readonly>
                     @foreach ($category as $cate)
                         <option value="{{ $cate->id }}" {{ $movieEdit->danhmuc_id == $cate->id ? 'selected' : '' }}>
                             {{ $cate->ten }}</option>

@@ -2,11 +2,11 @@
 @section('content')
     <p class="mt-3">
         <a href="{{ route('congtacvienphim.movie.add') }}" class="btn btn-info"><i class="fa fa-plus"></i> Thêm mới</a>
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">
+        {{-- <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-default">
             Nhập từ Excel
         </button>
         <a href="{{ route('admin.danhmuc.xuat') }}" class="btn btn-success"><i class="fa-light fa-download"></i> Xuất
-            ra Excel</a>
+            ra Excel</a> --}}
     </p>
     {{-- <iframe src="{{ asset('public/video/a.mkv') }}" frameborder="0" width="560" height="315"></iframe> --}}
     <table class="table table-responsive" id="tablephim">

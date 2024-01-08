@@ -57,7 +57,7 @@
                         <td>{{ $truyenchitiet->Truyen->tentruyen }}</td>
                         <td>
                             <img src="{{ asset('public/image/truyen/' . $truyenchitiet->Truyen->slug . '/chuong-' . $truyenchitiet->chuong . '/' . $truyenchitiet->hinhanh) }}"
-                                alt="hinhanh" style="width: 120px; height: 100px;;">
+                                alt="hinhanh" style="width: 120px; height: 100px;">
                         </td>
                         <td>{{ $truyenchitiet->chuong }}</td>
                         <td>{{ $truyenchitiet->updated_at }}</td>

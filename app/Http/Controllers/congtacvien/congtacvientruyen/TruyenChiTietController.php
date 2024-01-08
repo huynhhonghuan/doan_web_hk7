@@ -9,6 +9,7 @@ use App\Imports\Congtacvientruyen\TruyenChiTietImport;
 use App\Models\Truyen;
 use App\Models\TruyenChiTiet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
@@ -21,7 +22,9 @@ class TruyenChiTietController extends Controller
     public function index()
     {
         $title = 'Danh sách chi tiết truyện';
-        $danhsach = TruyenChiTiet::orderby('id', 'ASC')->get();
+        $ds = Truyen::where('user_id', Auth::user()->id)->select('id')->get();
+        $danhsach = TruyenChiTiet::whereIn('truyen_id', $ds)->get();
+        // dd($danhsach);
         return view('congtacvien.congtacvientruyen.truyenchitiet.index', compact('title', 'danhsach'));
     }
 
@@ -31,7 +34,7 @@ class TruyenChiTietController extends Controller
     public function create()
     {
         $title = 'Thêm mới chi tiết truyện';
-        $truyen = Truyen::all();
+        $truyen = Truyen::where('user_id', Auth::user()->id)->get();
         return view('congtacvien.congtacvientruyen.truyenchitiet.create', compact('title', 'truyen'));
     }
 
@@ -50,14 +53,14 @@ class TruyenChiTietController extends Controller
                 //Tạo thư mục con nếu chưa có
                 $thumuc = 'chuong-' . $request->chuong;
 
-                if (File::isDirectory($thumuc)) {
-                    File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
-                }
+                // if (File::isDirectory($thumuc)) {
+                //     File::makeDirectory(public_path('image\\truyen\\' . $slug . '\\' . $thumuc), true);
+                // }
 
                 //Xử lý hình ảnh lưu theo thời gian thực để k trị trùng
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext;
-                $file->move('image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/chuong-' . $request->chuong, $file_name);
             }
 
             TruyenChiTiet::create($request->validated() + ['hinhanh' => $file_name]);
@@ -106,7 +109,7 @@ class TruyenChiTietController extends Controller
                 //thêm ảnh mới vào
                 $ext = $request->file('hinhanh')->extension();
                 $file_name = time() . '-' . 'truyen.' . $ext; //cập nhật lại tên hình ảnh đã chỉnh
-                $file->move('image/truyen/' . $slug . '/'  . $thumuc, $file_name);
+                $file->move('public/image/truyen/' . $slug . '/'  . $thumuc, $file_name);
             }
 
             $truyenchitiet->update($request->validated() + ['hinhanh' => $file_name]);

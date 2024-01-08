@@ -25,9 +25,9 @@
                     placeholder="VD: https://www.youtube.com/watch?v=>>fO5t3tpVyuk<<">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none;">
                 <label>Danh Mục Phim</label>
-                <select class="form-control" name="category_id" id="category_id">
+                <select class="form-control" name="category_id" id="category_id" readonly>
                     @foreach ($category as $cate)
                         <option value="{{ $cate->id }}" {{ $movieEdit->danhmuc_id == $cate->id ? 'selected' : '' }}>
                             {{ $cate->ten }}</option>
@@ -35,10 +35,13 @@
                 </select>
             </div>
 
-            <div class="form-group" id="form-ep">
-                <label>Số Tập Phim</label>
-                <input type="number" min="0" max="2000" value="{{ $movieEdit->sotap }}" name="episodes" class="form-control" placeholder="">
-            </div>
+            @if ($movieEdit->danhmuc_id == 1)
+                <div class="form-group" id="form-ep">
+                    <label>Số Tập Phim</label>
+                    <input type="number" min="0" max="2000" value="{{ $movieEdit->sotap }}" name="episodes"
+                        class="form-control" placeholder="">
+                </div>
+            @endif
 
             <div class="form-group">
                 <label>Thể Loại</label>
@@ -50,7 +53,8 @@
                     @endforeach
                 </select> --}}
                 @foreach ($genre as $key => $gen)
-                    <input type="checkbox" name="genre[]" id="" value="{{ $gen->id }}" {{ isset($movie_genre) && $movie_genre->contains($gen->id) ? 'checked':'' }}>
+                    <input type="checkbox" name="genre[]" id="" value="{{ $gen->id }}"
+                        {{ isset($movie_genre) && $movie_genre->contains($gen->id) ? 'checked' : '' }}>
                     <label for="genre" style="margin-right: 10px;">{{ $gen->tentheloai }}</label>
                 @endforeach
             </div>
@@ -97,7 +101,8 @@
                 <input type="file" class="form-control" id="image" name="image" value="" placeholder="">
                 <div id="preview-upload">
                     <a href="{{ asset('public/image/phim') }}/{{ $movieEdit->hinhanh }}">
-                        <img id='sp_hinh-upload' src="{{ asset('public/image/phim') }}/{{ $movieEdit->hinhanh }}" width="100">
+                        <img id='sp_hinh-upload' src="{{ asset('public/image/phim') }}/{{ $movieEdit->hinhanh }}"
+                            width="100">
                     </a>
                 </div>
                 <input type="hidden" name="thumb" id="thumb">
