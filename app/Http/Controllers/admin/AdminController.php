@@ -31,16 +31,19 @@ class AdminController extends Controller
                 $query->where('vaitro.id', 'admin');
             })
             ->count();
+        //Lấy số lượng của từng cộng tác viên truyện
         $tk_ctvt = User::with('getVaiTro')
             ->whereHas('getVaiTro', function ($query) {
                 $query->where('vaitro.id', 'ctvt');
             })
             ->count();
+        //Lấy số lượng của từng cộng tác viên phim
         $tk_ctvp = User::with('getVaiTro')
             ->whereHas('getVaiTro', function ($query) {
                 $query->where('vaitro.id', 'ctvp');
             })
             ->count();
+        //Lấy số lượng của người dùng
         $tk_nd = User::with('getVaiTro')
             ->whereHas('getVaiTro', function ($query) {
                 $query->where('vaitro.id', 'nd');
